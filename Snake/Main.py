@@ -10,6 +10,8 @@ while running:
     running = Input.handle_input()
      
     Snake.draw()
+    
+    print(g.snake_body)
 
     g.pygame.display.flip()
     g.clock.tick(120)
