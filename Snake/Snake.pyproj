@@ -21,6 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Apple.py" />
     <Compile Include="Global.py" />
     <Compile Include="Input.py" />
     <Compile Include="Main.py" />
