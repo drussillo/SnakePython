@@ -1,5 +1,5 @@
 import Global as g
-from tkinter import CURRENT
+import Snake
 
 clock = g.pygame.time.Clock()
 frame_count = 0
@@ -20,6 +20,9 @@ def handle_input():
                 g.direction = 'e' if g.snake_body[0][2] != 'w' else 'w'
             elif event.key == g.pygame.K_a:
                 g.direction = 'w' if g.snake_body[0][2] != 'e' else 'e'
+            elif event.key == g.pygame.K_t:
+                #test key
+                Snake.add_segment()
 
     global frame_count
     frame_count += 1

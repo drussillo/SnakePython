@@ -12,7 +12,8 @@ while running:
     
     Snake.draw()
     
-    print(g.snake_body+["     Frame:"+str(Input.frame_count)])
+    #debug segment positions
+    #print(g.snake_body+["     Frame:"+str(Input.frame_count)])
 
     g.pygame.display.flip()
     g.clock.tick(120)
