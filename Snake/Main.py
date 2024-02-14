@@ -15,6 +15,7 @@ while running:
     
     #debug segment positions
     #print(g.snake_body+["     Frame:"+str(Input.frame_count)])
+    #hey leoporno30
 
     g.pygame.display.flip()
     g.clock.tick(120)
