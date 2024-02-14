@@ -1,6 +1,7 @@
 import Global as g
 import Input
 import Snake
+import Apple
 
 g.pygame.init()
 g.SCREEN.fill((255, 255, 255))
