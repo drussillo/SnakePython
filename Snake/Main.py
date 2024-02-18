@@ -16,14 +16,24 @@ running = True
 while running:
     running = Input.handle_input()
     
-    Snake.draw()
+    #main loop
+    if not g.failstate:
+        Snake.draw()
+        g.failstate = Snake.check_if_coll_itself() or Snake.out_of_bounds()
     
-    if not apple1.is_spawned: #se l'oggetto NON è spawnato:
-        apple1.spawn()
+        if not apple1.is_spawned: #se l'oggetto NON è spawnato:
+            apple1.spawn()
 
+        #debug segment positions
+        #print(g.snake_body+["     Frame:"+str(Input.frame_count)])
+    
+    #failstate    
+    else:
+        g.SCREEN.fill((255, 255, 255))
+        font = g.pygame.font.SysFont(None, 100)
+        img = font.render('You Failed!', True, (200, 0, 0))
+        g.SCREEN.blit(img, (420, 260))
 
-    #debug segment positions
-    #print(g.snake_body+["     Frame:"+str(Input.frame_count)])
 
     g.pygame.display.flip()
     g.clock.tick(120)
