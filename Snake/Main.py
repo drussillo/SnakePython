@@ -22,6 +22,10 @@ while running:
         apple1.spawn()
     else:
         apple1 = a.Apple()
+
+    print(f"{apple1.x_coord} : x coordinte       {apple1.y_coord} : y coordinate ")
+    print( "----------------------------------------------------------------------------------------------" )
+    print(f"{g.snake_body[0][0]} : x coordinte pitone      {g.snake_body[0][1]} : y coordinate  pitone")
     
     apple1.check_collision()
     #debug segment positions

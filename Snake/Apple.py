@@ -15,8 +15,8 @@ class Apple: #Questa è la classe della mela
             rnd_x = random.randint(50, 1230)
             rnd_y = random.randint(50, 670)
             loop = not self.valid_pos(rnd_x, rnd_y)    
-        self.x_coord = rnd_x
-        self.y_coord = rnd_y
+        self.x_coord = rnd_x - rnd_x % 25 
+        self.y_coord = rnd_y - rnd_y % 25
         
     def valid_pos(self, x, y): #Controlla se le coordinate sono su uno dei segmenti del serpente
         for segment in g.snake_body:
@@ -24,7 +24,7 @@ class Apple: #Questa è la classe della mela
                 return False
                 break
             else: return True
-
+   
     def check_collision(self):
         rect1 = g.pygame.Rect(self.x_coord, self.y_coord, 20, 20)
         head_coordinate_x = g.snake_body[0][0]
