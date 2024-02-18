@@ -1,10 +1,6 @@
 import Global as g
 import Snake
 
-clock = g.pygame.time.Clock()
-frame_count = 0
-frame_shift = 0
-
 def handle_input():
     for event in g.pygame.event.get():
         if event.type == g.pygame.QUIT:
@@ -23,14 +19,6 @@ def handle_input():
             elif event.key == g.pygame.K_t:
                 #test key
                 Snake.add_segment() #lenghten snake!
-
-    global frame_count
-    frame_count += 1
-    if frame_count == 25:
-        frame_count = 0
-        for i in range(len(g.snake_body)-1, 0, -1):
-            fwd_segment_direction = g.snake_body[i-1][2]
-            g.setBodDir(i, fwd_segment_direction)
-        g.setBodDir(0, g.direction)        
+        
 
     return True
