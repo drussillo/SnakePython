@@ -46,9 +46,7 @@ class Apple: #Questa è la classe della mela
         g.pygame.draw.rect(g.SCREEN, (200, 0, 0), g.pygame.Rect(self.x_coord, self.y_coord, 20, 20))
         self.is_spawned
 
-    
-
-    
+      
 #Guarda Main.py per l'init dell'oggetto Apple, Line 9
         
 
@@ -67,7 +65,9 @@ COME CONTINUARE?
 1. Mangiare la mela:
 bisogna fare un modo per detectare se il serpente tocca
 la mela. Due approcci sono possibili:
-    1. (pygame)p.Rect.colliderect(rect)
+        rect1 = g.pygame.Rect(coord_x, coord_y, 20, 20)
+        rect2 = g.pygame.Rect(coord_x, coord_y, 20, 20)
+    1. rect1.colliderect(rect2)
         non ho ancora testato questa funzione
         quindi poi devi vedere tu come usarla
     2. Spawna le mele solo dove può passare il serpente
@@ -88,10 +88,5 @@ iniziale e magari anche su una specie di scoreboard.
 Questo lascialo fare a me in modo da evitare conflitti di merge.
 
 
-Per comunicare le prossime volte usiamo il README.md file, così
-quando facciamo un pull possiamo leggere tutto da lì.
-
-Copierò queste istruzioni sul README quindi se vuoi le puoi 
-cancellare da qui / cancellare i commenti lasciati con #.
 
 """

@@ -27,3 +27,17 @@ def add_segment():
     offset_x, offset_y = offset_dict[last_direction]
     g.snake_body.append((last_x + offset_x, last_y + offset_y, last_direction))
     
+def check_if_coll_itself():
+    head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], 20, 20)
+    if len(g.snake_body) > 2:
+        temp_rect = [not head_rect.colliderect(g.pygame.Rect(segment[0], segment[1], 20, 20)) for segment in g.snake_body[2:]]
+        return not all(temp_rect)
+    else: return False
+    
+def out_of_bounds():
+    head_coords = (g.snake_body[0][0], g.snake_body[0][1])
+    if head_coords[1] < 0: return True
+    elif head_coords[1] > 700: return True
+    elif head_coords[0] > 1260: return True
+    elif head_coords[0] < 0: return True
+    else: return False
