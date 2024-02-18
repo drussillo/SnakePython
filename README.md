@@ -75,3 +75,5 @@ io mi occuperò del fail_state di quando il serpente tocca se
 stesso o i bordi. Lavorerò anche sulla GUI, su un ipotetico menù
 iniziale e magari anche su una specie di scoreboard.
 Questo lascialo fare a me in modo da evitare conflitti di merge.
+
+------
