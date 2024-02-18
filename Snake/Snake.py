@@ -1,4 +1,5 @@
 import Global as g
+frame_count = 0
 
 def draw():
     clear()
@@ -16,6 +17,19 @@ def move():
             g.snake_body[i] = (segment[0]+g.velocity, segment[1], segment[2])
         elif segment[2] == 'w':
             g.snake_body[i] = (segment[0]-g.velocity, segment[1], segment[2])
+
+    #TODO:
+            #MAKE MOVEMENT VELOCITY DEPENDENT 
+            #(resizing of snake may be needed!)
+    #handle tail follow-up        
+    global frame_count
+    frame_count += 1
+    if frame_count == 25:
+        frame_count = 0
+        for i in range(len(g.snake_body)-1, 0, -1):
+            fwd_segment_direction = g.snake_body[i-1][2]
+            g.setBodDir(i, fwd_segment_direction)
+        g.setBodDir(0, g.direction)
 
 def clear():
     for segment in g.snake_body:
@@ -36,7 +50,7 @@ def check_if_coll_itself():
     
 def out_of_bounds():
     head_coords = (g.snake_body[0][0], g.snake_body[0][1])
-    if head_coords[1] < 0: return True
+    if head_coords[1] < 100: return True
     elif head_coords[1] > 700: return True
     elif head_coords[0] > 1260: return True
     elif head_coords[0] < 0: return True

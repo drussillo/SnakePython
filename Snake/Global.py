@@ -6,8 +6,8 @@ velocity = 1
 clock = pygame.time.Clock()
 failstate = False
 
-rnd_x = random.randint(100, 1180) 
-rnd_y = random.randint(100, 620)
+rnd_x = random.randint(200, 1180) 
+rnd_y = random.randint(200, 620)
 rnd_char_dict = {0: 'n', 1: 's', 2: 'e', 3: 'w'}
 direction = rnd_char_dict[random.randint(0, 3)] #north, s, e or w
 
