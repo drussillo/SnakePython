@@ -2,6 +2,7 @@ import Global as g
 import Input
 import Snake
 import Apple as a
+import GUI 
 
 g.pygame.init()
 g.SCREEN.fill((255, 255, 255))
@@ -15,17 +16,13 @@ apple1 = a.Apple()
 running = True
 while running:
     running = Input.handle_input()
-    
+    GUI.draw()
     Snake.draw()
     
     if not apple1.is_spawned and not apple1.eaten: #se l'oggetto NON è spawnato:
         apple1.spawn()
     else:
-        apple1 = a.Apple()
-
-    print(f"{apple1.x_coord} : x coordinte       {apple1.y_coord} : y coordinate ")
-    print( "----------------------------------------------------------------------------------------------" )
-    print(f"{g.snake_body[0][0]} : x coordinte pitone      {g.snake_body[0][1]} : y coordinate  pitone")
+        apple1 = a.Apple()    
     
     apple1.check_collision()
     #debug segment positions

@@ -36,6 +36,7 @@ class Apple: #Questa è la classe della mela
             Snake.add_segment()
             self.eaten = True 
             self.despawn()
+            print(f" apples: { len(g.snake_body) - 1 }")
 
     
     def despawn(self):
