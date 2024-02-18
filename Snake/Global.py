@@ -2,17 +2,17 @@ import pygame
 import random
 
 SCREEN = pygame.display.set_mode([1280, 720])
-velocity = 1
+velocity = 1 #can only be 1, 2 or 3
 clock = pygame.time.Clock()
 failstate = False
 
-rnd_x = random.randint(200, 1180) 
-rnd_y = random.randint(200, 620)
+rnd_x = random.randint(250, 1130) 
+rnd_y = random.randint(250, 570)
 rnd_char_dict = {0: 'n', 1: 's', 2: 'e', 3: 'w'}
 direction = rnd_char_dict[random.randint(0, 3)] #north, s, e or w
 
 
-snake_body = [(rnd_x - rnd_x%25, rnd_y - rnd_y%25, direction)]  # Example initial snake body
+snake_body = [(rnd_x - rnd_x%30, rnd_y - rnd_y%30, direction)]  # Example initial snake body
 
 
 class Button():
