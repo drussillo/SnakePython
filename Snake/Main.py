@@ -18,10 +18,12 @@ while running:
     
     Snake.draw()
     
-    if not apple1.is_spawned: #se l'oggetto NON è spawnato:
+    if not apple1.is_spawned and not apple1.eaten: #se l'oggetto NON è spawnato:
         apple1.spawn()
-
-
+    else:
+        apple1 = a.Apple()
+    
+    apple1.check_collision()
     #debug segment positions
     #print(g.snake_body+["     Frame:"+str(Input.frame_count)])
 

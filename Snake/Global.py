@@ -2,7 +2,7 @@ import pygame
 import random
 
 SCREEN = pygame.display.set_mode([1280, 720])
-velocity = 1
+velocity = 1.01
 clock = pygame.time.Clock()
 
 rnd_x = random.randint(100, 1180)
