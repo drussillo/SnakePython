@@ -6,8 +6,6 @@ This is my attempt at making snake with python!
 # _Notes:
 
 TODO:
-
-    - Speed change possibility
     - Start menu -> photoshop or gimp art?
     - Failstate screen improvement -> photoshop or gimp art?
 
