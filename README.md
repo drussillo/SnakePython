@@ -5,21 +5,23 @@ This is my attempt at making snake with python!
 
 # _Notes:
 
-TODO
+TODO:
+
     - Speed change possibility
     - Start menu -> photoshop or gimp art?
     - Failstate screen improvement -> photoshop or gimp art?
 
 
 Ideas for future features (in priority order):
+
     - Graphics
         -> Pixel art?
-
+        
     - OST / sound
         -> death 
         -> eat
         -> bgm?
-
+        
     - Different apples
         -> Normal apples (1 lenght)
         -> Big apples (2 lenght)
