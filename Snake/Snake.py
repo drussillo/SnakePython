@@ -2,10 +2,24 @@ import Global as g
 frame_count = 0
 
 def draw():
-    clear()
     move()
-    for segment in g.snake_body:
-        g.pygame.draw.rect(g.SCREEN, (0, 200, 0), g.pygame.Rect(segment[0], segment[1], 25, 25))
+    head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], 25, 25)
+    if g.snake_body[0][2] == 'n': g.SCREEN.blit(g.snakehead_n, head_rect.topleft)
+    if g.snake_body[0][2] == 's': g.SCREEN.blit(g.snakehead_s, head_rect.topleft)
+    if g.snake_body[0][2] == 'e': g.SCREEN.blit(g.snakehead_e, head_rect.topleft)
+    if g.snake_body[0][2] == 'w': g.SCREEN.blit(g.snakehead_w, head_rect.topleft)
+
+    if len(g.snake_body) > 1:
+        for segment in g.snake_body[1:-1]:
+            segm_rect = g.pygame.Rect(segment[0], segment[1], 25, 25)
+            if segment[2] == 'n' or segment[2] == 's': g.SCREEN.blit(g.snakesegment_vert, segm_rect.topleft)
+            else: g.SCREEN.blit(g.snakesegment_hor, segm_rect.topleft)
+
+        last_rect = g.pygame.Rect(g.snake_body[-1][0], g.snake_body[-1][1], 25, 25)
+        if g.snake_body[-1][2] == 'n': g.SCREEN.blit(g.snakelast_n, last_rect.topleft)
+        elif g.snake_body[-1][2] == 's': g.SCREEN.blit(g.snakelast_s, last_rect.topleft)
+        elif g.snake_body[-1][2] == 'e': g.SCREEN.blit(g.snakelast_e, last_rect.topleft)
+        elif g.snake_body[-1][2] == 'w': g.SCREEN.blit(g.snakelast_w, last_rect.topleft)
 
 def move():
     for i, segment in enumerate(g.snake_body):
@@ -27,10 +41,6 @@ def move():
             fwd_segment_direction = g.snake_body[i-1][2]
             g.setBodDir(i, fwd_segment_direction)
         g.setBodDir(0, g.direction)
-
-def clear():
-    for segment in g.snake_body:
-        g.pygame.draw.rect(g.SCREEN, (255, 255, 255), g.pygame.Rect(segment[0], segment[1], 25, 25))
         
 def add_segment():
     last_x, last_y, last_direction = g.snake_body[len(g.snake_body)-1]

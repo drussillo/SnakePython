@@ -28,7 +28,6 @@ class Apple:
         if collides and not self.eaten:
             Snake.add_segment()
             self.eaten = True 
-            #self.despawn() #can be left out for a smoother effect
             print(f" apples: { len(g.snake_body) - 1 }")
 
     
@@ -36,4 +35,5 @@ class Apple:
         g.pygame.draw.rect(g.SCREEN, (255,255,255),g.pygame.Rect(self.x_coord,self.y_coord,25,25))
 
     def spawn(self):
-        g.pygame.draw.rect(g.SCREEN, (200, 0, 0), g.pygame.Rect(self.x_coord, self.y_coord, 25, 25))
+        apple_rect = g.pygame.Rect(self.x_coord, self.y_coord, 25, 25)
+        g.SCREEN.blit(g.defapple, apple_rect.topleft)
