@@ -5,10 +5,18 @@ import random
 screen_w = 1920
 screen_h = 1080
 SCREEN = pygame.display.set_mode([screen_w, screen_h])
-velocity = 6 #pixels per frame; tile has to be divisible by it
-d_size = 55 #default size
+velocity = 2 #pixels per frame; MAX is tile_size or size + dist
+d_size = 50 #default size
 d_dist = 5 #default distance
 d_tile_size = d_size + d_dist
+#adjust tile size according to velocity
+if d_tile_size % velocity != 0:
+    adj_size = (d_tile_size % velocity) // 2
+    adj_dist = (d_tile_size % velocity) - adj_size
+    d_size -= adj_size
+    d_dist -= adj_dist
+    d_tile_size = d_size + d_dist
+    print(f"{d_size}, {d_dist}, {d_tile_size}, {velocity}")
 HUD_w = screen_w
 HUD_h = 100
 
