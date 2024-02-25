@@ -18,7 +18,6 @@ def handle_input():
                 g.direction = 'w' if g.snake_body[0][2] != 'e' else 'e'
             elif event.key == g.pygame.K_t:
                 #test key
-                Snake.add_segment() #lenghten snake!
-        
+                Snake.add_segment() #lenghten snake
 
     return True

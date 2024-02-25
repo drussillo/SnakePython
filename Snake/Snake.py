@@ -2,10 +2,24 @@ import Global as g
 frame_count = 0
 
 def draw():
-    clear()
-    move()
-    for segment in g.snake_body:
-        g.pygame.draw.rect(g.SCREEN, (0, 200, 0), g.pygame.Rect(segment[0], segment[1], 25, 25))
+    #Head first
+    head_coords = (g.snake_body[0][0], g.snake_body[0][1])
+    if g.snake_body[0][2] == 'n': g.SCREEN.blit(g.snakehead_n, head_coords)
+    if g.snake_body[0][2] == 's': g.SCREEN.blit(g.snakehead_s, head_coords)
+    if g.snake_body[0][2] == 'e': g.SCREEN.blit(g.snakehead_e, head_coords)
+    if g.snake_body[0][2] == 'w': g.SCREEN.blit(g.snakehead_w, head_coords)
+    #Then center body
+    if len(g.snake_body) > 1:
+        for segment in g.snake_body[1:-1]:
+            segm_coords = (segment[0], segment[1])
+            if segment[2] == 'n' or segment[2] == 's': g.SCREEN.blit(g.snakesegment_vert, segm_coords)
+            else: g.SCREEN.blit(g.snakesegment_hor, segm_coords)
+        #Tail segment last
+        tail_coords = (g.snake_body[-1][0], g.snake_body[-1][1])
+        if g.snake_body[-1][2] == 'n': g.SCREEN.blit(g.snakelast_n, tail_coords)
+        elif g.snake_body[-1][2] == 's': g.SCREEN.blit(g.snakelast_s, tail_coords)
+        elif g.snake_body[-1][2] == 'e': g.SCREEN.blit(g.snakelast_e, tail_coords)
+        elif g.snake_body[-1][2] == 'w': g.SCREEN.blit(g.snakelast_w, tail_coords)
 
 def move():
     for i, segment in enumerate(g.snake_body):
@@ -18,37 +32,45 @@ def move():
         elif segment[2] == 'w':
             g.snake_body[i] = (segment[0]-g.velocity, segment[1], segment[2])
 
-    #handle tail follow-up        
+def follow_up():
     global frame_count
     frame_count += 1
-    if frame_count == 30 / g.velocity:
+    if frame_count == g.d_tile_size // g.velocity:
         frame_count = 0
-        for i in range(len(g.snake_body)-1, 0, -1):
-            fwd_segment_direction = g.snake_body[i-1][2]
-            g.setBodDir(i, fwd_segment_direction)
-        g.setBodDir(0, g.direction)
-
-def clear():
-    for segment in g.snake_body:
-        g.pygame.draw.rect(g.SCREEN, (255, 255, 255), g.pygame.Rect(segment[0], segment[1], 25, 25))
+        for current_index in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
+            next_segment_direction = g.snake_body[current_index-1][2]
+            set_segment_dir(current_index, next_segment_direction)
+        #set head to global direction
+        set_segment_dir(0, g.direction)
         
+def set_segment_dir(index, direction):
+    g.snake_body[index] = (g.snake_body[index][0], g.snake_body[index][1], direction)
+
 def add_segment():
     last_x, last_y, last_direction = g.snake_body[len(g.snake_body)-1]
-    offset_dict = {'n': (0,30), 's': (0, -30), 'e': (-30, 0), 'w': (30, 0)}
+    offset_dict = {
+        'n': (0, g.d_tile_size),
+        's': (0, -g.d_tile_size),
+        'e': (-g.d_tile_size, 0),
+        'w': (g.d_tile_size, 0)
+        }
     offset_x, offset_y = offset_dict[last_direction]
     g.snake_body.append((last_x + offset_x, last_y + offset_y, last_direction))
-    
+
 def check_if_coll_itself():
-    head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], 25, 25)
+    head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], g.d_size, g.d_size)
     if len(g.snake_body) > 2:
-        temp_rect = [not head_rect.colliderect(g.pygame.Rect(segment[0], segment[1], 25, 25)) for segment in g.snake_body[2:]]
-        return not all(temp_rect)
-    else: return False
-    
+        collides_with_head_list = [head_rect.colliderect(g.pygame.Rect(segment[0], segment[1], g.d_size, g.d_size)) for segment in g.snake_body[2:]]
+        return any(collides_with_head_list)
+    else: 
+        return False
+
 def out_of_bounds():
-    head_coords = (g.snake_body[0][0], g.snake_body[0][1])
-    if head_coords[1] < 100: return True
-    elif head_coords[1] > 700: return True
-    elif head_coords[0] > 1260: return True
-    elif head_coords[0] < 0: return True
-    else: return False
+    head_x, head_y, _ = g.snake_body[0]
+    check_sides_list = [
+        head_y < g.HUD_h,
+        head_y > g.screen_h - g.d_size,
+        head_x > g.screen_w - g.d_size,
+        head_x < 0
+        ]
+    return any(check_sides_list)

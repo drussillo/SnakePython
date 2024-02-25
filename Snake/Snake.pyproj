@@ -23,9 +23,13 @@
   <ItemGroup>
     <Compile Include="Apple.py" />
     <Compile Include="Global.py" />
+    <Compile Include="HUD.py" />
     <Compile Include="Input.py" />
     <Compile Include="Main.py" />
     <Compile Include="Snake.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="imgs\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -8,32 +8,24 @@ class Apple:
         self.is_spawned = False
         loop = True
         while loop:
-            rnd_x = random.randint(50, 1230)
-            rnd_y = random.randint(150, 670)
+            rnd_x = random.randint(g.d_tile_size * 2, g.screen_w - g.d_tile_size * 2)
+            rnd_y = random.randint(g.HUD_h + g.d_tile_size * 2, g.screen_h - g.d_tile_size * 2)
             loop = not self.valid_pos(rnd_x, rnd_y)    
-        self.x_coord = rnd_x - rnd_x % 30 
-        self.y_coord = rnd_y - rnd_y % 30
-        
-    def valid_pos(self, x, y):
-        validity = [not(segment[0] <= x <= segment[0]+30 and segment[1] <= y <= segment[1]+30) for segment in g.snake_body]
-        return all(validity)
-   
-    def check_collision(self):
-        rect1 = g.pygame.Rect(self.x_coord, self.y_coord, 25, 25)
-        head_coordinate_x = g.snake_body[0][0]
-        head_coordinate_y = g.snake_body[0][1]
-        rect2 = g.pygame.Rect(head_coordinate_x,head_coordinate_y,25,25)
+        self.x_coord = rnd_x - rnd_x % g.d_tile_size
+        self.y_coord = rnd_y - rnd_y % g.d_tile_size
 
-        collides = rect1.colliderect(rect2)
+    def valid_pos(self, x, y):
+        validity = [not(segment[0] <= x <= segment[0]+g.d_tile_size and segment[1] <= y <= segment[1]+g.d_tile_size) for segment in g.snake_body]
+        return all(validity)
+
+    def check_collision_w_head(self):
+        apple_rect = g.pygame.Rect(self.x_coord, self.y_coord, g.d_size, g.d_size)
+        head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], g.d_size, g.d_size)
+        collides = apple_rect.colliderect(head_rect)
         if collides and not self.eaten:
             Snake.add_segment()
-            self.eaten = True 
-            #self.despawn() #can be left out for a smoother effect
-            print(f" apples: { len(g.snake_body) - 1 }")
-
-    
-    def despawn(self):
-        g.pygame.draw.rect(g.SCREEN, (255,255,255),g.pygame.Rect(self.x_coord,self.y_coord,25,25))
+            self.eaten = True
+            print(f" apples: { len(g.snake_body) - 1 }") #debug
 
     def spawn(self):
-        g.pygame.draw.rect(g.SCREEN, (200, 0, 0), g.pygame.Rect(self.x_coord, self.y_coord, 25, 25))
+        g.SCREEN.blit(g.defapple, (self.x_coord, self.y_coord))
