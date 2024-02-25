@@ -7,7 +7,6 @@ import HUD
 g.pygame.init()
 g.SCREEN.fill((255, 255, 255))
 g.pygame.display.set_caption("Snake")
-
 apple1 = a.Apple()
 
 running = True
@@ -23,7 +22,6 @@ while running:
         Snake.move()
         Snake.draw()
         Snake.follow_up()
-        
         g.failstate = Snake.check_if_coll_itself() or Snake.out_of_bounds()
     
         if not apple1.is_spawned and not apple1.eaten:
@@ -31,10 +29,9 @@ while running:
         else:
             apple1 = a.Apple()
         apple1.check_collision_w_head()
-        
     #end main loop
         
-    #failstate    
+    #failstate
     else:
         g.SCREEN.fill((255, 255, 255))
         font = g.pygame.font.SysFont(None, 100)

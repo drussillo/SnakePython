@@ -5,8 +5,8 @@ import random
 screen_w = 1920
 screen_h = 1080
 SCREEN = pygame.display.set_mode([screen_w, screen_h])
-velocity = 2 #pixels per frame; MAX is tile_size or size + dist
-d_size = 50 #default size
+velocity = 3 #pixels per frame; MAX is tile_size or size + dist
+d_size = 60 #default size
 d_dist = 5 #default distance
 d_tile_size = d_size + d_dist
 #adjust tile size according to velocity
@@ -16,7 +16,7 @@ if d_tile_size % velocity != 0:
     d_size -= adj_size
     d_dist -= adj_dist
     d_tile_size = d_size + d_dist
-    print(f"{d_size}, {d_dist}, {d_tile_size}, {velocity}")
+    print(f"{d_size}, {d_dist}, {d_tile_size}, {velocity}") #debug
 HUD_w = screen_w
 HUD_h = 100
 
@@ -28,23 +28,22 @@ snakesegment_hor = pygame.image.load("imgs/snakesegment.png")
 snakesegment_hor = pygame.transform.scale(snakesegment_hor, (d_size, d_size))
 snakesegment_vert = pygame.transform.rotate(snakesegment_hor, 90)
 
-snakehead_n = pygame.image.load("imgs/dipre.jpg")
+snakehead_n = pygame.image.load("imgs/snakehead.png")
 snakehead_n = pygame.transform.scale(snakehead_n, (d_size, d_size))
 snakehead_e = pygame.transform.rotate(snakehead_n, -90)
 snakehead_s = pygame.transform.rotate(snakehead_e, -90)
 snakehead_w = pygame.transform.rotate(snakehead_s, -90)
 
-snakelast_w = pygame.image.load("imgs/snakesegmentlast.png")
+snakelast_w = pygame.image.load("imgs/snakelast.png")
 snakelast_w = pygame.transform.scale(snakelast_w, (d_size, d_size))
 snakelast_n = pygame.transform.rotate(snakelast_w, -90)
 snakelast_e = pygame.transform.rotate(snakelast_n, -90)
 snakelast_s = pygame.transform.rotate(snakelast_e, -90)
 
-defapple = pygame.image.load("imgs/defaultapple.jpg")
+defapple = pygame.image.load("imgs/defaultapple.png")
 defapple = pygame.transform.scale(defapple, (d_size, d_size))
 #end drawables
 
-#TODO: Make random position velocity and size dependent
 min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
 max_x = screen_w - d_size * 5 * velocity if screen_w - d_size * 5 * velocity < screen_w // 2 + d_size else screen_w // 2 + d_size
 min_y = HUD_h + d_size * 5 * velocity if HUD_h + d_size * 5 * velocity < screen_h // 2 - d_size else screen_h // 2 - d_size
@@ -54,7 +53,6 @@ rnd_y = random.randint(min_y, min_y)
 rnd_char_dict = {0: 'n', 1: 's', 2: 'e', 3: 'w'}
 direction = rnd_char_dict[random.randint(0, 3)] #north, s, e or w
 direction = 'n'
-
 # initial snake body
 snake_body = [(rnd_x - rnd_x % d_tile_size, rnd_y - rnd_y % d_tile_size, direction)]
 
