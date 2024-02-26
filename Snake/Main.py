@@ -8,7 +8,7 @@ g.pygame.init()
 g.SCREEN.fill((255, 255, 255))
 g.pygame.display.set_caption("Snake")
 apple_1 = a.Apple()
-fail_button_1 = HUD.Button(0, 0, 50, 50, "imgs/defaultapple.png")
+fail_button_1 = HUD.Button(w=60, h=60, image_path="imgs/defaultapple.png")
 fail_button_1.center()
 
 running = True
@@ -26,7 +26,7 @@ while running:
         Snake.draw()
         Snake.follow_up()
         g.failstate = Snake.check_if_coll_itself() or Snake.out_of_bounds()
-    
+
         if not apple_1.is_spawned and not apple_1.eaten:  
             apple_1.spawn()
         else:

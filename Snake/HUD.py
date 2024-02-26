@@ -8,11 +8,12 @@ def draw_fail_state_screen(): #without buttons
     g.SCREEN.fill((255, 255, 255))
     font = g.pygame.font.SysFont(None, 100)
     img = font.render('You Failed!', True, (200, 0, 0))
-    g.SCREEN.blit(img, (420, 260))
+    img_width, img_height = g.get_middle_pos(img.get_width(), img.get_height())
+    g.SCREEN.blit(img, (img_width, img_height-200))
 
 #TODO: Button Class
 class Button():
-    def __init__(self, x, y, w, h, image_path):
+    def __init__(self, x=0, y=0, w=30, h=30, image_path="imgs/defaultapple.png"):
         self.x = x
         self.y = y
         self.w = w
@@ -23,6 +24,9 @@ class Button():
 
     def center(self):
         self.x, self.y = g.get_middle_pos(self.w, self.h)
+
+    def resize(self, w=30, h=30):
+        self.image = g.pygame.transform.scale(self.image, (w, h))
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))

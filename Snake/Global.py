@@ -2,8 +2,8 @@ import pygame
 import random
 
 #Settings
-screen_w = 1920
-screen_h = 1080
+screen_w = 1280
+screen_h = 720
 SCREEN = pygame.display.set_mode([screen_w, screen_h])
 velocity = 3 #pixels per frame; MAX is tile_size or size + dist
 d_size = 60 #default size
@@ -57,5 +57,5 @@ snake_body = [(rnd_x - rnd_x % d_tile_size, rnd_y - rnd_y % d_tile_size, directi
 
 
 #Help functions
-def get_middle_pos(w, h):
+def get_middle_pos(w=0, h=0):
     return (screen_w // 2 - w // 2, screen_h // 2 - h // 2)
