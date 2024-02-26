@@ -7,14 +7,17 @@ import HUD
 g.pygame.init()
 g.SCREEN.fill((255, 255, 255))
 g.pygame.display.set_caption("Snake")
-apple1 = a.Apple()
+apple_1 = a.Apple()
+fail_button_1 = HUD.Button(0, 0, 50, 50, "imgs/defaultapple.png")
+fail_button_1.center()
 
 running = True
 while running:
-    running = Input.handle_input()
     
     #main loop
     if not g.failstate:
+        running = Input.handle_input_main()
+
         g.SCREEN.fill((200,255,200))
         HUD.draw()
         
@@ -24,19 +27,20 @@ while running:
         Snake.follow_up()
         g.failstate = Snake.check_if_coll_itself() or Snake.out_of_bounds()
     
-        if not apple1.is_spawned and not apple1.eaten:
-            apple1.spawn()
+        if not apple_1.is_spawned and not apple_1.eaten:  
+            apple_1.spawn()
         else:
-            apple1 = a.Apple()
-        apple1.check_collision_w_head()
+            apple_1 = a.Apple()
+        apple_1.check_collision_w_head()
     #end main loop
         
     #failstate
     else:
-        g.SCREEN.fill((255, 255, 255))
-        font = g.pygame.font.SysFont(None, 100)
-        img = font.render('You Failed!', True, (200, 0, 0))
-        g.SCREEN.blit(img, (420, 260))
+        running = Input.handle_input_fail()
+
+        HUD.draw_fail_state_screen()
+        fail_button_1.draw(g.SCREEN)
+        fail_button_1.check_if_clicked()
 
     g.pygame.display.flip()
     g.clock.tick(120)

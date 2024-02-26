@@ -1,7 +1,8 @@
 import Global as g
 import Snake
+import HUD
 
-def handle_input():
+def handle_input_main():
     for event in g.pygame.event.get():
         if event.type == g.pygame.QUIT:
             return False
@@ -19,5 +20,15 @@ def handle_input():
             elif event.key == g.pygame.K_t:
                 #test key
                 Snake.add_segment() #lenghten snake
+        #elif event.type == g.pygame.MOUSEBUTTONDOWN and event.button == 1:#
+    return True
+            
+def handle_input_fail():
+    for event in g.pygame.event.get():
+        if event.type == g.pygame.QUIT:
+            return False
+        elif event.type == g.pygame.KEYDOWN:
+            if event.key == g.pygame.K_ESCAPE:
+                return False
 
     return True

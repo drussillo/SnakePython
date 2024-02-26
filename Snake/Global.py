@@ -16,12 +16,11 @@ if d_tile_size % velocity != 0:
     d_size -= adj_size
     d_dist -= adj_dist
     d_tile_size = d_size + d_dist
-    print(f"{d_size}, {d_dist}, {d_tile_size}, {velocity}") #debug
 HUD_w = screen_w
 HUD_h = 100
 
 clock = pygame.time.Clock()
-failstate = False
+failstate = False #set to False. True is just for testing failstates.
 
 #start drawables
 snakesegment_hor = pygame.image.load("imgs/snakesegment.png")
@@ -57,15 +56,6 @@ direction = 'n'
 snake_body = [(rnd_x - rnd_x % d_tile_size, rnd_y - rnd_y % d_tile_size, direction)]
 
 
-#TODO: Button Class
-class Button():
-    def __init__(self, x, y, image):
-        self.coords = (x, y)
-        self.image = image
-        self.rect = pygame.Rect(x, y, image.get_width(), image.get_height())
-    
-    def draw(self):
-        pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(pos):
-            if pygame.mouseget_pressed()[0] == 1:
-                print("clicked button")
+#Help functions
+def get_middle_pos(w, h):
+    return (screen_w // 2 - w // 2, screen_h // 2 - h // 2)
