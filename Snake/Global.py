@@ -8,18 +8,19 @@ SCREEN = pygame.display.set_mode([screen_w, screen_h])
 velocity = 3 #pixels per frame; MAX is tile_size or size + dist
 d_size = 60 #default size
 d_dist = 5 #default distance
-d_tile_size = d_size + d_dist
+
 #adjust tile size according to velocity
+d_tile_size = d_size + d_dist
 if d_tile_size % velocity != 0:
     adj_size = (d_tile_size % velocity) // 2
     adj_dist = (d_tile_size % velocity) - adj_size
     d_size -= adj_size
     d_dist -= adj_dist
     d_tile_size = d_size + d_dist
-    print(f"{d_size}, {d_dist}, {d_tile_size}, {velocity}") #debug
 HUD_w = screen_w
-HUD_h = 100
+HUD_h = screen_h//10
 
+#miscellaneous
 clock = pygame.time.Clock()
 failstate = False
 
@@ -44,28 +45,40 @@ defapple = pygame.image.load("imgs/defaultapple.png")
 defapple = pygame.transform.scale(defapple, (d_size, d_size))
 #end drawables
 
-min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
-max_x = screen_w - d_size * 5 * velocity if screen_w - d_size * 5 * velocity < screen_w // 2 + d_size else screen_w // 2 + d_size
-min_y = HUD_h + d_size * 5 * velocity if HUD_h + d_size * 5 * velocity < screen_h // 2 - d_size else screen_h // 2 - d_size
-max_y = screen_h - d_size * 5 * velocity if screen_h - d_size * 5 * velocity > screen_h // 2 + d_size else screen_h // 2 + d_size
-rnd_x = random.randint(min_x, min_x)
-rnd_y = random.randint(min_y, min_y)
-rnd_char_dict = {0: 'n', 1: 's', 2: 'e', 3: 'w'}
-direction = rnd_char_dict[random.randint(0, 3)] #north, s, e or w
-direction = 'n'
+def randomize_spawn_pos():
+    min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
+    max_x = screen_w - d_size * 5 * velocity if screen_w - d_size * 5 * velocity > screen_w // 2 + d_size else screen_w // 2 + d_size
+    min_y = HUD_h + d_size * 5 * velocity if HUD_h + d_size * 5 * velocity < screen_h // 2 - d_size else screen_h // 2 - d_size
+    max_y = screen_h - d_size * 5 * velocity if screen_h - d_size * 5 * velocity > screen_h // 2 + d_size else screen_h // 2 + d_size
+    rnd_x, rnd_y = (random.randint(min_x, max_x), random.randint(min_y, max_y))
+    return (rnd_x - rnd_x % d_tile_size, rnd_y - rnd_y % d_tile_size)
+
+def randomize_direction():
+    rnd_char_dict = {
+        0: 'n',
+        1: 's',
+        2: 'e',
+        3: 'w'
+    }
+    return rnd_char_dict[random.randint(0, 3)] #north, s, e or w
+
 # initial snake body
-snake_body = [(rnd_x - rnd_x % d_tile_size, rnd_y - rnd_y % d_tile_size, direction)]
+head_x, head_y = randomize_spawn_pos()
+direction = randomize_direction()
+snake_body = [(head_x, head_y, direction)]
 
 
-#TODO: Button Class
-class Button():
-    def __init__(self, x, y, image):
-        self.coords = (x, y)
-        self.image = image
-        self.rect = pygame.Rect(x, y, image.get_width(), image.get_height())
-    
-    def draw(self):
-        pos = pygame.mouse.get_pos()
-        if self.rect.collidepoint(pos):
-            if pygame.mouseget_pressed()[0] == 1:
-                print("clicked button")
+#Help functions
+def get_middle_pos(w=0, h=0):
+    return (screen_w // 2 - w // 2, screen_h // 2 - h // 2)
+
+def reset(): #KEEP UPDATING!!!
+    global snake_body
+    global direction
+    global failstate
+    global is_reset
+
+    failstate = False
+    new_head_x, new_head_y = randomize_spawn_pos()
+    direction = randomize_direction()
+    snake_body = [(new_head_x, new_head_y, direction)]
