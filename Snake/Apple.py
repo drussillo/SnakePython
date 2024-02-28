@@ -5,7 +5,6 @@ import random
 class Apple: 
     def __init__(self):
         self.eaten = False 
-        self.is_spawned = False
         loop = True
         while loop:
             rnd_x = random.randint(g.d_tile_size * 2, g.screen_w - g.d_tile_size * 2)
@@ -27,5 +26,18 @@ class Apple:
             self.eaten = True
             print(f" apples: { len(g.snake_body) - 1 }") #debug
 
-    def spawn(self):
+    def draw(self):
         g.SCREEN.blit(g.defapple, (self.x_coord, self.y_coord))
+        
+    def new_apple(self):
+        self.__init__()
+
+
+#handle apples
+apple_1 = Apple()
+def handle_apples():
+    if apple_1.eaten or g.failstate:
+        apple_1.new_apple()
+    else:
+        apple_1.draw()
+        apple_1.check_collision_w_head()
