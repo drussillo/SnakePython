@@ -1,6 +1,5 @@
 import Global as g
 import Snake
-import HUD
 
 def handle_input_main():
     for event in g.pygame.event.get():

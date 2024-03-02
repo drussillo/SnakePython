@@ -2,7 +2,7 @@ import Global as g
 import Input
 import Snake
 import Apple
-import HUD
+import UI
 
 g.pygame.init()
 g.SCREEN.fill((255, 255, 255))
@@ -16,7 +16,7 @@ while running:
         running = Input.handle_input_main()
 
         g.SCREEN.fill((200,255,200))
-        HUD.draw()
+        UI.draw()
         
         #draw and move the snake
         Snake.move()
@@ -31,7 +31,7 @@ while running:
     #failstate
     else:
         running = Input.handle_input_fail()
-        HUD.draw_fail_state_screen()
+        UI.draw_fail_state_screen()
 
     g.pygame.display.flip()
     g.clock.tick(120)
