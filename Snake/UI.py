@@ -42,4 +42,4 @@ class Button():
         self.is_down = g.pygame.mouse.get_pressed(num_buttons=3)[0]
 
 #declare button objects
-fail_button_1 = Button(w=60, h=60, image_path="imgs/defaultapple.png")
+fail_button_1 = Button(w=60, h=60, image_path="drawables/defaultapple.png")

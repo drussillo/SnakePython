@@ -6,6 +6,7 @@ screen_w = 1920
 screen_h = 1080
 SCREEN = pygame.display.set_mode([screen_w, screen_h])
 velocity = 3 #pixels per frame; MAX is tile_size or size + dist
+max_fps = 120
 d_size = 60 #default size
 d_dist = 5 #default distance
 
@@ -25,23 +26,23 @@ clock = pygame.time.Clock()
 failstate = False
 
 #start drawables
-snakesegment_hor = pygame.image.load("imgs/snakesegment.png")
+snakesegment_hor = pygame.image.load("drawables/snakesegment.png")
 snakesegment_hor = pygame.transform.scale(snakesegment_hor, (d_size, d_size))
 snakesegment_vert = pygame.transform.rotate(snakesegment_hor, 90)
 
-snakehead_n = pygame.image.load("imgs/snakehead.png")
+snakehead_n = pygame.image.load("drawables/snakehead.png")
 snakehead_n = pygame.transform.scale(snakehead_n, (d_size, d_size))
 snakehead_e = pygame.transform.rotate(snakehead_n, -90)
 snakehead_s = pygame.transform.rotate(snakehead_e, -90)
 snakehead_w = pygame.transform.rotate(snakehead_s, -90)
 
-snakelast_w = pygame.image.load("imgs/snakelast.png")
+snakelast_w = pygame.image.load("drawables/snakelast.png")
 snakelast_w = pygame.transform.scale(snakelast_w, (d_size, d_size))
 snakelast_n = pygame.transform.rotate(snakelast_w, -90)
 snakelast_e = pygame.transform.rotate(snakelast_n, -90)
 snakelast_s = pygame.transform.rotate(snakelast_e, -90)
 
-defapple = pygame.image.load("imgs/defaultapple.png")
+defapple = pygame.image.load("drawables/defaultapple.png")
 defapple = pygame.transform.scale(defapple, (d_size, d_size))
 #end drawables
 

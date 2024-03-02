@@ -34,6 +34,6 @@ while running:
         UI.draw_fail_state_screen()
 
     g.pygame.display.flip()
-    g.clock.tick(120)
+    g.clock.tick(g.max_fps)
     
 g.pygame.quit()
