@@ -15,8 +15,8 @@ while running:
     if not g.failstate:
         running = Input.handle_input_main()
 
-        g.SCREEN.fill((200,255,200))
-        UI.draw()
+        UI.draw_background()
+        UI.draw_HUD()
         
         #draw and move the snake
         Snake.move()
@@ -25,7 +25,6 @@ while running:
         g.failstate = Snake.check_if_coll_itself() or Snake.out_of_bounds()
         
         Apple.handle_apples()
-
     #end main loop
         
     #failstate

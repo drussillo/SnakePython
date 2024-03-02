@@ -4,7 +4,6 @@ import random
 #Settings
 screen_w = 1920
 screen_h = 1080
-SCREEN = pygame.display.set_mode([screen_w, screen_h])
 velocity = 3 #pixels per frame; MAX is tile_size or size + dist
 max_fps = 120
 d_size = 60 #default size
@@ -18,14 +17,22 @@ if d_tile_size % velocity != 0:
     d_size -= adj_size
     d_dist -= adj_dist
     d_tile_size = d_size + d_dist
+
+#adjust screen dimensions according to tile size
+screen_w -= screen_w % d_tile_size
+screen_h -= screen_h % d_tile_size
+
+#miscellaneous
+SCREEN = pygame.display.set_mode([screen_w, screen_h])
+clock = pygame.time.Clock()
+failstate = False
 HUD_w = screen_w
 HUD_h = screen_h//10
 
-#miscellaneous
-clock = pygame.time.Clock()
-failstate = False
-
 #start drawables
+bgtile1 = pygame.image.load("drawables/bgtile1.png")
+bgtile1 = pygame.transform.scale(bgtile1, (d_tile_size, d_tile_size))
+
 snakesegment_hor = pygame.image.load("drawables/snakesegment.png")
 snakesegment_hor = pygame.transform.scale(snakesegment_hor, (d_size, d_size))
 snakesegment_vert = pygame.transform.rotate(snakesegment_hor, 90)

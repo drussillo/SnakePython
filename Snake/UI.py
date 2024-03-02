@@ -2,8 +2,13 @@ import Global as g
 
 field = g.pygame.Rect(0, 0, g.HUD_w, g.HUD_h) 
 
-def draw():
+def draw_HUD():
     g.pygame.draw.rect(g.SCREEN, (222,222,23), field)
+    
+def draw_background():
+    for y in range(g.screen_h // g.d_tile_size):
+        for x in range(g.screen_w // g.d_tile_size):
+            g.SCREEN.blit(g.bgtile1, (x * g.d_tile_size, y * g.d_tile_size))
 
 def draw_fail_state_screen(): #without buttons
     g.SCREEN.fill((255, 255, 255))
@@ -16,7 +21,7 @@ def draw_fail_state_screen(): #without buttons
     fail_button_1.check_if_clicked(g.reset)
 
 class Button():
-    def __init__(self, x=0, y=0, w=30, h=30, image_path="imgs/defaultapple.png"):
+    def __init__(self, x=0, y=0, w=g.d_tile_size, h=g.d_tile_size, image_path="imgs/defaultapple.png"):
         self.x = x
         self.y = y
         self.w = w
