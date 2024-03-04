@@ -33,6 +33,7 @@ failstate = False
 HUD_w = screen_w
 HUD_h = screen_h//10
 velocity_start = velocity
+frame_count = 0
 
 #start drawables
 bgtile1 = pygame.image.load("drawables/bgtile1.png")
@@ -62,7 +63,7 @@ snakelast_s = pygame.transform.rotate(snakelast_e, -90)
 
 defapple = pygame.image.load("drawables/defaultapple.png")
 defapple = pygame.transform.scale(defapple, (d_size, d_size))
-#end drawables
+
 
 #randomize background
 background_arr = [[random.choice([bgtile1, bgtile2, bgtile3, bgtile4]) for x in range(screen_w // d_tile_size)] for y in range(screen_h // d_tile_size)]
@@ -94,13 +95,14 @@ snake_body = [(head_x, head_y, direction)]
 def get_middle_pos(w=0, h=0):
     return (screen_w // 2 - w // 2, screen_h // 2 - h // 2)
 
-def reset(): #KEEP UPDATING!!!
-    global snake_body
-    global direction
-    global failstate
-    global is_reset
+#TODO: Fix reset snake offset bug
+def reset():
+    if frame_count == 0:
+        global snake_body
+        global direction
+        global failstate
 
-    failstate = False
-    new_head_x, new_head_y = randomize_spawn_pos()
-    direction = randomize_direction()
-    snake_body = [(new_head_x, new_head_y, direction)]
+        failstate = False
+        new_head_x, new_head_y = randomize_spawn_pos()
+        direction = randomize_direction()
+        snake_body = [(new_head_x, new_head_y, direction)]

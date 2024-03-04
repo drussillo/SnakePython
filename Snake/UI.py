@@ -17,21 +17,27 @@ def draw_fail_state_screen(): #without buttons
     img_width, img_height = g.get_middle_pos(img.get_width(), img.get_height())
     g.SCREEN.blit(img, (img_width, img_height-200))
     fail_button_1.center()
+    fail_button_1.move(y=200)
     fail_button_1.draw(g.SCREEN)
     fail_button_1.check_if_clicked(g.reset)
 
 class Button():
-    def __init__(self, x=0, y=0, w=g.d_tile_size, h=g.d_tile_size, image_path="imgs/defaultapple.png"):
+    def __init__(self, x=0, y=0, w=None, h=None, image_path="drawables/defaultapple.png"):
         self.x = x
         self.y = y
-        self.w = w
-        self.h = h
-        self.image = g.pygame.transform.scale(g.pygame.image.load(image_path), (w, h))
-        self.rect = g.pygame.Rect(x, y, w, h)
+        img_obj = g.pygame.image.load(image_path)
+        self.w = w if w != None else img_obj.get_width() * 4
+        self.h = h if h != None else img_obj.get_height() * 4
+        self.image = g.pygame.transform.scale(img_obj, (self.w, self.h))
+        self.rect = g.pygame.Rect(x, y, self.w, self.h)
         self.is_down = False
 
     def center(self):
         self.x, self.y = g.get_middle_pos(self.w, self.h)
+
+    def move(self, x=0, y=0):
+        self.x += x
+        self.y += y
 
     def resize(self, w=30, h=30):
         self.image = g.pygame.transform.scale(self.image, (w, h))
@@ -47,4 +53,4 @@ class Button():
         self.is_down = g.pygame.mouse.get_pressed(num_buttons=3)[0]
 
 #declare button objects
-fail_button_1 = Button(w=60, h=60, image_path="drawables/defaultapple.png")
+fail_button_1 = Button(w=200, h=68.3, image_path="drawables/resetbutton.png")
