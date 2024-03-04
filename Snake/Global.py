@@ -28,6 +28,7 @@ clock = pygame.time.Clock()
 failstate = False
 HUD_w = screen_w
 HUD_h = screen_h//10
+velocity_start = velocity
 
 #start drawables
 bgtile1 = pygame.image.load("drawables/bgtile1.png")
