@@ -6,7 +6,7 @@ screen_w = 1920
 screen_h = 1080
 velocity = 3 #pixels per frame; MAX is tile_size or size + dist
 max_fps = 120
-d_size = 60 #default size
+d_size = 25 #default size
 d_dist = 5 #default distance
 
 #adjust tile size according to velocity
