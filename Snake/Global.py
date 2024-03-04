@@ -4,6 +4,7 @@ import random
 #Settings
 screen_w = 1920
 screen_h = 1080
+fullscreen = False
 velocity = 3 #pixels per frame; MAX is tile_size or size + dist
 max_fps = 120
 d_size = 60 #default size
@@ -23,7 +24,10 @@ screen_w -= screen_w % d_tile_size
 screen_h -= screen_h % d_tile_size
 
 #miscellaneous
-SCREEN = pygame.display.set_mode([screen_w, screen_h])
+if fullscreen:
+    SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN)
+else:
+    SCREEN = pygame.display.set_mode([screen_w, screen_h])
 clock = pygame.time.Clock()
 failstate = False
 HUD_w = screen_w
