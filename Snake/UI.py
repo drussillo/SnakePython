@@ -6,9 +6,9 @@ def draw_HUD():
     g.pygame.draw.rect(g.SCREEN, (222,222,23), field)
     
 def draw_background():
-    for y in range(g.screen_h // g.d_tile_size):
-        for x in range(g.screen_w // g.d_tile_size):
-            g.SCREEN.blit(g.bgtile1, (x * g.d_tile_size, y * g.d_tile_size))
+    for y, row in enumerate(g.background_arr):
+        for x, bgimg in enumerate(row):
+            g.SCREEN.blit(bgimg, (x * g.d_tile_size, y * g.d_tile_size))
 
 def draw_fail_state_screen(): #without buttons
     g.SCREEN.fill((255, 255, 255))

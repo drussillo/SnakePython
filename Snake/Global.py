@@ -6,7 +6,7 @@ screen_w = 1920
 screen_h = 1080
 velocity = 3 #pixels per frame; MAX is tile_size or size + dist
 max_fps = 120
-d_size = 25 #default size
+d_size = 60 #default size
 d_dist = 5 #default distance
 
 #adjust tile size according to velocity
@@ -33,6 +33,12 @@ velocity_start = velocity
 #start drawables
 bgtile1 = pygame.image.load("drawables/bgtile1.png")
 bgtile1 = pygame.transform.scale(bgtile1, (d_tile_size, d_tile_size))
+bgtile2 = pygame.image.load("drawables/bgtile2.png")
+bgtile2 = pygame.transform.scale(bgtile2, (d_tile_size, d_tile_size))
+bgtile3 = pygame.image.load("drawables/bgtile3.png")
+bgtile3 = pygame.transform.scale(bgtile3, (d_tile_size, d_tile_size))
+bgtile4 = pygame.image.load("drawables/bgtile4.png")
+bgtile4 = pygame.transform.scale(bgtile4, (d_tile_size, d_tile_size))
 
 snakesegment_hor = pygame.image.load("drawables/snakesegment.png")
 snakesegment_hor = pygame.transform.scale(snakesegment_hor, (d_size, d_size))
@@ -53,6 +59,9 @@ snakelast_s = pygame.transform.rotate(snakelast_e, -90)
 defapple = pygame.image.load("drawables/defaultapple.png")
 defapple = pygame.transform.scale(defapple, (d_size, d_size))
 #end drawables
+
+#randomize background
+background_arr = [[random.choice([bgtile1, bgtile2, bgtile3, bgtile4]) for x in range(screen_w // d_tile_size)] for y in range(screen_h // d_tile_size)]
 
 def randomize_spawn_pos():
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
