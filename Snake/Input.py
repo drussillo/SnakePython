@@ -1,6 +1,5 @@
 import Global as g
 import Snake
-import HUD
 
 def handle_input_main():
     for event in g.pygame.event.get():
@@ -17,10 +16,14 @@ def handle_input_main():
                 g.direction = 'e' if g.snake_body[0][2] != 'w' else 'w'
             elif event.key == g.pygame.K_a:
                 g.direction = 'w' if g.snake_body[0][2] != 'e' else 'e'
+            elif event.key == g.pygame.K_SPACE:
+                g.velocity *= 2
             elif event.key == g.pygame.K_t:
                 #test key
                 Snake.add_segment() #lenghten snake
-        #elif event.type == g.pygame.MOUSEBUTTONDOWN and event.button == 1:#
+        elif event.type == g.pygame.KEYUP:
+            if event.key == g.pygame.K_SPACE:
+                g.velocity = g.velocity_start
     return True
             
 def handle_input_fail():

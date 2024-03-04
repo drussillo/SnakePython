@@ -23,10 +23,10 @@
   <ItemGroup>
     <Compile Include="Apple.py" />
     <Compile Include="Global.py" />
-    <Compile Include="HUD.py" />
     <Compile Include="Input.py" />
     <Compile Include="Main.py" />
     <Compile Include="Snake.py" />
+    <Compile Include="UI.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="imgs\" />

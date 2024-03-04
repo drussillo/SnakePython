@@ -3,7 +3,7 @@ frame_count = 0
 
 def draw():
     #Head first
-    head_coords = (g.snake_body[0][0], g.snake_body[0][1])
+    head_coords = (g.snake_body[0][0]  + g.d_dist // 2, g.snake_body[0][1] + g.d_dist // 2)
     if g.snake_body[0][2] == 'n': g.SCREEN.blit(g.snakehead_n, head_coords)
     if g.snake_body[0][2] == 's': g.SCREEN.blit(g.snakehead_s, head_coords)
     if g.snake_body[0][2] == 'e': g.SCREEN.blit(g.snakehead_e, head_coords)
@@ -11,11 +11,11 @@ def draw():
     #Then center body
     if len(g.snake_body) > 1:
         for segment in g.snake_body[1:-1]:
-            segm_coords = (segment[0], segment[1])
+            segm_coords = (segment[0] + g.d_dist // 2, segment[1] + g.d_dist // 2)
             if segment[2] == 'n' or segment[2] == 's': g.SCREEN.blit(g.snakesegment_vert, segm_coords)
             else: g.SCREEN.blit(g.snakesegment_hor, segm_coords)
         #Tail segment last
-        tail_coords = (g.snake_body[-1][0], g.snake_body[-1][1])
+        tail_coords = (g.snake_body[-1][0] + g.d_dist // 2, g.snake_body[-1][1] + g.d_dist // 2)
         if g.snake_body[-1][2] == 'n': g.SCREEN.blit(g.snakelast_n, tail_coords)
         elif g.snake_body[-1][2] == 's': g.SCREEN.blit(g.snakelast_s, tail_coords)
         elif g.snake_body[-1][2] == 'e': g.SCREEN.blit(g.snakelast_e, tail_coords)
