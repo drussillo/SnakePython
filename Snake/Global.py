@@ -9,6 +9,7 @@ velocity = 3 #pixels per frame; MAX is tile_size or size + dist
 max_fps = 120
 d_size = 60 #default size
 d_dist = 5 #default distance
+HUD_divisor = 10
 
 #adjust tile size according to velocity
 d_tile_size = d_size + d_dist
@@ -19,21 +20,16 @@ if d_tile_size % velocity != 0:
     d_dist -= adj_dist
     d_tile_size = d_size + d_dist
 
-#adjust screen dimensions according to tile size
-screen_w -= screen_w % d_tile_size
-screen_h -= screen_h % d_tile_size
-
 #miscellaneous
-if fullscreen:
-    SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN)
-else:
-    SCREEN = pygame.display.set_mode([screen_w, screen_h])
+SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 clock = pygame.time.Clock()
 failstate = False
 HUD_w = screen_w
-HUD_h = screen_h//10
+HUD_h = screen_h//HUD_divisor
 velocity_start = velocity
 frame_count = 0
+offset_x = screen_w % d_tile_size // 2
+offset_y = (screen_h - HUD_h) % d_tile_size // 2
 
 #start drawables
 bgtile1 = pygame.image.load("drawables/bgtile1.png")
@@ -66,7 +62,7 @@ defapple = pygame.transform.scale(defapple, (d_size, d_size))
 
 
 #randomize background
-background_arr = [[random.choice([bgtile1, bgtile2, bgtile3, bgtile4]) for x in range(screen_w // d_tile_size)] for y in range(screen_h // d_tile_size)]
+background_arr = [[random.choice([bgtile1, bgtile2, bgtile3, bgtile4]) for x in range(screen_w // d_tile_size)] for y in range((screen_h - HUD_h) // d_tile_size)]
 
 def randomize_spawn_pos():
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
@@ -74,7 +70,7 @@ def randomize_spawn_pos():
     min_y = HUD_h + d_size * 5 * velocity if HUD_h + d_size * 5 * velocity < screen_h // 2 - d_size else screen_h // 2 - d_size
     max_y = screen_h - d_size * 5 * velocity if screen_h - d_size * 5 * velocity > screen_h // 2 + d_size else screen_h // 2 + d_size
     rnd_x, rnd_y = (random.randint(min_x, max_x), random.randint(min_y, max_y))
-    return (rnd_x - rnd_x % d_tile_size, rnd_y - rnd_y % d_tile_size)
+    return (rnd_x - rnd_x % d_tile_size + offset_x, rnd_y - rnd_y % d_tile_size + HUD_h + offset_y)
 
 def randomize_direction():
     rnd_char_dict = {
@@ -102,6 +98,7 @@ def reset():
         global direction
         global failstate
 
+        SCREEN.fill((110, 135, 97))
         failstate = False
         new_head_x, new_head_y = randomize_spawn_pos()
         direction = randomize_direction()

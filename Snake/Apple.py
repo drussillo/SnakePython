@@ -8,10 +8,10 @@ class Apple:
         loop = True
         while loop:
             rnd_x = random.randint(g.d_tile_size * 2, g.screen_w - g.d_tile_size * 2)
-            rnd_y = random.randint(g.HUD_h + g.d_tile_size * 2, g.screen_h - g.d_tile_size * 2)
-            loop = not self.valid_pos(rnd_x, rnd_y)    
-        self.x_coord = rnd_x - rnd_x % g.d_tile_size + g.d_dist // 2
-        self.y_coord = rnd_y - rnd_y % g.d_tile_size + g.d_dist // 2
+            rnd_y = random.randint(g.d_tile_size * 2, g.screen_h - g.d_tile_size * 3 - g.HUD_h)
+            loop = not self.valid_pos(rnd_x + g.offset_x, rnd_y + g.offset_y + g.HUD_h)
+        self.x_coord = rnd_x - rnd_x % g.d_tile_size + g.d_dist // 2 + g.offset_x
+        self.y_coord = rnd_y - rnd_y % g.d_tile_size + g.d_dist // 2 + g.offset_y + g.HUD_h
 
     def valid_pos(self, x, y):
         validity = [not(segment[0] <= x <= segment[0]+g.d_tile_size and segment[1] <= y <= segment[1]+g.d_tile_size) for segment in g.snake_body]
