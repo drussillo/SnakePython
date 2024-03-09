@@ -5,7 +5,7 @@ import Apple
 import UI
 
 g.pygame.init()
-g.SCREEN.fill((0, 0, 0))
+g.SCREEN.fill((110, 135, 97))
 g.pygame.display.set_caption("Snake")
 
 running = True

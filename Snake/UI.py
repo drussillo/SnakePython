@@ -8,7 +8,7 @@ def draw_HUD():
 def draw_background():
     for y, row in enumerate(g.background_arr):
         for x, bgimg in enumerate(row):
-            g.SCREEN.blit(bgimg, (x * g.d_tile_size, y * g.d_tile_size))
+            g.SCREEN.blit(bgimg, (x * g.d_tile_size + g.offset_x, y * g.d_tile_size + g.HUD_h + g.offset_y))
 
 def draw_fail_state_screen(): #without buttons
     g.SCREEN.fill((255, 255, 255))
