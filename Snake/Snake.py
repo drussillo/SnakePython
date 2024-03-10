@@ -68,9 +68,9 @@ def check_if_coll_itself():
 def out_of_bounds():
     head_x, head_y, _ = g.snake_body[0]
     check_sides_list = [
-        head_y < g.HUD_h,
-        head_y > g.screen_h - g.d_size,
-        head_x > g.screen_w - g.d_size,
-        head_x < 0
+        head_y < g.HUD_h + g.offset_y,
+        head_y > g.screen_h - g.d_size - g.offset_y,
+        head_x > g.screen_w - g.d_size - g.offset_x,
+        head_x < g.offset_x
         ]
     return any(check_sides_list)

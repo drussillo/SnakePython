@@ -5,7 +5,7 @@ import random
 screen_w = 1920
 screen_h = 1080
 fullscreen = False
-velocity = 3 #pixels per frame; MAX is tile_size or size + dist
+velocity = 1 #pixels per frame; MAX is tile_size or size + dist
 max_fps = 120
 d_size = 60 #default size
 d_dist = 5 #default distance
