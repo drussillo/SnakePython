@@ -1,5 +1,4 @@
 import Global as g
-frame_count = 0
 
 def draw():
     #Head first
@@ -33,10 +32,7 @@ def move():
             g.snake_body[i] = (segment[0]-g.velocity, segment[1], segment[2])
 
 def follow_up():
-    global frame_count
-    frame_count += 1
-    if frame_count == g.d_tile_size // g.velocity:
-        frame_count = 0
+    if (g.snake_body[0][0] - g.offset_x) % g.d_tile_size == 0 and (g.snake_body[0][1] - g.offset_y - g.HUD_h) % g.d_tile_size == 0:
         for current_index in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
             next_segment_direction = g.snake_body[current_index-1][2]
             set_segment_dir(current_index, next_segment_direction)
@@ -68,9 +64,9 @@ def check_if_coll_itself():
 def out_of_bounds():
     head_x, head_y, _ = g.snake_body[0]
     check_sides_list = [
-        head_y < g.HUD_h,
-        head_y > g.screen_h - g.d_size,
-        head_x > g.screen_w - g.d_size,
-        head_x < 0
+        head_y < g.HUD_h + g.offset_y,
+        head_y > g.screen_h - g.d_size - g.offset_y,
+        head_x > g.screen_w - g.d_size - g.offset_x,
+        head_x < g.offset_x
         ]
     return any(check_sides_list)

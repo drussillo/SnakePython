@@ -5,7 +5,7 @@ import random
 screen_w = 1920
 screen_h = 1080
 fullscreen = False
-velocity = 3 #pixels per frame; MAX is tile_size or size + dist
+velocity = 2 #pixels per frame; MAX is tile_size or size + dist
 max_fps = 120
 d_size = 60 #default size
 d_dist = 5 #default distance
@@ -27,7 +27,6 @@ failstate = False
 HUD_w = screen_w
 HUD_h = screen_h//HUD_divisor
 velocity_start = velocity
-frame_count = 0
 offset_x = screen_w % d_tile_size // 2
 offset_y = (screen_h - HUD_h) % d_tile_size // 2
 
@@ -93,13 +92,14 @@ def get_middle_pos(w=0, h=0):
 
 #TODO: Fix reset snake offset bug
 def reset():
-    if frame_count == 0:
-        global snake_body
-        global direction
-        global failstate
+    global snake_body
+    global direction
+    global failstate
+    global velocity
 
-        SCREEN.fill((110, 135, 97))
-        failstate = False
-        new_head_x, new_head_y = randomize_spawn_pos()
-        direction = randomize_direction()
-        snake_body = [(new_head_x, new_head_y, direction)]
+    SCREEN.fill((110, 135, 97))
+    failstate = False
+    new_head_x, new_head_y = randomize_spawn_pos()
+    direction = randomize_direction()
+    snake_body = [(new_head_x, new_head_y, direction)]
+    velocity = velocity_start
