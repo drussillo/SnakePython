@@ -95,9 +95,11 @@ def reset():
     global snake_body
     global direction
     global failstate
+    global velocity
 
     SCREEN.fill((110, 135, 97))
     failstate = False
     new_head_x, new_head_y = randomize_spawn_pos()
     direction = randomize_direction()
     snake_body = [(new_head_x, new_head_y, direction)]
+    velocity = velocity_start

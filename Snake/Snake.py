@@ -33,7 +33,6 @@ def move():
 
 def follow_up():
     if (g.snake_body[0][0] - g.offset_x) % g.d_tile_size == 0 and (g.snake_body[0][1] - g.offset_y - g.HUD_h) % g.d_tile_size == 0:
-        print("Next Tile")
         for current_index in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
             next_segment_direction = g.snake_body[current_index-1][2]
             set_segment_dir(current_index, next_segment_direction)
