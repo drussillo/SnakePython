@@ -40,5 +40,7 @@ def handle_input_fail():
         elif event.type == g.pygame.KEYDOWN:
             if event.key == g.pygame.K_ESCAPE:
                 return False
+            if event.key == g.pygame.K_r:
+                g.reset()
 
     return True

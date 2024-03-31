@@ -2,8 +2,8 @@ import pygame
 import random
 
 #Settings
-screen_w = 1920
-screen_h = 1080
+screen_w = 720
+screen_h = 720
 fullscreen = False
 velocity = 2 #pixels per frame; MAX is tile_size or size + dist
 max_fps = 120

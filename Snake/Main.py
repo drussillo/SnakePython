@@ -29,8 +29,8 @@ while running:
         
     #failstate
     else:
-        running = Input.handle_input_fail()
         UI.draw_fail_state_screen()
+        running = Input.handle_input_fail()
 
     g.pygame.display.flip()
     g.clock.tick(g.max_fps)

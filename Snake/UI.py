@@ -1,10 +1,18 @@
 import Global as g
 
-field = g.pygame.Rect(0, 0, g.HUD_w, g.HUD_h) 
 
 def draw_HUD():
-    g.pygame.draw.rect(g.SCREEN, (222,222,23), field)
-    
+    HUD_field = g.pygame.Rect(0, 0, g.HUD_w, g.HUD_h) 
+    g.pygame.draw.rect(g.SCREEN, (222,222,23), HUD_field)
+    apple_icon_w, apple_icon_h = g.d_tile_size//1.5, g.d_tile_size//1.5
+    apple_icon = g.pygame.transform.scale(g.defapple, (apple_icon_w, apple_icon_h))
+    apple_icon_pos_x, apple_icon_pos_y = g.HUD_w//g.HUD_divisor, g.HUD_h // 2 - apple_icon.get_height()//2
+    g.SCREEN.blit(apple_icon, (apple_icon_pos_x, apple_icon_pos_y))
+    font = g.pygame.font.SysFont(None, apple_icon.get_width())
+    apple_counter = font.render(f" x {len(g.snake_body)}", True, (0,0,0))
+    apple_counter_pos_x, apple_counter_pos_y = apple_icon_pos_x + apple_icon_w, apple_icon_pos_y + apple_icon_w//4
+    g.SCREEN.blit(apple_counter, (apple_counter_pos_x, apple_counter_pos_y))
+
 def draw_background():
     for y, row in enumerate(g.background_arr):
         for x, bgimg in enumerate(row):
@@ -13,9 +21,9 @@ def draw_background():
 def draw_fail_state_screen(): #without buttons
     g.SCREEN.fill((255, 255, 255))
     font = g.pygame.font.SysFont(None, 100)
-    img = font.render('You Failed!', True, (200, 0, 0))
-    img_width, img_height = g.get_middle_pos(img.get_width(), img.get_height())
-    g.SCREEN.blit(img, (img_width, img_height-200))
+    fail_title = font.render('You Failed!', True, (200, 0, 0))
+    fail_title_pos_x, fail_title_pos_y = g.get_middle_pos(fail_title.get_width(), fail_title.get_height())
+    g.SCREEN.blit(fail_title, (fail_title_pos_x, fail_title_pos_y-200))
     fail_button_1.center()
     fail_button_1.move(y=200)
     fail_button_1.draw(g.SCREEN)
