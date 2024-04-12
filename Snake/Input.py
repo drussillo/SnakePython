@@ -1,7 +1,7 @@
 import Global as g
 import Snake
 
-def handle_input_main():
+def handle_input_main() -> bool:
     for event in g.pygame.event.get():
         if event.type == g.pygame.QUIT:
             return False
@@ -33,7 +33,7 @@ def handle_input_main():
         
     return True
             
-def handle_input_fail():
+def handle_input_fail() -> bool:
     for event in g.pygame.event.get():
         if event.type == g.pygame.QUIT:
             return False

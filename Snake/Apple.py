@@ -39,7 +39,7 @@ class Apple:
 
 #handle apples
 apple_1 = Apple()
-def handle_apples():
+def handle_apples() -> None:
     if apple_1.eaten or g.failstate:
         apple_1.new_apple()
     else:
