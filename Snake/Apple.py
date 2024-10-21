@@ -3,7 +3,7 @@ import Snake
 import random
 
 class Apple: 
-    def __init__(self):
+    def __init__(self) -> None:
         self.eaten = False 
         loop = True
         while loop:
@@ -13,11 +13,15 @@ class Apple:
         self.x_coord = rnd_x - rnd_x % g.d_tile_size + g.d_dist // 2 + g.offset_x
         self.y_coord = rnd_y - rnd_y % g.d_tile_size + g.d_dist // 2 + g.offset_y + g.HUD_h
 
-    def valid_pos(self, x, y):
-        validity = [not(segment[0] <= x <= segment[0]+g.d_tile_size and segment[1] <= y <= segment[1]+g.d_tile_size) for segment in g.snake_body]
-        return all(validity)
+    def valid_pos(self, x:int, y:int) -> bool:
+        check_rect = g.pygame.Rect(x, y, g.d_tile_size, g.d_tile_size)
+        for current_segment in g.snake_body:
+            snake_segment_rect = g.pygame.Rect(current_segment[0], current_segment[1], g.d_tile_size, g.d_tile_size)
+            if check_rect.colliderect(snake_segment_rect):
+                return False
+        return True
 
-    def check_collision_w_head(self):
+    def check_collision_w_head(self) -> None:
         apple_rect = g.pygame.Rect(self.x_coord, self.y_coord, g.d_size, g.d_size)
         head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], g.d_size, g.d_size)
         collides = apple_rect.colliderect(head_rect)
@@ -26,16 +30,16 @@ class Apple:
             self.eaten = True
             print(f" apples: { len(g.snake_body) - 1 }") #debug
 
-    def draw(self):
+    def draw(self) -> None:
         g.SCREEN.blit(g.defapple, (self.x_coord, self.y_coord))
         
-    def new_apple(self):
+    def new_apple(self) -> None:
         self.__init__()
 
 
 #handle apples
 apple_1 = Apple()
-def handle_apples():
+def handle_apples() -> None:
     if apple_1.eaten or g.failstate:
         apple_1.new_apple()
     else:

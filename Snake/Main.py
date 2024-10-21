@@ -8,7 +8,7 @@ g.pygame.init()
 g.SCREEN.fill((110, 135, 97))
 g.pygame.display.set_caption("Snake")
 
-running = True
+running:bool = True
 while running:
     
     #main loop
@@ -25,12 +25,15 @@ while running:
         g.failstate = Snake.check_if_coll_itself() or Snake.out_of_bounds()
         
         Apple.handle_apples()
+
+        #debug
+
     #end main loop
         
     #failstate
     else:
-        running = Input.handle_input_fail()
         UI.draw_fail_state_screen()
+        running = Input.handle_input_fail()
 
     g.pygame.display.flip()
     g.clock.tick(g.max_fps)
