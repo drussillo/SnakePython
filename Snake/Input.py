@@ -41,6 +41,16 @@ def handle_input_fail() -> bool:
             if event.key == g.pygame.K_ESCAPE:
                 return False
             if event.key == g.pygame.K_r:
-                g.reset()
+                g.reset_mode_basic()
+
+    return True
+
+def handle_input_menu() -> bool:
+    for event in g.pygame.event.get():
+        if event.type == g.pygame.QUIT:
+            return False
+        elif event.type == g.pygame.KEYDOWN:
+            if event.key == g.pygame.K_ESCAPE:
+                return False
 
     return True
