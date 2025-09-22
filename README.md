@@ -7,7 +7,6 @@ This is my attempt at making snake with python!
 
 TODO:
 
-    - Start menu -> photoshop or gimp art?
     - Failstate screen improvement -> photoshop or gimp art?
 
 
