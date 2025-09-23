@@ -3,10 +3,12 @@ import Input
 import Snake
 import Apple
 import UI
+import States
 
 g.pygame.init()
 g.SCREEN.fill((110, 135, 97))
 g.pygame.display.set_caption("Snake")
+g.pygame.mixer.init()
 
 running:bool = True
 
@@ -14,27 +16,31 @@ running:bool = True
 while running:
     match g.current_state:
 
-        case g.Gamestate.MODE_BASIC:
-            running = Input.handle_input_main()
+        case g.Gamestate.MENU:
+            States.init_menu()
+            UI.draw_main_menu_screen()
+            running = Input.handle_input_menu()
 
+        case g.Gamestate.FAIL:
+            UI.draw_fail_state_screen()
+            States.init_fail()
+            running = Input.handle_input_fail()
+
+        case g.Gamestate.MODE_BASIC:
+            States.init_mode_basic()
             UI.draw_background()
             UI.draw_HUD()
-            
+            running = Input.handle_input_main()
+
+
             #draw and move the snake
             Snake.move()
             Snake.draw()
             Snake.follow_up()
             if Snake.check_if_coll_itself() or Snake.out_of_bounds():
-                g.current_state = g.Gamestate.FAIL
+                Snake.die()
             
             Apple.handle_apples()
-        case g.Gamestate.FAIL:
-            UI.draw_fail_state_screen()
-            running = Input.handle_input_fail()
-
-        case g.Gamestate.MENU:
-            UI.draw_main_menu_screen()
-            running = Input.handle_input_menu()
 
         case _:
             print("Unknown or unhandled gamestate")

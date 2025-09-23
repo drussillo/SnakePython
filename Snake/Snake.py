@@ -1,4 +1,5 @@
 import Global as g
+import Sound
 
 def draw() -> None:
     #Head first
@@ -43,6 +44,7 @@ def set_segment_dir(index:int, direction:str) -> None:
     g.snake_body[index] = (g.snake_body[index][0], g.snake_body[index][1], direction)
 
 def add_segment() -> None:
+    Sound.play(Sound.Type.GROW)
     last_x, last_y, last_direction = g.snake_body[len(g.snake_body)-1]
     offset_dict = {
         'n': (0, g.d_tile_size),
@@ -70,3 +72,11 @@ def out_of_bounds() -> bool:
         head_x < g.offset_x
         ]
     return any(check_sides_list)
+
+def die() -> None:
+    move()
+    Sound.stop()
+    Sound.play(Sound.Type.DEATH)
+    while Sound.is_playing():
+        continue
+    g.current_state = g.Gamestate.FAIL

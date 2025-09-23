@@ -26,6 +26,7 @@ SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN) if ful
 clock = pygame.time.Clock()
 # gamestates
 class Gamestate(Enum):
+    VOID = 0
     MENU = 1
     FAIL = 2
     MODE_BASIC = 3
