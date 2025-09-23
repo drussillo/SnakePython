@@ -6,7 +6,6 @@ import UI
 import States
 
 g.pygame.init()
-g.SCREEN.fill((110, 135, 97))
 g.pygame.display.set_caption("Snake")
 g.pygame.mixer.init()
 
@@ -31,7 +30,6 @@ while running:
             UI.draw_background()
             UI.draw_HUD()
             running = Input.handle_input_main()
-
 
             #draw and move the snake
             Snake.move()

@@ -14,14 +14,15 @@ def draw_HUD() -> None:
     g.SCREEN.blit(apple_counter, (apple_counter_pos_x, apple_counter_pos_y))
 
 def draw_background() -> None:
+    g.SCREEN.fill((110, 135, 97))
     for y, row in enumerate(g.background_arr):
         for x, bgimg in enumerate(row):
             g.SCREEN.blit(bgimg, (x * g.d_tile_size + g.offset_x, y * g.d_tile_size + g.HUD_h + g.offset_y))
 
 def draw_fail_state_screen() -> None: #without buttons
-    g.SCREEN.fill((255, 255, 255))
+    g.SCREEN.fill((110, 135, 97))
     font = g.pygame.font.SysFont(None, 100)
-    fail_title = font.render('You Failed!', True, (200, 0, 0))
+    fail_title = font.render('You Failed!', True, (56, 79, 93))
     fail_title_pos_x, fail_title_pos_y = g.get_middle_pos(fail_title.get_width(), fail_title.get_height())
     g.SCREEN.blit(fail_title, (fail_title_pos_x, fail_title_pos_y-200))
     # reset button
@@ -38,9 +39,9 @@ def draw_fail_state_screen() -> None: #without buttons
     button_2.check_if_clicked(g.reset_menu)
 
 def draw_main_menu_screen() -> None:
-    g.SCREEN.fill((255, 255, 255))
+    g.SCREEN.fill((110, 135, 97))
     font = g.pygame.font.SysFont(None, 100)
-    main_title = font.render('Snake Python', True, (200, 0, 0))
+    main_title = font.render('Snake Python', True, (56, 79, 93))
     main_title_pos_x, main_title_pos_y = g.get_middle_pos(main_title.get_width(), main_title.get_height())
     g.SCREEN.blit(main_title, (main_title_pos_x, main_title_pos_y-200))
     button_1.set_image("drawables/startbutton.png")
