@@ -6,6 +6,8 @@ This is my attempt at making snake with python!
 # Notes:
 
 ### TODO:  
+Bug Fixes
+- Double apples bug (probably new apple spawning at same coords as old apple)
 Graphics  
 - Custom backgrounds for menu, fail, etc.
 - Custom text
@@ -13,6 +15,7 @@ Graphics
 Obstacles
 - Rocks: instant death
 - Bumps: get shorter
+
 
 ### Ideas for future features (in priority order):  
 Different apples  
