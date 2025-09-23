@@ -40,7 +40,7 @@ class Apple:
 #handle apples
 apple_1 = Apple()
 def handle_apples() -> None:
-    if apple_1.eaten or g.failstate:
+    if apple_1.eaten or (g.current_state == g.Gamestate.FAIL):
         apple_1.new_apple()
     else:
         apple_1.draw()

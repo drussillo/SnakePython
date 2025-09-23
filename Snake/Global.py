@@ -1,5 +1,6 @@
 import pygame
 import random
+from enum import Enum
 
 #Settings
 screen_w:int = 720
@@ -23,7 +24,15 @@ if d_tile_size % velocity != 0:
 #miscellaneous
 SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 clock = pygame.time.Clock()
-failstate:bool = False
+# gamestates
+class Gamestate(Enum):
+    VOID = 0
+    MENU = 1
+    FAIL = 2
+    MODE_BASIC = 3
+
+current_state: Gamestate = Gamestate.MENU
+
 HUD_w:int = screen_w
 HUD_h:int = screen_h//HUD_divisor
 velocity_start:int = velocity
@@ -90,16 +99,25 @@ snake_body:list[(int, int, str)] = [(head_x, head_y, direction)]
 def get_middle_pos(w=0, h=0) -> (int, int):
     return (screen_w // 2 - w // 2, screen_h // 2 - h // 2)
 
-#TODO: Fix reset snake offset bug
-def reset() -> None:
+
+# reset functions
+def reset_mode_basic() -> None:
     global snake_body
     global direction
-    global failstate
+    global current_state
     global velocity
 
     SCREEN.fill((110, 135, 97))
-    failstate = False
+    current_state = Gamestate.MODE_BASIC
     new_head_x, new_head_y = randomize_spawn_pos()
     direction = randomize_direction()
     snake_body = [(new_head_x, new_head_y, direction)]
     velocity = velocity_start
+
+def reset_menu() -> None:
+    global current_state
+
+    current_state = Gamestate.MENU
+
+
+
