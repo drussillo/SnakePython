@@ -1,0 +1,2 @@
+import Global as g
+
