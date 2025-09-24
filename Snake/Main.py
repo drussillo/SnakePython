@@ -32,9 +32,8 @@ while running:
             running = Input.handle_input_main()
 
             #draw and move the snake
-            Snake.move()
             Snake.draw()
-            Snake.follow_up()
+            Snake.movement()
             if Snake.check_if_coll_itself() or Snake.out_of_bounds():
                 Snake.die()
             

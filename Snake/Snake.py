@@ -3,43 +3,82 @@ import Sound
 
 def draw() -> None:
     #Head first
-    head_coords:(int, int) = (g.snake_body[0][0]  + g.d_dist // 2, g.snake_body[0][1] + g.d_dist // 2)
-    if g.snake_body[0][2] == 'n': g.SCREEN.blit(g.snakehead_n, head_coords)
-    if g.snake_body[0][2] == 's': g.SCREEN.blit(g.snakehead_s, head_coords)
-    if g.snake_body[0][2] == 'e': g.SCREEN.blit(g.snakehead_e, head_coords)
-    if g.snake_body[0][2] == 'w': g.SCREEN.blit(g.snakehead_w, head_coords)
+    head_coords:(int, int) = (g.snake_body[0][0] + g.d_dist // 2, g.snake_body[0][1] + g.d_dist // 2) # top left of tile + dist
+    match g.snake_body[0][2]:  # head direction
+        case 'n': g.SCREEN.blit(g.snakehead_n, head_coords)
+        case 's': g.SCREEN.blit(g.snakehead_s, head_coords)
+        case 'e': g.SCREEN.blit(g.snakehead_e, head_coords)
+        case 'w': g.SCREEN.blit(g.snakehead_w, head_coords)
     #Then center body
     if len(g.snake_body) > 1:
-        for segment in g.snake_body[1:-1]:
+        for segment in g.snake_body[1:-1]: # exclude head and tail
             segm_coords:(int, int) = (segment[0] + g.d_dist // 2, segment[1] + g.d_dist // 2)
-            if segment[2] == 'n' or segment[2] == 's': g.SCREEN.blit(g.snakesegment_vert, segm_coords)
-            else: g.SCREEN.blit(g.snakesegment_hor, segm_coords)
+            match segment[2]: # segment direction
+                case 'n' | 's': g.SCREEN.blit(g.snakesegment_vert, segm_coords)
+                case 'e' | 'w': g.SCREEN.blit(g.snakesegment_hor, segm_coords)
         #Tail segment last
         tail_coords:(int, int) = (g.snake_body[-1][0] + g.d_dist // 2, g.snake_body[-1][1] + g.d_dist // 2)
-        if g.snake_body[-1][2] == 'n': g.SCREEN.blit(g.snakelast_n, tail_coords)
-        elif g.snake_body[-1][2] == 's': g.SCREEN.blit(g.snakelast_s, tail_coords)
-        elif g.snake_body[-1][2] == 'e': g.SCREEN.blit(g.snakelast_e, tail_coords)
-        elif g.snake_body[-1][2] == 'w': g.SCREEN.blit(g.snakelast_w, tail_coords)
+        match g.snake_body[-1][2]: # tail direction
+            case 'n': g.SCREEN.blit(g.snakelast_n, tail_coords)
+            case 's': g.SCREEN.blit(g.snakelast_s, tail_coords)
+            case 'e': g.SCREEN.blit(g.snakelast_e, tail_coords)
+            case 'w': g.SCREEN.blit(g.snakelast_w, tail_coords)
 
-def move() -> None:
+def advance() -> None:
     for i, segment in enumerate(g.snake_body):
-        if segment[2] == 'n':
-            g.snake_body[i] = (segment[0], segment[1]-g.velocity, segment[2])
-        elif segment[2] == 's':
-            g.snake_body[i] = (segment[0], segment[1]+g.velocity, segment[2])
-        elif segment[2] == 'e':
-            g.snake_body[i] = (segment[0]+g.velocity, segment[1], segment[2])
-        elif segment[2] == 'w':
-            g.snake_body[i] = (segment[0]-g.velocity, segment[1], segment[2])
+        match segment[2]:
+            case 'n':
+                g.snake_body[i] = (segment[0], segment[1] - g.velocity, segment[2])
+            case 's':
+                g.snake_body[i] = (segment[0], segment[1] + g.velocity, segment[2])
+            case 'e':
+                g.snake_body[i] = (segment[0] + g.velocity, segment[1], segment[2])
+            case 'w':
+                g.snake_body[i] = (segment[0] - g.velocity, segment[1], segment[2])
+    
+def quick_update_head_direction() -> None:
+    head = g.snake_body[0]
+    if g.direction != head[2]:  # direction currently being changed
+        horizontal_offset = (head[0] - g.offset_x) % g.d_tile_size
+        vertical_offset = (head[1] - g.HUD_h - g.offset_y) % g.d_tile_size
+        print(horizontal_offset, vertical_offset)
+        match (head[2], g.direction):  # from, to
+            case ('e', 'n') | ('e', 's'):
+                if horizontal_offset < g.d_tile_size // 2 and horizontal_offset > 0:
+                    g.snake_body[0] = (head[0] - horizontal_offset, head[1], g.direction)
+                else:
+                    g.snake_body[0] = (head[0] - horizontal_offset + g.d_tile_size, head[1], g.direction)
+            case ('w', 'n') | ('w', 's'):
+                if horizontal_offset > g.d_tile_size // 2 and horizontal_offset < g.d_tile_size:
+                    g.snake_body[0] = (head[0] - horizontal_offset + g.d_tile_size, head[1], g.direction)
+                else:
+                    g.snake_body[0] = (head[0] - horizontal_offset, head[1], g.direction)
+            case ('n', 'e') | ('n', 'w'):
+                if vertical_offset > g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
+                    g.snake_body[0] = (head[0], head[1] - vertical_offset + g.d_tile_size, g.direction)
+                else:
+                    g.snake_body[0] = (head[0], head[1] - vertical_offset, g.direction)
+            case ('s', 'e') | ('s', 'w'):
+                if vertical_offset < g.d_tile_size // 2 and vertical_offset > 0:
+                    g.snake_body[0] = (head[0], head[1] - vertical_offset, g.direction)
+                else:
+                    g.snake_body[0] = (head[0], head[1] - vertical_offset + g.d_tile_size, g.direction)
 
 def follow_up() -> None:
     if (g.snake_body[0][0] - g.offset_x) % g.d_tile_size == 0 and (g.snake_body[0][1] - g.offset_y - g.HUD_h) % g.d_tile_size == 0:
+        print("test")
         for current_index in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
+            # if(g.snake_body[current_index][2] != g.snake_body[current_index-1][2]):
             next_segment_direction = g.snake_body[current_index-1][2]
             set_segment_dir(current_index, next_segment_direction)
         #set head to global direction
         set_segment_dir(0, g.direction)
-        
+
+def movement() -> None:
+    advance()
+    quick_update_head_direction()
+    follow_up()
+
 def set_segment_dir(index:int, direction:str) -> None:
     g.snake_body[index] = (g.snake_body[index][0], g.snake_body[index][1], direction)
 
@@ -74,7 +113,7 @@ def out_of_bounds() -> bool:
     return any(check_sides_list)
 
 def die() -> None:
-    move()
+    advance()
     Sound.stop()
     Sound.play(Sound.Type.DEATH)
     while Sound.is_playing():
