@@ -41,7 +41,7 @@ def quick_update_head_direction() -> None:
     if g.direction != head[2]:  # direction currently being changed
         horizontal_offset = (head[0] - g.offset_x) % g.d_tile_size
         vertical_offset = (head[1] - g.HUD_h - g.offset_y) % g.d_tile_size
-        print(horizontal_offset, vertical_offset)
+        # print(horizontal_offset, vertical_offset)
         match (head[2], g.direction):  # from, to
             case ('e', 'n') | ('e', 's'):
                 if horizontal_offset < g.d_tile_size // 2 and horizontal_offset > 0:
@@ -68,16 +68,47 @@ def follow_up() -> None:
     if (g.snake_body[0][0] - g.offset_x) % g.d_tile_size == 0 and (g.snake_body[0][1] - g.offset_y - g.HUD_h) % g.d_tile_size == 0:
         print("test")
         for current_index in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
-            # if(g.snake_body[current_index][2] != g.snake_body[current_index-1][2]):
             next_segment_direction = g.snake_body[current_index-1][2]
             set_segment_dir(current_index, next_segment_direction)
         #set head to global direction
         set_segment_dir(0, g.direction)
 
+def follow_up_quick() -> None:
+    if (g.snake_body[0][0] - g.offset_x) % g.d_tile_size == 0 and (g.snake_body[0][1] - g.offset_y - g.HUD_h) % g.d_tile_size == 0:
+        for current_index in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
+            current_segment = g.snake_body[current_index]
+            next_segment_direction = g.snake_body[current_index-1][2]
+            if next_segment_direction != current_segment[2]:
+                horizontal_offset = (current_segment[0] - g.offset_x) % g.d_tile_size
+                vertical_offset = (current_segment[1] - g.HUD_h - g.offset_y) % g.d_tile_size
+                print(horizontal_offset, vertical_offset)
+                match (current_segment[2], next_segment_direction):
+                    case ('e', 'n') | ('e', 's'): # works?
+                        if horizontal_offset < g.d_tile_size // 2 and horizontal_offset > 0:
+                            g.snake_body[current_index] = (current_segment[0] - horizontal_offset, current_segment[1], next_segment_direction)
+                        else:
+                            g.snake_body[current_index] = (current_segment[0] - horizontal_offset + g.d_tile_size, current_segment[1], next_segment_direction)
+                    case ('w', 'n') | ('w', 's'):
+                        if horizontal_offset > g.d_tile_size // 2 and horizontal_offset < g.d_tile_size:
+                            g.snake_body[current_index] = (current_segment[0] - horizontal_offset + g.d_tile_size, current_segment[1], next_segment_direction)
+                        else:
+                            g.snake_body[current_index] = (current_segment[0] - horizontal_offset, current_segment[1], next_segment_direction)
+                    case ('n', 'e') | ('n', 'w'):
+                        if vertical_offset > g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
+                            g.snake_body[current_index] = (current_segment[0], current_segment[1] - vertical_offset + g.d_tile_size, next_segment_direction)
+                        else:
+                            g.snake_body[current_index] = (current_segment[0], current_segment[1] - vertical_offset, next_segment_direction)
+                    case ('s', 'e') | ('s', 'w'):
+                        if vertical_offset < g.d_tile_size // 2 and vertical_offset > 0:
+                            g.snake_body[current_index] = (current_segment[0], current_segment[1] - vertical_offset, next_segment_direction)
+                        else:
+                            g.snake_body[current_index] = (current_segment[0], current_segment[1] - vertical_offset + g.d_tile_size, next_segment_direction)
+        # set_segment_dir(0, g.direction)
+
 def movement() -> None:
     advance()
+    follow_up_quick()
     quick_update_head_direction()
-    follow_up()
 
 def set_segment_dir(index:int, direction:str) -> None:
     g.snake_body[index] = (g.snake_body[index][0], g.snake_body[index][1], direction)
