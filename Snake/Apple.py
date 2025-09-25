@@ -8,9 +8,10 @@ class Apple(Object):
         super().__init__("./drawables/defaultapple.png")
 
     def apply_effect(self) -> None:
-        Snake.add_segment()
-        self.eaten = True
-        print(f" apples: { len(g.snake_body) - 1 }") #debug
+        if not self.eaten:
+            Snake.add_segment()
+            self.eaten = True
+            print(f" apples: { len(g.snake_body) - 1 }") #debug
 
 #handle apples
 apple_1 = Apple()
