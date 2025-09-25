@@ -165,3 +165,5 @@ def die() -> None:
     while Sound.is_playing():
         continue
     g.current_state = g.Gamestate.FAIL
+
+

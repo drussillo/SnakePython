@@ -21,7 +21,10 @@ class Object:
         self.y_coord = rnd_y - rnd_y % g.d_tile_size + g.d_dist // 2 + g.offset_y + g.HUD_h
 
     def valid_pos(self, x:int, y:int) -> bool:
-        check_rect = g.pygame.Rect(x, y, g.d_tile_size, g.d_tile_size)
+        # TODO:
+        # make area around snake illegal
+        # check if inside other object
+        check_rect = g.pygame.Rect(x, y, self.width, self.height)
         for current_segment in g.snake_body:
             snake_segment_rect = g.pygame.Rect(current_segment[0], current_segment[1], g.d_tile_size, g.d_tile_size)
             if check_rect.colliderect(snake_segment_rect):
@@ -32,7 +35,7 @@ class Object:
         object_rect = g.pygame.Rect(self.x_coord, self.y_coord, g.d_size, g.d_size)
         head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], g.d_size, g.d_size)
         collides = object_rect.colliderect(head_rect)
-        if collides and not self.eaten:
+        if collides:
             self.apply_effect()
 
     def apply_effect(self) -> None:
