@@ -36,42 +36,84 @@ def advance() -> None:
             case 'w':
                 g.snake_body[i] = (segment[0] - g.velocity, segment[1], segment[2])
     
+def align_with_tile(x:int, y:int, current_direction:str, next_direction:str) -> (int, int):
+    horizontal_offset = (x - g.offset_x) % g.d_tile_size
+    vertical_offset = (y - g.HUD_h - g.offset_y) % g.d_tile_size
+    match (current_direction, next_direction):
+        case ('e', 'n') | ('e', 's'):
+            if horizontal_offset < g.d_tile_size // 2 and horizontal_offset > 0:
+                return (x - horizontal_offset, y)
+            elif horizontal_offset > g.d_tile_size // 2:
+                return (x - horizontal_offset + g.d_tile_size, y)
+            else:
+                return(x, y)
+        case ('w', 'n') | ('w', 's'):
+            if horizontal_offset > g.d_tile_size // 2:
+                return (x - horizontal_offset + g.d_tile_size, y)
+            elif horizontal_offset <= g.d_tile_size // 2 and horizontal_offset > 0:
+                return (x - horizontal_offset, y)
+            else:
+                print("error2", horizontal_offset)
+                return(0,0)
+        case ('n', 'e') | ('n', 'w'):
+            if vertical_offset > g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
+                return (x, y - vertical_offset + g.d_tile_size)
+            elif vertical_offset <= g.d_tile_size // 2:
+                return (x, y - vertical_offset)
+            else:
+                print("error3", vertical_offset)
+                return(0,0)
+        case ('s', 'e') | ('s', 'w'):
+            if vertical_offset < g.d_tile_size // 2:
+                return (x, y - vertical_offset)
+            elif vertical_offset >= g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
+                return (x, y - vertical_offset + g.d_tile_size)
+            else:
+                print("error4", vertical_offset)
+                return(0,0)
+        case _:
+            print("Error: attempting to realign with invalid directions")
+            return (x, y)
 
 def head_update_direction_quick() -> None:
     head = g.snake_body[0]
     if g.direction != head[2]:  # direction currently being changed
-        horizontal_offset = (head[0] - g.offset_x) % g.d_tile_size
-        vertical_offset = (head[1] - g.HUD_h - g.offset_y) % g.d_tile_size
-        # print(horizontal_offset, vertical_offset)
-        match (head[2], g.direction):  # from, to
-            case ('e', 'n') | ('e', 's'):
-                if horizontal_offset < g.d_tile_size // 2 and horizontal_offset > 0:
-                    print("early")
-                    g.snake_body[0] = (head[0] - horizontal_offset, head[1], head[2])
-                elif horizontal_offset > g.d_tile_size // 2:
-                    print("late")
-                    g.snake_body[0] = (head[0] - horizontal_offset + g.d_tile_size, head[1], head[2])
-            case ('w', 'n') | ('w', 's'):
-                if horizontal_offset > g.d_tile_size // 2:
-                    print("early")
-                    g.snake_body[0] = (head[0] - horizontal_offset + g.d_tile_size, head[1], head[2])
-                elif horizontal_offset < g.d_tile_size // 2 and horizontal_offset > 0:
-                    print("late")
-                    g.snake_body[0] = (head[0] - horizontal_offset, head[1], head[2])
-            case ('n', 'e') | ('n', 'w'):
-                if vertical_offset > g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
-                    print("early")
-                    g.snake_body[0] = (head[0], head[1] - vertical_offset + g.d_tile_size, head[2])
-                elif vertical_offset < g.d_tile_size // 2:
-                    print("late")
-                    g.snake_body[0] = (head[0], head[1] - vertical_offset, head[2])
-            case ('s', 'e') | ('s', 'w'):
-                if vertical_offset < g.d_tile_size // 2:
-                    print("early")
-                    g.snake_body[0] = (head[0], head[1] - vertical_offset, head[2])
-                elif vertical_offset > g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
-                    print("late")
-                    g.snake_body[0] = (head[0], head[1] - vertical_offset + g.d_tile_size, head[2])
+        new_x, new_y = align_with_tile(head[0], head[1], head[2], g.direction)
+        g.snake_body[0] = (new_x, new_y, head[2])
+
+
+    # horizontal_offset = (head[0] - g.offset_x) % g.d_tile_size
+    # vertical_offset = (head[1] - g.HUD_h - g.offset_y) % g.d_tile_size
+    # # print(horizontal_offset, vertical_offset)
+    # match (head[2], g.direction):  # from, to
+    #     case ('e', 'n') | ('e', 's'):
+    #         if horizontal_offset < g.d_tile_size // 2 and horizontal_offset > 0:
+    #             print("early")
+    #             g.snake_body[0] = (head[0] - horizontal_offset, head[1], head[2])
+    #         elif horizontal_offset > g.d_tile_size // 2:
+    #             print("late")
+    #             g.snake_body[0] = (head[0] - horizontal_offset + g.d_tile_size, head[1], head[2])
+    #     case ('w', 'n') | ('w', 's'):
+    #         if horizontal_offset > g.d_tile_size // 2:
+    #             print("early")
+    #             g.snake_body[0] = (head[0] - horizontal_offset + g.d_tile_size, head[1], head[2])
+    #         elif horizontal_offset < g.d_tile_size // 2 and horizontal_offset > 0:
+    #             print("late")
+    #             g.snake_body[0] = (head[0] - horizontal_offset, head[1], head[2])
+    #     case ('n', 'e') | ('n', 'w'):
+    #         if vertical_offset > g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
+    #             print("early")
+    #             g.snake_body[0] = (head[0], head[1] - vertical_offset + g.d_tile_size, head[2])
+    #         elif vertical_offset < g.d_tile_size // 2:
+    #             print("late")
+    #             g.snake_body[0] = (head[0], head[1] - vertical_offset, head[2])
+    #     case ('s', 'e') | ('s', 'w'):
+    #         if vertical_offset < g.d_tile_size // 2:
+    #             print("early")
+    #             g.snake_body[0] = (head[0], head[1] - vertical_offset, head[2])
+    #         elif vertical_offset > g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
+    #             print("late")
+    #             g.snake_body[0] = (head[0], head[1] - vertical_offset + g.d_tile_size, head[2])
 
 def follow_up_quick() -> None:
     # if head is aligned
@@ -120,6 +162,7 @@ def follow_up_quick() -> None:
         set_segment_dir(0, g.direction)
 
 def movement() -> None:
+    print((g.snake_body[0][0] - g.offset_x) % g.d_tile_size)
     head_update_direction_quick()
     follow_up_quick()
     advance()
