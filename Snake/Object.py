@@ -6,7 +6,7 @@ class Object:
         # set drawable
         self.drawable:g.pygame.surface.Surface = g.defapple
         if drawable_path:
-            self.drawable = g.pygame.image.load("drawables/defaultapple.png")
+            self.drawable = g.pygame.image.load(drawable_path)
             self.drawable = g.pygame.transform.scale(self.drawable, (width, height))
         # set width and height
         self.width = width
