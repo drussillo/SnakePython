@@ -24,6 +24,14 @@ class Object:
         # TODO:
         # make area around snake illegal
         # check if inside other object
+
+        # head_x = g.snake_body[0][0]
+        # head_y = g.snake_body[0][1]
+        # head_direction = g.snake_body[0][2]
+        # match(head_direction):
+        #     case 'n':
+        #         pass
+
         check_rect = g.pygame.Rect(x, y, self.width, self.height)
         for current_segment in g.snake_body:
             snake_segment_rect = g.pygame.Rect(current_segment[0], current_segment[1], g.d_tile_size, g.d_tile_size)
