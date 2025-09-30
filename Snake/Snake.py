@@ -53,7 +53,7 @@ def align_with_tile(x:int, y:int, current_direction:str, next_direction:str) -> 
             elif horizontal_offset <= g.d_tile_size // 2 and horizontal_offset > 0:
                 return (x - horizontal_offset, y)
             else:
-                reuturn (x, y)
+                return (x, y)
         case ('n', 'e') | ('n', 'w'):
             if vertical_offset > g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
                 return (x, y - vertical_offset + g.d_tile_size)
@@ -94,7 +94,6 @@ def follow_up_quick() -> None:
         set_segment_dir(0, g.direction)
 
 def movement() -> None:
-    print((g.snake_body[0][0] - g.offset_x) % g.d_tile_size)
     head_update_direction_quick()
     follow_up_quick()
     advance()
@@ -139,6 +138,6 @@ def die() -> None:
     Sound.play(Sound.Type.DEATH)
     while Sound.is_playing():
         continue
-    g.current_state = g.Gamestate.FAIL
+    g.reset_fail()
 
 
