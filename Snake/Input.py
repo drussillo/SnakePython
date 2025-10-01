@@ -1,5 +1,5 @@
 import Global as g
-import Snake
+import Snake  # debug
 
 def handle_input_main() -> bool:
     for event in g.pygame.event.get():

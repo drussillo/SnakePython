@@ -71,12 +71,8 @@ class Object:
     def add_to_stack(self) -> None:
         g.object_stack.append(self)
 
-    def rem_from_stack(self) -> None:
+    def remove_from_stack(self) -> None:
         g.object_stack.remove(self)
-
-def clear_stack() -> None:
-    g.object_stack = []
-    
 
 
 

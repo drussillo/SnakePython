@@ -97,6 +97,10 @@ snake_body:list[(int, int, str)] = [(head_x, head_y, direction)]
 # objects
 object_stack = []
 
+def clear_object_stack() -> None:
+    global object_stack
+    object_stack = []
+
 #Help functions
 def get_middle_pos(w=0, h=0) -> (int, int):
     return (screen_w // 2 - w // 2, screen_h // 2 - h // 2)

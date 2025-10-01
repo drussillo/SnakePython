@@ -15,6 +15,7 @@ def init_menu() -> None:
 def init_fail() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.FAIL:
+        g.clear_object_stack()
         Sound.stop()
         initalized_state = g.Gamestate.FAIL
 
@@ -22,7 +23,7 @@ def init_fail() -> None:
 def init_mode_basic() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.MODE_BASIC:
-        g.current_state = g.Gamestate.MODE_BASIC
+        g.clear_object_stack()
         new_head_x, new_head_y = g.randomize_spawn_pos()
         g.direction = g.randomize_direction()
         g.snake_body = [(new_head_x, new_head_y, g.direction)]
