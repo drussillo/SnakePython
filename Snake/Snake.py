@@ -116,6 +116,7 @@ def add_segment() -> None:
     g.snake_body.append((last_x + offset_x, last_y + offset_y, last_direction))
 
 def check_if_coll_itself() -> bool:
+    # TODO: Fix colliding with segment in turn
     head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], g.d_size, g.d_size)
     for current_segment in g.snake_body[3:]:
         current_segment_rect = g.pygame.Rect(current_segment[0], current_segment[1], g.d_tile_size, g.d_tile_size)
