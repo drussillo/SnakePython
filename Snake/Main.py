@@ -5,6 +5,7 @@ import Apple
 import UI
 import States
 import Obstacle
+import Object
 
 g.pygame.init()
 g.pygame.display.set_caption("Snake")
@@ -38,8 +39,8 @@ while running:
             if Snake.check_if_coll_itself() or Snake.out_of_bounds():
                 Snake.die()
             
-            Apple.handle_apples()
-            Obstacle.handle_boulders()
+            Apple.handle_apples_basic()
+            Obstacle.handle_obstacles()
 
         case _:
             print("Unknown or unhandled gamestate")

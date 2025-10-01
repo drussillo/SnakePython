@@ -9,13 +9,13 @@ def handle_input_main() -> bool:
         elif event.type == g.pygame.KEYDOWN:
             if event.key == g.pygame.K_ESCAPE:
                 return False
-            elif event.key == g.pygame.K_w:
+            elif event.key == g.pygame.K_w or event.key == g.pygame.K_UP:
                 g.direction = 'n' if g.snake_body[0][2] != 's' else 's'
-            elif event.key == g.pygame.K_s:
+            elif event.key == g.pygame.K_s or event.key == g.pygame.K_DOWN:
                 g.direction = 's' if g.snake_body[0][2] != 'n' else 'n'
-            elif event.key == g.pygame.K_d:
+            elif event.key == g.pygame.K_d or event.key == g.pygame.K_RIGHT:
                 g.direction = 'e' if g.snake_body[0][2] != 'w' else 'w'
-            elif event.key == g.pygame.K_a:
+            elif event.key == g.pygame.K_a or event.key == g.pygame.K_LEFT:
                 g.direction = 'w' if g.snake_body[0][2] != 'e' else 'e'
             elif event.key == g.pygame.K_t:
                 #test key

@@ -1,28 +1,29 @@
 import Global as g
 import Sound
 
+
 def draw() -> None:
-    #Head first
-    head_coords:(int, int) = (g.snake_body[0][0] + g.d_dist // 2, g.snake_body[0][1] + g.d_dist // 2) # top left of tile + dist
-    match g.snake_body[0][2]:  # head direction
-        case 'n': g.SCREEN.blit(g.snakehead_n, head_coords)
-        case 's': g.SCREEN.blit(g.snakehead_s, head_coords)
-        case 'e': g.SCREEN.blit(g.snakehead_e, head_coords)
-        case 'w': g.SCREEN.blit(g.snakehead_w, head_coords)
-    #Then center body
     if len(g.snake_body) > 1:
-        for segment in g.snake_body[1:-1]: # exclude head and tail
-            segm_coords:(int, int) = (segment[0] + g.d_dist // 2, segment[1] + g.d_dist // 2)
-            match segment[2]: # segment direction
-                case 'n' | 's': g.SCREEN.blit(g.snakesegment_vert, segm_coords)
-                case 'e' | 'w': g.SCREEN.blit(g.snakesegment_hor, segm_coords)
-        #Tail segment last
+        # Tail segment
         tail_coords:(int, int) = (g.snake_body[-1][0] + g.d_dist // 2, g.snake_body[-1][1] + g.d_dist // 2)
         match g.snake_body[-1][2]: # tail direction
             case 'n': g.SCREEN.blit(g.snakelast_n, tail_coords)
             case 's': g.SCREEN.blit(g.snakelast_s, tail_coords)
             case 'e': g.SCREEN.blit(g.snakelast_e, tail_coords)
             case 'w': g.SCREEN.blit(g.snakelast_w, tail_coords)
+        # Center body
+        for segment in reversed(g.snake_body[1:-1]): # exclude head and tail
+            segm_coords:(int, int) = (segment[0] + g.d_dist // 2, segment[1] + g.d_dist // 2)
+            match segment[2]: # segment direction
+                case 'n' | 's': g.SCREEN.blit(g.snakesegment_vert, segm_coords)
+                case 'e' | 'w': g.SCREEN.blit(g.snakesegment_hor, segm_coords)
+    # Head 
+    head_coords:(int, int) = (g.snake_body[0][0] + g.d_dist // 2, g.snake_body[0][1] + g.d_dist // 2) # top left of tile + dist
+    match g.snake_body[0][2]:  # head direction
+        case 'n': g.SCREEN.blit(g.snakehead_n, head_coords)
+        case 's': g.SCREEN.blit(g.snakehead_s, head_coords)
+        case 'e': g.SCREEN.blit(g.snakehead_e, head_coords)
+        case 'w': g.SCREEN.blit(g.snakehead_w, head_coords)
 
 def advance() -> None:
     for i, segment in enumerate(g.snake_body):
@@ -77,9 +78,9 @@ def head_update_direction_quick() -> None:
     if g.direction != head[2]:  # direction currently being changed
         new_x, new_y = align_with_tile(head[0], head[1], head[2], g.direction)
         g.snake_body[0] = (new_x, new_y, head[2])
+        has_turned = True
 
 def follow_up_quick() -> None:
-    # if head is aligned
     for i in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
         current_x = g.snake_body[i][0]
         current_y = g.snake_body[i][1]

@@ -106,24 +106,13 @@ def get_middle_pos(w=0, h=0) -> (int, int):
 
 def reset_menu() -> None:
     global current_state
-
     current_state = Gamestate.MENU
 
 def reset_fail() ->None:
     global current_state
-
     current_state = Gamestate.FAIL
 
 def reset_mode_basic() -> None:
-    global snake_body
-    global direction
     global current_state
-    global velocity
-
-    SCREEN.fill((110, 135, 97))
     current_state = Gamestate.MODE_BASIC
-    new_head_x, new_head_y = randomize_spawn_pos()
-    direction = randomize_direction()
-    snake_body = [(new_head_x, new_head_y, direction)]
-    velocity = velocity_start
 

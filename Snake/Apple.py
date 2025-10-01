@@ -15,8 +15,14 @@ class Apple(Object):
 
 #handle apples
 apple_1 = Apple()
-def handle_apples() -> None:
-    if apple_1.eaten or (g.current_state == g.Gamestate.FAIL):
+
+def init_apples_basic() -> None:
+    apple_1.new_instance()
+    print("new apple: init")
+
+def handle_apples_basic() -> None:
+    if apple_1.eaten:
+        print("new apple: eaten")
         apple_1.new_instance()
     else:
         apple_1.draw()

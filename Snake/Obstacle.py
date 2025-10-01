@@ -12,9 +12,10 @@ class Boulder(Object):
 
 #handle obstacles
 boulder_1 = Boulder()
-def handle_boulders() -> None:
-    if g.current_state == g.Gamestate.FAIL:
-        boulder_1.new_instance()
-    else:
-        boulder_1.draw()
-        boulder_1.check_collision_w_head()
+
+def init_obstacles_basic() -> None:
+    boulder_1.new_instance()
+
+def handle_obstacles() -> None:
+    boulder_1.draw()
+    boulder_1.check_collision_w_head()
