@@ -92,6 +92,7 @@ def randomize_direction() -> str:
 # initial snake body
 head_x, head_y = randomize_spawn_pos()
 direction = randomize_direction()
+has_turned = False
 snake_body:list[(int, int, str)] = [(head_x, head_y, direction)]
 
 # objects

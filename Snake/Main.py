@@ -41,7 +41,6 @@ while running:
             
             Apple.handle_apples_basic()
             Obstacle.handle_obstacles()
-            print(g.object_stack)
 
         case _:
             print("Unknown or unhandled gamestate")

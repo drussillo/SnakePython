@@ -8,19 +8,21 @@ def handle_input_main() -> bool:
         # key down events
         # TODO: fix turn twice in same square
         elif event.type == g.pygame.KEYDOWN:
-            if event.key == g.pygame.K_ESCAPE:
-                return False
-            elif event.key == g.pygame.K_w or event.key == g.pygame.K_UP:
-                g.direction = 'n' if g.snake_body[0][2] != 's' else 's'
-            elif event.key == g.pygame.K_s or event.key == g.pygame.K_DOWN:
-                g.direction = 's' if g.snake_body[0][2] != 'n' else 'n'
-            elif event.key == g.pygame.K_d or event.key == g.pygame.K_RIGHT:
-                g.direction = 'e' if g.snake_body[0][2] != 'w' else 'w'
-            elif event.key == g.pygame.K_a or event.key == g.pygame.K_LEFT:
-                g.direction = 'w' if g.snake_body[0][2] != 'e' else 'e'
-            elif event.key == g.pygame.K_t:
-                #test key
-                Snake.add_segment() #lenghten snake
+            match event.key:
+                case g.pygame.K_ESCAPE:
+                    return False
+                case g.pygame.K_w | g.pygame.K_UP:
+                    g.direction = 'n' if g.snake_body[0][2] != 's' else 's'
+                case g.pygame.K_s | g.pygame.K_DOWN:
+                    g.direction = 's' if g.snake_body[0][2] != 'n' else 'n'
+                case g.pygame.K_d | g.pygame.K_RIGHT:
+                    g.direction = 'e' if g.snake_body[0][2] != 'w' else 'w'
+                case g.pygame.K_a | g.pygame.K_LEFT:
+                    g.direction = 'w' if g.snake_body[0][2] != 'e' else 'e'
+                case g.pygame.K_t:
+                    #test key
+                    Snake.add_segment() #lenghten snake
+
     #key up events
         elif event.type == g.pygame.KEYUP:
             if event.key == g.pygame.K_SPACE:

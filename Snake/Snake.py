@@ -73,14 +73,14 @@ def align_with_tile(x:int, y:int, current_direction:str, next_direction:str) -> 
             print("Error: attempting to realign with invalid directions")
             return (0, 0)
 
-def head_update_direction_quick() -> None:
+def head_update_direction() -> None:
+    # TODO: fix u turn bug
     head = g.snake_body[0]
     if g.direction != head[2]:  # direction currently being changed
         new_x, new_y = align_with_tile(head[0], head[1], head[2], g.direction)
         g.snake_body[0] = (new_x, new_y, head[2])
-        has_turned = True
 
-def follow_up_quick() -> None:
+def follow_up() -> None:
     for i in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
         current_x = g.snake_body[i][0]
         current_y = g.snake_body[i][1]
@@ -95,8 +95,8 @@ def follow_up_quick() -> None:
         set_segment_dir(0, g.direction)
 
 def movement() -> None:
-    head_update_direction_quick()
-    follow_up_quick()
+    head_update_direction()
+    follow_up()
     advance()
     # follow_up()
 
