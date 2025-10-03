@@ -42,33 +42,16 @@ def align_with_tile(x:int, y:int, current_direction:str, next_direction:str) -> 
     vertical_offset = (y - g.HUD_h - g.offset_y) % g.d_tile_size
     match (current_direction, next_direction):
         case ('e', 'n') | ('e', 's'):
-            if horizontal_offset < g.d_tile_size // 2 and horizontal_offset > 0:  # late / jump back
-                print("early")
-                return (x - horizontal_offset, y)
-            elif horizontal_offset >= g.d_tile_size // 2:  # early / jump ahead
-                print("late")
+            if horizontal_offset > 0:
                 return (x - horizontal_offset + g.d_tile_size, y)
             else:
-                print("else")
                 return (x, y)
         case ('w', 'n') | ('w', 's'):
-            if horizontal_offset > g.d_tile_size // 2:
-                return (x - horizontal_offset + g.d_tile_size, y)
-            elif horizontal_offset <= g.d_tile_size // 2 and horizontal_offset > 0:
-                return (x - horizontal_offset, y)
-            else:
-                return (x, y)
+            return (x - horizontal_offset, y)
         case ('n', 'e') | ('n', 'w'):
-            if vertical_offset > g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
-                return (x, y - vertical_offset + g.d_tile_size)
-            elif vertical_offset <= g.d_tile_size // 2:
-                return (x, y - vertical_offset)
-            else:
-                return (x, y)
+            return (x, y - vertical_offset)
         case ('s', 'e') | ('s', 'w'):
-            if vertical_offset < g.d_tile_size // 2:
-                return (x, y - vertical_offset)
-            elif vertical_offset >= g.d_tile_size // 2 and vertical_offset < g.d_tile_size:
+            if vertical_offset > 0:
                 return (x, y - vertical_offset + g.d_tile_size)
             else:
                 return (x, y)
@@ -76,35 +59,38 @@ def align_with_tile(x:int, y:int, current_direction:str, next_direction:str) -> 
             print("Error: attempting to realign with invalid directions")
             return (0, 0)
 
+# align_snake_if_turn
 def head_align_if_turn() -> None:
-    # TODO: fix u turn bug
-    head = g.snake_body[0]
-    if g.direction != head[2]:  # direction currently being changed
-        new_x, new_y = align_with_tile(head[0], head[1], head[2], g.direction)
-        g.snake_body[0] = (new_x, new_y, head[2])
+    next_direction = g.direction
+    if g.snake_body[0][2] != next_direction:
+        print("turn!")
+        for i in range(len(g.snake_body)): 
+            current_x, current_y, current_direction = g.snake_body[i]
+            if i > 0 and g.snake_body[i - 1][2] != current_direction:
+                next_direction = g.snake_body[i - 1][2]
+
+            if current_direction != next_direction:
+                new_x, new_y = align_with_tile(current_x, current_y, current_direction, next_direction)
+                g.snake_body[i] = (new_x, new_y, current_direction)
 
 def follow_up() -> None:
-    for i in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
-        current_x, current_y, current_direction = g.snake_body[i]
-        next_x, next_y, next_direction = g.snake_body[i - 1]
-        next_segment_aligned:bool = (
-                (next_x - g.offset_x) % g.d_tile_size == 0 and 
-                (next_y - g.offset_y - g.HUD_h) % g.d_tile_size == 0
-        )
-        if current_direction != next_direction and next_segment_aligned:
-            new_x, new_y = align_with_tile(current_x, current_y, current_direction, next_direction)
-            g.snake_body[i] = (new_x, new_y, next_direction)
-
-def update_head_direction() -> None:
-    if (g.snake_body[0][0] - g.offset_x) % g.d_tile_size == 0 and (g.snake_body[0][1] - g.offset_y - g.HUD_h) % g.d_tile_size == 0:
+    head_aligned:bool = (
+            (g.snake_body[0][0] - g.offset_x) % g.d_tile_size == 0 and 
+            (g.snake_body[0][1] - g.offset_y - g.HUD_h) % g.d_tile_size == 0
+    )
+    if head_aligned:
+        for i in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
+            set_segment_dir(i, g.snake_body[i - 1][2])
+        # update head direction
         set_segment_dir(0, g.direction)
 
 def movement() -> None:
+    horizontal_offset = (g.snake_body[0][0] - g.offset_x) % g.d_tile_size
+    vertical_offset = (g.snake_body[0][1] - g.HUD_h - g.offset_y) % g.d_tile_size
+    print(horizontal_offset, vertical_offset)
     head_align_if_turn()
     follow_up()
-    update_head_direction()
     advance()
-    # follow_up()
 
 def set_segment_dir(index:int, direction:str) -> None:
     g.snake_body[index] = (g.snake_body[index][0], g.snake_body[index][1], direction)
