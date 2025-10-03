@@ -6,7 +6,6 @@ def handle_input_main() -> bool:
         if event.type == g.pygame.QUIT:
             return False
         # key down events
-        # TODO: fix turn twice in same square
         elif event.type == g.pygame.KEYDOWN:
             match event.key:
                 case g.pygame.K_ESCAPE:
