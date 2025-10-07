@@ -63,7 +63,6 @@ def align_with_tile(x:int, y:int, current_direction:str, next_direction:str) -> 
 def head_align_if_turn() -> None:
     next_direction = g.direction
     if g.snake_body[0][2] != next_direction:
-        print("turn!")
         for i in range(len(g.snake_body)): 
             current_x, current_y, current_direction = g.snake_body[i]
             if i > 0 and g.snake_body[i - 1][2] != current_direction:
@@ -87,7 +86,6 @@ def follow_up() -> None:
 def movement() -> None:
     horizontal_offset = (g.snake_body[0][0] - g.offset_x) % g.d_tile_size
     vertical_offset = (g.snake_body[0][1] - g.HUD_h - g.offset_y) % g.d_tile_size
-    print(horizontal_offset, vertical_offset)
     head_align_if_turn()
     follow_up()
     advance()
