@@ -16,7 +16,6 @@ Obstacles
 - Rocks: instant death
 - Bumps: get shorter
 
-
 ### Ideas for future features (in priority order):  
 Different apples  
 - Normal apples (1 lenght)
