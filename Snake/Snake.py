@@ -88,6 +88,10 @@ def movement() -> None:
     follow_up()
     advance()
 
+def check_if_fail() -> None:
+    if check_if_coll_itself() or out_of_bounds():
+        die()
+
 def set_segment_dir(index:int, direction:str) -> None:
     g.snake_body[index] = (g.snake_body[index][0], g.snake_body[index][1], direction)
 

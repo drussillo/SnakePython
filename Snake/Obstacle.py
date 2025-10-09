@@ -25,7 +25,6 @@ class Boulder(Object):
             x == g.screen_w - g.offset_x - g.d_tile_size and 
             (y == g.offset_y + g.HUD_h + g.d_tile_size or y == g.screen_h - g.offset_y - 2 * g.d_tile_size)
         ):
-            print("HELLO")
             return False
         else:
             return super().valid_pos(x, y)
@@ -36,9 +35,6 @@ boulder_1 = Boulder()
 
 def init_obstacles_basic() -> None:
     boulder_1.new_instance()
-    print(boulder_1.valid_pos(650, 590))
-    print(g.screen_w - g.offset_x - g.d_tile_size, g.screen_h-g.offset_y-2*g.d_tile_size)
-    print(boulder_1.x_coord, boulder_1.y_coord)
 
 def handle_obstacles() -> None:
     boulder_1.draw()
