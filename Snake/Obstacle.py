@@ -10,6 +10,14 @@ class Boulder(Object):
     def apply_effect(self) -> None:
         Snake.die()
 
+    '''
+    def valid_pos(self, x:int, y:int) -> bool:
+        super().valid_pos(x, y)
+
+        TODO: avoid 8 tiles next to corners
+
+    '''
+
 #handle obstacles
 boulder_1 = Boulder()
 
