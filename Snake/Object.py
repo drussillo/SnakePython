@@ -1,0 +1,78 @@
+import Global as g
+import random
+
+class Object:
+    def __init__(self, drawable_path:str="", width:int=g.d_size, height:int=g.d_size) -> None:
+        # set drawable
+        self.drawable:g.pygame.surface.Surface = g.defapple
+        if drawable_path:
+            self.drawable = g.pygame.image.load(drawable_path)
+            self.drawable = g.pygame.transform.scale(self.drawable, (width, height))
+        # set width and height
+        self.width = width
+        self.height = height
+        # set posx and posy
+        loop = True
+        while loop:
+            rnd_x = random.randint(0, g.screen_w - g.d_tile_size)
+            rnd_y = random.randint(0, g.screen_h - g.d_tile_size - g.HUD_h)
+            loop = not self.valid_pos(rnd_x + g.offset_x, rnd_y + g.offset_y + g.HUD_h)
+        self.x_coord = rnd_x - rnd_x % g.d_tile_size + g.d_dist // 2 + g.offset_x
+        self.y_coord = rnd_y - rnd_y % g.d_tile_size + g.d_dist // 2 + g.offset_y + g.HUD_h
+
+        self.add_to_stack()
+
+    def valid_pos(self, x:int, y:int) -> bool:
+        head_x:int = g.snake_body[0][0]
+        head_y:int = g.snake_body[0][1]
+        head_direction:str = g.snake_body[0][2]
+        distance_from_head:int = g.d_tile_size * 4
+
+        # check if in front of head (current direction)
+        valid:bool = True
+        match(g.direction):
+            case 'n':
+                valid = not (y <= head_y and y >= head_y - distance_from_head)
+            case 's':
+                valid = not (y >= head_y and y <= head_y + distance_from_head)
+            case 'e':
+                valid = not (x >= head_x and x <= head_x + distance_from_head)
+            case 'w':
+                valid = not (x <= head_x and x >= head_x - distance_from_head)
+        if valid:
+            new_rect = g.pygame.Rect(x, y, g.d_size, g.d_size)
+            for segment in g.snake_body:
+                segment_rect = g.pygame.Rect(segment[0], segment[1], g.d_size, g.d_size)
+                if new_rect.colliderect(segment_rect):
+                    return False
+            for obj in g.object_stack:
+                object_rect = g.pygame.Rect(obj.x_coord, obj.y_coord, g.d_size, g.d_size)
+                if new_rect.colliderect(object_rect):
+                    return False
+        return valid
+
+    def check_collision_w_head(self) -> None:
+        object_rect = g.pygame.Rect(self.x_coord, self.y_coord, g.d_size, g.d_size)
+        head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], g.d_size, g.d_size)
+        collides = object_rect.colliderect(head_rect)
+        if collides:
+            self.apply_effect()
+
+    def apply_effect(self) -> None:
+        pass
+        # insert effect in override function
+
+    def draw(self) -> None:
+        g.SCREEN.blit(self.drawable, (self.x_coord, self.y_coord))
+        
+    def new_instance(self) -> None:
+        self.__init__()
+
+    def add_to_stack(self) -> None:
+        g.object_stack.append(self)
+
+    def remove_from_stack(self) -> None:
+        g.object_stack.remove(self)
+
+
+
