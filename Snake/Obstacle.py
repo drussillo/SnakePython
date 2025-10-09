@@ -10,13 +10,25 @@ class Boulder(Object):
     def apply_effect(self) -> None:
         Snake.die()
 
-    '''
     def valid_pos(self, x:int, y:int) -> bool:
-        super().valid_pos(x, y)
+        if (
+            # first, second, second-to-last, and last columns
+            x == g.offset_x and 
+            (y == g.offset_y + g.HUD_h + g.d_tile_size or y == g.screen_h - g.offset_y - 2 * g.d_tile_size) 
+            or
+            x == g.offset_x + g.d_tile_size and 
+            (y == g.offset_y + g.HUD_h or y == g.screen_h - g.offset_y - g.d_tile_size) 
+            or
+            x == g.screen_w - g.offset_x - 2 * g.d_tile_size and 
+            (y == g.offset_y + g.HUD_h or y == g.screen_h - g.offset_y - g.d_tile_size) 
+            or
+            x == g.screen_w - g.offset_x - g.d_tile_size and 
+            (y == g.offset_y + g.HUD_h + g.d_tile_size or y == g.screen_h - g.offset_y - 2 * g.d_tile_size)
+        ):
+            return False
+        else:
+            return super().valid_pos(x, y)
 
-        TODO: avoid 8 tiles next to corners
-
-    '''
 
 #handle obstacles
 boulder_1 = Boulder()

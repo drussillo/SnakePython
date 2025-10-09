@@ -84,11 +84,13 @@ def follow_up() -> None:
         set_segment_dir(0, g.direction)
 
 def movement() -> None:
-    horizontal_offset = (g.snake_body[0][0] - g.offset_x) % g.d_tile_size
-    vertical_offset = (g.snake_body[0][1] - g.HUD_h - g.offset_y) % g.d_tile_size
     head_align_if_turn()
     follow_up()
     advance()
+
+def check_if_fail() -> None:
+    if check_if_coll_itself() or out_of_bounds():
+        die()
 
 def set_segment_dir(index:int, direction:str) -> None:
     g.snake_body[index] = (g.snake_body[index][0], g.snake_body[index][1], direction)
