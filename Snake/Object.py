@@ -14,11 +14,22 @@ class Object:
         # set posx and posy
         loop = True
         while loop:
-            rnd_x = random.randint(0, g.screen_w - g.d_tile_size)
-            rnd_y = random.randint(0, g.screen_h - g.d_tile_size - g.HUD_h)
-            loop = not self.valid_pos(rnd_x + g.offset_x, rnd_y + g.offset_y + g.HUD_h)
-        self.x_coord = rnd_x - rnd_x % g.d_tile_size + g.d_dist // 2 + g.offset_x
-        self.y_coord = rnd_y - rnd_y % g.d_tile_size + g.d_dist // 2 + g.offset_y + g.HUD_h
+            rnd_x = random.randint(0, g.screen_w - 2 * g.offset_x - g.d_tile_size)
+            rnd_x -= rnd_x % g.d_tile_size
+            rnd_x += g.offset_x
+            rnd_y = random.randint(0, g.screen_h - 2 * g.offset_y - g.HUD_h g.d_tile_size)
+            rnd_y -= rnd_y % g.d_tile_size
+            rnd_y += g.offset_y + g.HUD_h
+            loop = not self.valid_pos(rnd_x, rnd_y)
+        self.x_coord = rnd_x
+        self.y_coord = rnd_y
+
+        # while loop:
+        #     rnd_x = random.randint(0, g.screen_w - g.d_tile_size)
+        #     rnd_y = random.randint(0, g.screen_h - g.d_tile_size - g.HUD_h)
+        #     loop = not self.valid_pos(rnd_x + g.offset_x, rnd_y + g.offset_y + g.HUD_h)
+        # self.x_coord = rnd_x - rnd_x % g.d_tile_size + g.d_dist // 2 + g.offset_x
+        # self.y_coord = rnd_y - rnd_y % g.d_tile_size + g.d_dist // 2 + g.offset_y + g.HUD_h
 
         self.add_to_stack()
 

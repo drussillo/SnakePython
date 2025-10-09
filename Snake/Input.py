@@ -1,5 +1,6 @@
 import Global as g
 import Snake  # debug
+import Obstacle
 
 def handle_input_main() -> bool:
     for event in g.pygame.event.get():
@@ -20,7 +21,8 @@ def handle_input_main() -> bool:
                     g.direction = 'w' if g.snake_body[0][2] != 'e' else 'e'
                 case g.pygame.K_t:
                     #test key
-                    Snake.add_segment() #lenghten snake
+                    # Snake.add_segment() #lenghten snake
+                    Obstacle.init_obstacles_basic()
 
     #key up events
         elif event.type == g.pygame.KEYUP:

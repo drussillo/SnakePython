@@ -36,8 +36,8 @@ while running:
             #draw and move the snake
             Snake.draw()
             Snake.movement()
-            if Snake.check_if_coll_itself() or Snake.out_of_bounds():
-                Snake.die()
+            # if Snake.check_if_coll_itself() or Snake.out_of_bounds():
+            #     Snake.die()
             
             Apple.handle_apples_basic()
             Obstacle.handle_obstacles()
