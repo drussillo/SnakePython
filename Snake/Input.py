@@ -18,9 +18,9 @@ def handle_input_main() -> bool:
                     g.direction = 'e' if g.snake_body[0][2] != 'w' else 'w'
                 case g.pygame.K_a | g.pygame.K_LEFT:
                     g.direction = 'w' if g.snake_body[0][2] != 'e' else 'e'
-                case g.pygame.K_t:
-                    #test key
-                    # Snake.add_segment() #lenghten snake
+                # case g.pygame.K_t:
+                #     # test key
+                #     Snake.add_segment() #lenghten snake
 
     #key up events
         elif event.type == g.pygame.KEYUP:

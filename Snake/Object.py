@@ -14,10 +14,10 @@ class Object:
         # set posx and posy
         loop = True
         while loop:
-            rnd_x = random.randint(0, g.screen_w - 2 * g.offset_x - g.d_tile_size)
+            rnd_x = random.randint(0, g.screen_w - 2 * g.offset_x - 1)
             rnd_x -= rnd_x % g.d_tile_size
             rnd_x += g.offset_x
-            rnd_y = random.randint(0, g.screen_h - 2 * g.offset_y - g.HUD_h - g.d_tile_size)
+            rnd_y = random.randint(0, g.screen_h - 2 * g.offset_y - g.HUD_h - 1)
             rnd_y -= rnd_y % g.d_tile_size
             rnd_y += g.offset_y + g.HUD_h
             loop = not self.valid_pos(rnd_x, rnd_y)
@@ -43,6 +43,7 @@ class Object:
             case 'w':
                 valid = not (x <= head_x and x >= head_x - distance_from_head)
         if valid:
+            # check if tile is occupied
             new_rect = g.pygame.Rect(x, y, g.d_tile_size, g.d_tile_size)
             for segment in g.snake_body:
                 segment_rect = g.pygame.Rect(segment[0], segment[1], g.d_tile_size, g.d_tile_size)
