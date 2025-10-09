@@ -5,17 +5,18 @@ This is my attempt at making snake with python!
 
 # Notes:
 
-### TODO:  
-Bug Fixes
-- Double apples bug (probably new apple spawning at same coords as old apple)
+### TODO:
+Settings
+- Add settings menu
+Modes:
+- Add basic mode selection from menu
+- Add level mode
 Graphics  
 - Custom backgrounds for menu, fail, etc.
 - Custom text
 - HUD improvement
 Obstacles
-- Rocks: instant death
 - Bumps: get shorter
-
 
 ### Ideas for future features (in priority order):  
 Different apples  
