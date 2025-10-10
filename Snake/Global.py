@@ -48,36 +48,28 @@ def get_sprite(sheet, x, y, width, height):
 
 #start drawables
 bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
-bgtile1 = get_sprite(bgtiles, 0, 0, 15, 15)
-bgtile1 = pygame.transform.scale(bgtile1, (d_tile_size, d_tile_size))
-bgtile2 = get_sprite(bgtiles, 15, 0, 15, 15)
-bgtile2 = pygame.transform.scale(bgtile2, (d_tile_size, d_tile_size))
-bgtile3 = get_sprite(bgtiles, 30, 0, 15, 15)
-bgtile3 = pygame.transform.scale(bgtile3, (d_tile_size, d_tile_size))
-bgtile4 = get_sprite(bgtiles, 45, 0, 15, 15)
-bgtile4 = pygame.transform.scale(bgtile4, (d_tile_size, d_tile_size))
+bgtile1 = pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size))
+bgtile2 = pygame.transform.scale(get_sprite(bgtiles, 15, 0, 15, 15), (d_tile_size, d_tile_size))
+bgtile3 = pygame.transform.scale(get_sprite(bgtiles, 30, 0, 15, 15), (d_tile_size, d_tile_size))
+bgtile4 = pygame.transform.scale(get_sprite(bgtiles, 45, 0, 15, 15), (d_tile_size, d_tile_size))
 
-# snakesegments = g.pygame.image.load("drawables/snakesegments.png")
-# snakesegment_hor = get_sprite(snakesegments, )
+snakesegments = pygame.image.load("drawables/segments.png").convert_alpha()
+snakesegment_vert = pygame.transform.scale(get_sprite(snakesegments, 0, 0, 15, 15), (d_size, d_size))
+snakesegment_hor = pygame.transform.rotate(snakesegment_vert, 90)
 
-snakesegment_hor = pygame.image.load("drawables/snakesegment.png")
-snakesegment_hor = pygame.transform.scale(snakesegment_hor, (d_size, d_size))
-snakesegment_vert = pygame.transform.rotate(snakesegment_hor, 90)
-
-snakehead_n = pygame.image.load("drawables/snakehead.png")
-snakehead_n = pygame.transform.scale(snakehead_n, (d_size, d_size))
+snakehead_n = pygame.transform.scale(get_sprite(snakesegments, 30, 0, 15, 15), (d_size, d_size))
 snakehead_e = pygame.transform.rotate(snakehead_n, -90)
 snakehead_s = pygame.transform.rotate(snakehead_e, -90)
 snakehead_w = pygame.transform.rotate(snakehead_s, -90)
 
-snakelast_w = pygame.image.load("drawables/snakelast.png")
-snakelast_w = pygame.transform.scale(snakelast_w, (d_size, d_size))
-snakelast_n = pygame.transform.rotate(snakelast_w, -90)
+snakelast_n = pygame.transform.scale(get_sprite(snakesegments, 15, 0, 15, 15), (d_size, d_size))
 snakelast_e = pygame.transform.rotate(snakelast_n, -90)
 snakelast_s = pygame.transform.rotate(snakelast_e, -90)
+snakelast_w = pygame.transform.rotate(snakelast_s, -90)
 
-defapple = pygame.image.load("drawables/defaultapple.png")
-defapple = pygame.transform.scale(defapple, (d_size, d_size))
+objects = pygame.image.load("drawables/objects.png").convert_alpha()
+defapple = pygame.transform.scale(get_sprite(objects, 0, 0, 15, 15), (d_size, d_size))
+boulder = pygame.transform.scale(get_sprite(objects, 15, 0, 15, 15), (d_size, d_size))
 
 
 #randomize background

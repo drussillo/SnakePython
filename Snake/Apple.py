@@ -5,7 +5,7 @@ from Object import Object
 class Apple(Object):
     def __init__(self) -> None:
         self.eaten = False 
-        super().__init__("./drawables/defaultapple.png")
+        super().__init__(g.defapple)
 
     def apply_effect(self) -> None:
         if not self.eaten:
