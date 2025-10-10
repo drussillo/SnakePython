@@ -39,15 +39,26 @@ velocity_start:int = velocity
 offset_x:int = screen_w % d_tile_size // 2
 offset_y:int = (screen_h - HUD_h) % d_tile_size // 2
 
+def get_sprite(sheet, x, y, width, height):
+    # Create a new Surface for the individual sprite
+    sprite_image = pygame.Surface((width, height), pygame.SRCALPHA)
+    # Blit the desired portion of the sprite sheet onto the new Surface
+    sprite_image.blit(sheet, (0, 0), (x, y, width, height))
+    return sprite_image
+
 #start drawables
-bgtile1 = pygame.image.load("drawables/bgtile1.png")
+bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
+bgtile1 = get_sprite(bgtiles, 0, 0, 15, 15)
 bgtile1 = pygame.transform.scale(bgtile1, (d_tile_size, d_tile_size))
-bgtile2 = pygame.image.load("drawables/bgtile2.png")
+bgtile2 = get_sprite(bgtiles, 15, 0, 15, 15)
 bgtile2 = pygame.transform.scale(bgtile2, (d_tile_size, d_tile_size))
-bgtile3 = pygame.image.load("drawables/bgtile3.png")
+bgtile3 = get_sprite(bgtiles, 30, 0, 15, 15)
 bgtile3 = pygame.transform.scale(bgtile3, (d_tile_size, d_tile_size))
-bgtile4 = pygame.image.load("drawables/bgtile4.png")
+bgtile4 = get_sprite(bgtiles, 45, 0, 15, 15)
 bgtile4 = pygame.transform.scale(bgtile4, (d_tile_size, d_tile_size))
+
+# snakesegments = g.pygame.image.load("drawables/snakesegments.png")
+# snakesegment_hor = get_sprite(snakesegments, )
 
 snakesegment_hor = pygame.image.load("drawables/snakesegment.png")
 snakesegment_hor = pygame.transform.scale(snakesegment_hor, (d_size, d_size))
