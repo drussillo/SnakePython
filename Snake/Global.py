@@ -47,6 +47,13 @@ def get_sprite(sheet, x, y, width, height):
     return sprite_image
 
 #start drawables
+buttonscale:int = 4
+buttons = pygame.image.load("drawables/buttons.png").convert_alpha()
+emptybutton = pygame.transform.scale(get_sprite(buttons, 0, 0, 41, 14), (41 * buttonscale, 14 * buttonscale))
+menubutton = pygame.transform.scale(get_sprite(buttons, 0, 14, 34, 14), (34 * buttonscale, 14 * buttonscale))
+retrybutton = pygame.transform.scale(get_sprite(buttons, 0, 28, 41, 14), (41 * buttonscale, 14 * buttonscale))
+startbutton = pygame.transform.scale(get_sprite(buttons, 0, 42, 41, 14), (41 * buttonscale, 14 * buttonscale))
+
 bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
 bgtile1 = pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size))
 bgtile2 = pygame.transform.scale(get_sprite(bgtiles, 15, 0, 15, 15), (d_tile_size, d_tile_size))

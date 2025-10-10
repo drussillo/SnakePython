@@ -26,13 +26,13 @@ def draw_fail_state_screen() -> None: #without buttons
     fail_title_pos_x, fail_title_pos_y = g.get_middle_pos(fail_title.get_width(), fail_title.get_height())
     g.SCREEN.blit(fail_title, (fail_title_pos_x, fail_title_pos_y-200))
     # reset button
-    button_1.set_image(image_path="drawables/resetbutton.png")
+    button_1.set_image(g.retrybutton)
     button_1.center()
     button_1.move(y=200, x=150)
     button_1.draw(g.SCREEN)
     button_1.check_if_clicked(g.reset_mode_basic)
     # menu button
-    button_2.set_image("drawables/menubutton.png")
+    button_2.set_image(g.menubutton)
     button_2.center()
     button_2.move(y=200, x=-150)
     button_2.draw(g.SCREEN)
@@ -44,28 +44,26 @@ def draw_main_menu_screen() -> None:
     main_title = font.render('Snake Python', True, (56, 79, 93))
     main_title_pos_x, main_title_pos_y = g.get_middle_pos(main_title.get_width(), main_title.get_height())
     g.SCREEN.blit(main_title, (main_title_pos_x, main_title_pos_y-200))
-    button_1.set_image("drawables/startbutton.png")
+    button_1.set_image(g.startbutton)
     button_1.center()
     button_1.move(y=200)
     button_1.draw(g.SCREEN)
     button_1.check_if_clicked(g.reset_mode_basic)
 
 class Button():
-    def __init__(self, x=0, y=0, w=None, h=None, image_path:str="drawables/defaultapple.png") -> None:
+    def __init__(self, x=0, y=0, w=0, h=0, drawable:g.pygame.surface.Surface=g.emptybutton) -> None:
         self.x = x
         self.y = y
-        img_obj = g.pygame.image.load(image_path)
-        self.w = w if w != None else img_obj.get_width() * 4
-        self.h = h if h != None else img_obj.get_height() * 4
-        self.image = g.pygame.transform.scale(img_obj, (self.w, self.h))
+        self.w = w if w > 0 else drawable.get_width()
+        self.h = h if h > 0 else drawable.get_height()
+        self.image = drawable
         self.rect = g.pygame.Rect(x, y, self.w, self.h)
         self.is_down = False
 
-    def set_image(self, image_path:str="drawables/defaultapple.png") -> None:
-        img_obj = g.pygame.image.load(image_path)
-        self.w = img_obj.get_width() * 4
-        self.h = img_obj.get_height() * 4
-        self.image = g.pygame.transform.scale(img_obj, (self.w, self.h))
+    def set_image(self, drawable:g.pygame.surface.Surface=g.defapple) -> None:
+        self.w = drawable.get_width()
+        self.h = drawable.get_height()
+        self.image = drawable
 
     def center(self) -> None:
         self.x, self.y = g.get_middle_pos(self.w, self.h)
@@ -88,6 +86,6 @@ class Button():
         self.is_down = g.pygame.mouse.get_pressed(num_buttons=3)[0]
 
 #declare multiuse button objects
-button_1 = Button(w=200, h=68.3, image_path="drawables/emptybutton.png")
-button_2 = Button(w=200, h=68.3, image_path="drawables/emptybutton.png")
+button_1 = Button()
+button_2 = Button()
 
