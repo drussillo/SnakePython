@@ -56,3 +56,13 @@ def handle_input_menu() -> bool:
                 return False
 
     return True
+
+def handle_input_settings() -> bool:
+    for event in g.pygame.event.get():
+        if event.type == g.pygame.QUIT:
+            return False
+        elif event.type == g.pygame.KEYDOWN:
+            if event.key == g.pygame.K_ESCAPE:
+                return False
+
+    return True

@@ -8,7 +8,7 @@ def draw_HUD() -> None:
     apple_icon = g.pygame.transform.scale(g.defapple, (apple_icon_w, apple_icon_h))
     apple_icon_pos_x, apple_icon_pos_y = g.HUD_w//g.HUD_divisor, g.HUD_h // 2 - apple_icon.get_height()//2
     g.SCREEN.blit(apple_icon, (apple_icon_pos_x, apple_icon_pos_y))
-    font = g.pygame.font.SysFont(None, apple_icon.get_width())
+    font = g.pygame.font.SysFont(g.default_font, apple_icon.get_width())
     apple_counter = font.render(f" x {len(g.snake_body) - 1}", True, (0,0,0))
     apple_counter_pos_x, apple_counter_pos_y = apple_icon_pos_x + apple_icon_w, apple_icon_pos_y + apple_icon_w//4
     g.SCREEN.blit(apple_counter, (apple_counter_pos_x, apple_counter_pos_y))
@@ -21,10 +21,9 @@ def draw_background() -> None:
 
 def draw_fail_state_screen() -> None: #without buttons
     g.SCREEN.fill((110, 135, 97))
-    font = g.pygame.font.SysFont(None, 100)
+    font = g.pygame.font.SysFont(g.default_font, 100)
     fail_title = font.render('You Failed!', True, (56, 79, 93))
-    fail_title_pos_x, fail_title_pos_y = g.get_middle_pos(fail_title.get_width(), fail_title.get_height())
-    g.SCREEN.blit(fail_title, (fail_title_pos_x, fail_title_pos_y-200))
+    g.SCREEN.blit(fail_title, (g.screen_w // 2 - fail_title.get_width() // 2, g.screen_h // 5))
     # reset button
     button_1.set_image(g.retrybutton)
     button_1.center()
@@ -40,27 +39,39 @@ def draw_fail_state_screen() -> None: #without buttons
 
 def draw_main_menu_screen() -> None:
     g.SCREEN.fill((110, 135, 97))
-    font = g.pygame.font.SysFont(None, 100)
+    font = g.pygame.font.SysFont(g.default_font, 100)
     main_title = font.render('Snake Python', True, (56, 79, 93))
-    main_title_pos_x, main_title_pos_y = g.get_middle_pos(main_title.get_width(), main_title.get_height())
-    g.SCREEN.blit(main_title, (main_title_pos_x, main_title_pos_y-200))
+    g.SCREEN.blit(main_title, (g.screen_w // 2 - main_title.get_width() // 2, g.screen_h // 5))
+    # start button
     button_1.set_image(g.startbutton)
     button_1.center()
-    button_1.move(y=200)
+    button_1.move(y=g.screen_h//5)
     button_1.draw(g.SCREEN)
     button_1.check_if_clicked(g.reset_mode_basic)
+    # settings button
+    button_2.set_image(g.settingsbutton)
+    button_2.center()
+    button_2.move(y=button_1.y-button_2.y+75)
+    button_2.draw(g.SCREEN)
+    button_2.check_if_clicked(g.reset_settings)
 
-def draw_settings_menu_screen() -> None:
+def draw_settings_screen() -> None:
     g.SCREEN.fill((110, 135, 97))
-    font = g.pygame.font.SysFont(None, 100)
+    font = g.pygame.font.SysFont(g.default_font, 100)
     settings_title = font.render('Settings', True, (56, 79, 93))
-    settings_rect = settings_title.get_rect()
-    g.SCREEN.blit(settings_title, (settings_rect.x, settings_rect.y))
-    button_1.set_image(g.emptybutton)
+    g.SCREEN.blit(settings_title, (g.screen_w // 2 - settings_title.get_width() // 2, g.screen_h // 5))
+    # cancel button
+    button_1.set_image(g.cancelbutton)
     button_1.center()
-    button_1.move(y=200)
+    button_1.move(x=-150, y=g.screen_h//2.5)
     button_1.draw(g.SCREEN)
-    button_1.check_if_clicked(g.reset_mode_basic)
+    button_1.check_if_clicked(g.reset_menu)
+    # save button
+    button_2.set_image(g.savebutton)
+    button_2.center()
+    button_2.move(x=150, y=g.screen_h//2.5)
+    button_2.draw(g.SCREEN)
+    button_2.check_if_clicked(g.reset_menu)
 
 
 class Button():

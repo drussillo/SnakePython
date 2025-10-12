@@ -22,6 +22,7 @@ if d_tile_size % velocity != 0:
     d_tile_size = d_size + d_dist
 
 #miscellaneous
+default_font = None
 SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 clock = pygame.time.Clock()
 # gamestates
@@ -29,7 +30,8 @@ class Gamestate(Enum):
     VOID = 0
     MENU = 1
     FAIL = 2
-    MODE_BASIC = 3
+    SETTINGS = 3
+    MODE_BASIC = 4
 
 current_state: Gamestate = Gamestate.MENU
 
@@ -47,12 +49,15 @@ def get_sprite(sheet, x, y, width, height):
     return sprite_image
 
 #start drawables
-buttonscale:int = 4
+buttonscale:int = 4  # each row is 14px
 buttons = pygame.image.load("drawables/buttons.png").convert_alpha()
 emptybutton = pygame.transform.scale(get_sprite(buttons, 0, 0, 41, 14), (41 * buttonscale, 14 * buttonscale))
 menubutton = pygame.transform.scale(get_sprite(buttons, 0, 14, 34, 14), (34 * buttonscale, 14 * buttonscale))
 retrybutton = pygame.transform.scale(get_sprite(buttons, 0, 28, 41, 14), (41 * buttonscale, 14 * buttonscale))
 startbutton = pygame.transform.scale(get_sprite(buttons, 0, 42, 41, 14), (41 * buttonscale, 14 * buttonscale))
+settingsbutton = pygame.transform.scale(get_sprite(buttons, 0, 56, 61, 14), (61 * buttonscale, 14 *buttonscale))
+cancelbutton = pygame.transform.scale(get_sprite(buttons, 0, 70, 48, 14), (48 * buttonscale, 14 *buttonscale))
+savebutton = pygame.transform.scale(get_sprite(buttons, 0, 84, 34, 14), (34 * buttonscale, 14 *buttonscale))
 
 bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
 bgtile1 = pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size))
@@ -122,9 +127,13 @@ def reset_menu() -> None:
     global current_state
     current_state = Gamestate.MENU
 
-def reset_fail() ->None:
+def reset_fail() -> None:
     global current_state
     current_state = Gamestate.FAIL
+
+def reset_settings() -> None:
+    global current_state
+    current_state = Gamestate.SETTINGS
 
 def reset_mode_basic() -> None:
     global current_state

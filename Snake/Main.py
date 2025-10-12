@@ -27,6 +27,11 @@ while running:
             States.init_fail()
             running = Input.handle_input_fail()
 
+        case g.Gamestate.SETTINGS:
+            UI.draw_settings_screen()
+            States.init_settings()
+            running = Input.handle_input_settings()
+
         case g.Gamestate.MODE_BASIC:
             States.init_mode_basic()
             UI.draw_background()
