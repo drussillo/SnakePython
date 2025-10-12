@@ -6,19 +6,22 @@ This is my attempt at making snake with python!
 # Notes:
 
 ### TODO:
-Settings
+Settings  
 - Add settings menu
-Modes:
-- Add basic mode selection from menu
-- Add level mode
-Graphics  
-- Custom backgrounds for menu, fail, etc.
-- Custom text
-- HUD improvement
-Obstacles
-- Bumps: get shorter
 
-### Ideas for future features (in priority order):  
+Modes:  
+- Add basic mode selection from menu 
+- Add level mode
+
+Graphics:  
+- Custom backgrounds for menu, fail, etc.  
+- Custom text  
+- HUD improvement
+  
+Obstacles:  
+- Bumps: get shorter  
+
+### Ideas for future features (in priority order):   
 Different apples  
 - Normal apples (1 lenght)
 - Big apples (2 lenght)
