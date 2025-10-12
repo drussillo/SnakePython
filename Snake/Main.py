@@ -6,6 +6,7 @@ import UI
 import States
 import Obstacle
 import Object
+import Sound
 
 g.pygame.init()
 g.pygame.display.set_caption("Snake")

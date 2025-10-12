@@ -64,14 +64,32 @@ def draw_settings_screen() -> None:
     button_1.set_image(g.cancelbutton)
     button_1.center()
     button_1.move(x=-150, y=g.screen_h//2.5)
-    button_1.draw(g.SCREEN)
+    button_1.draw()
     button_1.check_if_clicked(g.reset_menu)
     # save button
     button_2.set_image(g.savebutton)
     button_2.center()
     button_2.move(x=150, y=g.screen_h//2.5)
-    button_2.draw(g.SCREEN)
+    button_2.draw()
     button_2.check_if_clicked(g.reset_menu)
+    # sfx button
+    if g.sfx:
+        button_3.set_image(g.sfxonbutton)
+    else:
+        button_3.set_image(g.sfxoffbutton)
+    button_3.center()
+    button_3.move(x=-50)
+    button_3.draw()
+    button_3.check_if_clicked(g.toggle_sfx)
+    # music button
+    if g.music:
+        button_4.set_image(g.musiconbutton)
+    else:
+        button_4.set_image(g.musicoffbutton)
+    button_4.center()
+    button_4.move(x=50)
+    button_4.draw()
+    button_4.check_if_clicked(g.toggle_music)
 
 
 class Button():
@@ -99,7 +117,7 @@ class Button():
     def resize(self, w=30, h=30) -> None:
         self.image = g.pygame.transform.scale(self.image, (w, h))
 
-    def draw(self, surface:type(g.SCREEN)) -> None:
+    def draw(self, surface=g.SCREEN) -> None:
         surface.blit(self.image, (self.x, self.y))
 
     def check_if_clicked(self, function) -> None:
@@ -112,4 +130,5 @@ class Button():
 #declare multiuse button objects
 button_1 = Button()
 button_2 = Button()
-
+button_3 = Button()
+button_4 = Button()
