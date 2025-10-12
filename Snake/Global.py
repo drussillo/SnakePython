@@ -10,7 +10,7 @@ velocity:int = 2 #pixels per frame; MAX is tile_size or size + dist
 max_fps:int = 120
 d_size:int = 60 #default size
 d_dist:int = 5 #default distance
-sound:bool = True
+sfx:bool = True 
 music:bool = True
 HUD_divisor:int = 10
 

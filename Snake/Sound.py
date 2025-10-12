@@ -8,7 +8,8 @@ class Type(Enum):
     SPAWN = 3
 
 def playBGM() -> None:
-    g.pygame.mixer.music.play(-1,0.0)
+    if g.music:
+        g.pygame.mixer.music.play(-1,0.0)
 
 def setBGM(path:str) -> None:
     g.pygame.mixer.music.load(path)
@@ -20,16 +21,17 @@ def is_playing() -> bool:
     return g.pygame.mixer.get_busy()
 
 def play(type:Type) -> None:
-    match type:
-        case Type.GROW:
-            path = "./audio/grow.wav"
-        case Type.DEATH:
-            path = "./audio/death.wav"
-        case Type.SPAWN:
-            path = "./audio/spawn.wav"
-        case _:
-            path = "./audio/error.wav"
+    if g.sfx:
+        match type:
+            case Type.GROW:
+                path = "./audio/grow.wav"
+            case Type.DEATH:
+                path = "./audio/death.wav"
+            case Type.SPAWN:
+                path = "./audio/spawn.wav"
+            case _:
+                path = "./audio/error.wav"
 
-    sound = g.pygame.mixer.Sound(path)
-    sound.set_volume(0.2)
-    sound.play()
+        sound = g.pygame.mixer.Sound(path)
+        sound.set_volume(0.2)
+        sound.play()
