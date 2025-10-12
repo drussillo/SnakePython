@@ -50,6 +50,19 @@ def draw_main_menu_screen() -> None:
     button_1.draw(g.SCREEN)
     button_1.check_if_clicked(g.reset_mode_basic)
 
+def draw_settings_menu_screen() -> None:
+    g.SCREEN.fill((110, 135, 97))
+    font = g.pygame.font.SysFont(None, 100)
+    settings_title = font.render('Settings', True, (56, 79, 93))
+    settings_rect = settings_title.get_rect()
+    g.SCREEN.blit(settings_title, (settings_rect.x, settings_rect.y))
+    button_1.set_image(g.emptybutton)
+    button_1.center()
+    button_1.move(y=200)
+    button_1.draw(g.SCREEN)
+    button_1.check_if_clicked(g.reset_mode_basic)
+
+
 class Button():
     def __init__(self, x=0, y=0, w=0, h=0, drawable:g.pygame.surface.Surface=g.emptybutton) -> None:
         self.x = x
