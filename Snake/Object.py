@@ -2,12 +2,9 @@ import Global as g
 import random
 
 class Object:
-    def __init__(self, drawable_path:str="", width:int=g.d_size, height:int=g.d_size) -> None:
+    def __init__(self, drawable:g.pygame.surface.Surface=g.defapple, width:int=g.d_size, height:int=g.d_size) -> None:
         # set drawable
-        self.drawable:g.pygame.surface.Surface = g.defapple
-        if drawable_path:
-            self.drawable = g.pygame.image.load(drawable_path)
-            self.drawable = g.pygame.transform.scale(self.drawable, (width, height))
+        self.drawable:g.pygame.surface.Surface = drawable
         # set width and height
         self.width = width
         self.height = height

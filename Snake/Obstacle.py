@@ -5,7 +5,7 @@ import random
 
 class Boulder(Object):
     def __init__(self) -> None:
-        super().__init__("./drawables/boulder.png")
+        super().__init__(g.boulder)
 
     def apply_effect(self) -> None:
         Snake.die()
