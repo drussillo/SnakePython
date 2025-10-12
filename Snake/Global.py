@@ -27,6 +27,19 @@ if d_tile_size % velocity != 0:
 default_font = None
 SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 clock = pygame.time.Clock()
+
+# temp settings
+screen_w_temp:int
+screen_h_temp:int
+fullscreen_temp:bool
+velocity_temp:int
+max_fps_temp:int
+d_size_temp:int
+d_dist_temp:int
+sfx_temp:bool
+music_temp:bool
+
+
 # gamestates
 class Gamestate(Enum):
     VOID = 0
@@ -126,13 +139,13 @@ def clear_object_stack() -> None:
 def get_middle_pos(w=0, h=0) -> (int, int):
     return (screen_w // 2 - w // 2, screen_h // 2 - h // 2)
 
-def toggle_sfx() -> None:
-    global sfx
-    sfx = not sfx
+def toggle_sfx_temp() -> None:
+    global sfx_temp
+    sfx_temp = not sfx_temp
 
-def toggle_music() -> None:
-    global music
-    music = not music
+def toggle_music_temp() -> None:
+    global music_temp
+    music_temp = not music_temp
 
 # reset functions
 

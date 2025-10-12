@@ -71,26 +71,38 @@ def draw_settings_screen() -> None:
     button_2.center()
     button_2.move(x=150, y=g.screen_h//2.5)
     button_2.draw()
-    button_2.check_if_clicked(g.reset_menu)
+    button_2.check_if_clicked(save)
     # sfx button
-    if g.sfx:
+    if g.sfx_temp:
         button_3.set_image(g.sfxonbutton)
     else:
         button_3.set_image(g.sfxoffbutton)
     button_3.center()
     button_3.move(x=-50)
     button_3.draw()
-    button_3.check_if_clicked(g.toggle_sfx)
+    button_3.check_if_clicked(g.toggle_sfx_temp)
     # music button
-    if g.music:
+    if g.music_temp:
         button_4.set_image(g.musiconbutton)
     else:
         button_4.set_image(g.musicoffbutton)
     button_4.center()
     button_4.move(x=50)
     button_4.draw()
-    button_4.check_if_clicked(g.toggle_music)
+    button_4.check_if_clicked(g.toggle_music_temp)
 
+# settings helper
+def save() -> None:
+    g.screen_w = g.screen_w_temp
+    g.screen_h = g.screen_h_temp
+    g.fullscren = g.fullscreen_temp
+    g.velocity = g.velocity_temp
+    g.max_fps = g.max_fps_temp
+    g.d_size = g.d_size_temp
+    g.d_dist = g.d_dist_temp
+    g.sfx = g.sfx_temp
+    g.music = g.music_temp
+    g.reset_menu()
 
 class Button():
     def __init__(self, x=0, y=0, w=0, h=0, drawable:g.pygame.surface.Surface=g.emptybutton) -> None:
