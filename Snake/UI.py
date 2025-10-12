@@ -54,6 +54,12 @@ def draw_main_menu_screen() -> None:
     button_2.move(y=button_1.y-button_2.y+75)
     button_2.draw(g.SCREEN)
     button_2.check_if_clicked(g.reset_settings)
+    # TODO: Add resultion setting
+    # TODO: Add fullscreen setting
+    # TODO: Add velocity setting
+    # TODO: Add max_fps / gamespeed setting
+    # TODO: Add tilesize (d_size + adj tilesize) setting
+    # TODO: Add input mode? (legacy vs quick)
 
 def draw_settings_screen() -> None:
     g.SCREEN.fill((110, 135, 97))

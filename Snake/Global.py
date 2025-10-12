@@ -14,14 +14,20 @@ sfx:bool = True
 music:bool = True
 HUD_divisor:int = 10
 
-#adjust tile size according to velocity
 d_tile_size:int = d_size + d_dist
-if d_tile_size % velocity != 0:
-    adj_size = (d_tile_size % velocity) // 2
-    adj_dist = (d_tile_size % velocity) - adj_size
-    d_size -= adj_size
-    d_dist -= adj_dist
+#adjust tile size according to velocity
+def adjust_d_tile_size() -> None:
+    global d_tile_size
+    global d_size
+    global d_dist
     d_tile_size = d_size + d_dist
+    if d_tile_size % velocity != 0:
+        adj_size = (d_tile_size % velocity) // 2
+        adj_dist = (d_tile_size % velocity) - adj_size
+        d_size -= adj_size
+        d_dist -= adj_dist
+        d_tile_size = d_size + d_dist
+adjust_d_tile_size()
 
 #miscellaneous
 default_font = None
