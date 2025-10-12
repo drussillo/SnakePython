@@ -60,6 +60,10 @@ startbutton = pygame.transform.scale(get_sprite(buttons, 0, 42, 41, 14), (41 * b
 settingsbutton = pygame.transform.scale(get_sprite(buttons, 0, 56, 61, 14), (61 * buttonscale, 14 *buttonscale))
 cancelbutton = pygame.transform.scale(get_sprite(buttons, 0, 70, 48, 14), (48 * buttonscale, 14 *buttonscale))
 savebutton = pygame.transform.scale(get_sprite(buttons, 0, 84, 34, 14), (34 * buttonscale, 14 *buttonscale))
+sfxonbutton = pygame.transform.scale(get_sprite(buttons, 0, 98, 16, 14), (16 * buttonscale, 14 *buttonscale))
+sfxoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 112, 16, 14), (16 * buttonscale, 14 *buttonscale))
+musiconbutton = pygame.transform.scale(get_sprite(buttons, 0, 126, 16, 14), (16 * buttonscale, 14 *buttonscale))
+musicoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 140, 16, 14), (16 * buttonscale, 14 *buttonscale))
 
 bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
 bgtile1 = pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size))
