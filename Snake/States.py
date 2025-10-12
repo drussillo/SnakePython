@@ -19,6 +19,21 @@ def init_fail() -> None:
         Sound.stop()
         initalized_state = g.Gamestate.FAIL
 
+def init_settings() -> None:
+    global initalized_state
+    if initalized_state != g.Gamestate.SETTINGS:
+        # reset temp settings
+        g.screen_w_temp = g.screen_w
+        g.screen_h_temp = g.screen_h
+        g.fullscreen_temp = g.fullscreen
+        g.velocity_temp = g.velocity
+        g.max_fps_temp = g.max_fps
+        g.d_size_temp = g.d_size
+        g.d_dist_temp = g.d_dist
+        g.sfx_temp = g.sfx
+        g.music_temp = g.music
+        initalized_state = g.Gamestate.SETTINGS
+
 
 def init_mode_basic() -> None:
     global initalized_state

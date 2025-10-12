@@ -10,26 +10,49 @@ velocity:int = 2 #pixels per frame; MAX is tile_size or size + dist
 max_fps:int = 120
 d_size:int = 60 #default size
 d_dist:int = 5 #default distance
+sfx:bool = True 
+music:bool = True
 HUD_divisor:int = 10
 
-#adjust tile size according to velocity
 d_tile_size:int = d_size + d_dist
-if d_tile_size % velocity != 0:
-    adj_size = (d_tile_size % velocity) // 2
-    adj_dist = (d_tile_size % velocity) - adj_size
-    d_size -= adj_size
-    d_dist -= adj_dist
+#adjust tile size according to velocity
+def adjust_d_tile_size() -> None:
+    global d_tile_size
+    global d_size
+    global d_dist
     d_tile_size = d_size + d_dist
+    if d_tile_size % velocity != 0:
+        adj_size = (d_tile_size % velocity) // 2
+        adj_dist = (d_tile_size % velocity) - adj_size
+        d_size -= adj_size
+        d_dist -= adj_dist
+        d_tile_size = d_size + d_dist
+adjust_d_tile_size()
 
 #miscellaneous
+default_font = None
 SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 clock = pygame.time.Clock()
+
+# temp settings
+screen_w_temp:int
+screen_h_temp:int
+fullscreen_temp:bool
+velocity_temp:int
+max_fps_temp:int
+d_size_temp:int
+d_dist_temp:int
+sfx_temp:bool
+music_temp:bool
+
+
 # gamestates
 class Gamestate(Enum):
     VOID = 0
     MENU = 1
     FAIL = 2
-    MODE_BASIC = 3
+    SETTINGS = 3
+    MODE_BASIC = 4
 
 current_state: Gamestate = Gamestate.MENU
 
@@ -47,12 +70,19 @@ def get_sprite(sheet, x, y, width, height):
     return sprite_image
 
 #start drawables
-buttonscale:int = 4
+buttonscale:int = 4  # each row is 14px
 buttons = pygame.image.load("drawables/buttons.png").convert_alpha()
 emptybutton = pygame.transform.scale(get_sprite(buttons, 0, 0, 41, 14), (41 * buttonscale, 14 * buttonscale))
 menubutton = pygame.transform.scale(get_sprite(buttons, 0, 14, 34, 14), (34 * buttonscale, 14 * buttonscale))
 retrybutton = pygame.transform.scale(get_sprite(buttons, 0, 28, 41, 14), (41 * buttonscale, 14 * buttonscale))
 startbutton = pygame.transform.scale(get_sprite(buttons, 0, 42, 41, 14), (41 * buttonscale, 14 * buttonscale))
+settingsbutton = pygame.transform.scale(get_sprite(buttons, 0, 56, 61, 14), (61 * buttonscale, 14 *buttonscale))
+cancelbutton = pygame.transform.scale(get_sprite(buttons, 0, 70, 48, 14), (48 * buttonscale, 14 *buttonscale))
+savebutton = pygame.transform.scale(get_sprite(buttons, 0, 84, 34, 14), (34 * buttonscale, 14 *buttonscale))
+sfxonbutton = pygame.transform.scale(get_sprite(buttons, 0, 98, 17, 14), (17 * buttonscale, 14 *buttonscale))
+sfxoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 112, 17, 14), (17 * buttonscale, 14 *buttonscale))
+musiconbutton = pygame.transform.scale(get_sprite(buttons, 0, 126, 17, 14), (17 * buttonscale, 14 *buttonscale))
+musicoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 140, 17, 14), (17 * buttonscale, 14 *buttonscale))
 
 bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
 bgtile1 = pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size))
@@ -115,6 +145,13 @@ def clear_object_stack() -> None:
 def get_middle_pos(w=0, h=0) -> (int, int):
     return (screen_w // 2 - w // 2, screen_h // 2 - h // 2)
 
+def toggle_sfx_temp() -> None:
+    global sfx_temp
+    sfx_temp = not sfx_temp
+
+def toggle_music_temp() -> None:
+    global music_temp
+    music_temp = not music_temp
 
 # reset functions
 
@@ -122,9 +159,13 @@ def reset_menu() -> None:
     global current_state
     current_state = Gamestate.MENU
 
-def reset_fail() ->None:
+def reset_fail() -> None:
     global current_state
     current_state = Gamestate.FAIL
+
+def reset_settings() -> None:
+    global current_state
+    current_state = Gamestate.SETTINGS
 
 def reset_mode_basic() -> None:
     global current_state

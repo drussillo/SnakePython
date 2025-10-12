@@ -6,6 +6,7 @@ import UI
 import States
 import Obstacle
 import Object
+import Sound
 
 g.pygame.init()
 g.pygame.display.set_caption("Snake")
@@ -26,6 +27,11 @@ while running:
             UI.draw_fail_state_screen()
             States.init_fail()
             running = Input.handle_input_fail()
+
+        case g.Gamestate.SETTINGS:
+            States.init_settings()
+            UI.draw_settings_screen()
+            running = Input.handle_input_settings()
 
         case g.Gamestate.MODE_BASIC:
             States.init_mode_basic()

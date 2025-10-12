@@ -6,8 +6,16 @@ This is my attempt at making snake with python!
 # Notes:
 
 ### TODO:
+Bugfixes:  
+- Speed boost breaks with different tile sizes
+
 Settings  
-- Add settings menu
+- Add resultion setting
+- Add fullscreen setting
+- Add velocity setting
+- Add max_fps / gamespeed setting
+- Add tilesize (d_size + adj tilesize) setting
+- Add input mode? (legacy vs quick)
 
 Modes:  
 - Add basic mode selection from menu 
