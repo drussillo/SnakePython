@@ -54,12 +54,6 @@ def draw_main_menu_screen() -> None:
     button_2.move(y=button_1.y-button_2.y+75)
     button_2.draw(g.SCREEN)
     button_2.check_if_clicked(g.reset_settings)
-    # TODO: Add resultion setting
-    # TODO: Add fullscreen setting
-    # TODO: Add velocity setting
-    # TODO: Add max_fps / gamespeed setting
-    # TODO: Add tilesize (d_size + adj tilesize) setting
-    # TODO: Add input mode? (legacy vs quick)
 
 def draw_settings_screen() -> None:
     g.SCREEN.fill((110, 135, 97))
@@ -71,7 +65,7 @@ def draw_settings_screen() -> None:
     button_1.center()
     button_1.move(x=-150, y=g.screen_h//2.5)
     button_1.draw()
-    button_1.check_if_clicked(g.reset_menu)
+    button_1.check_if_clicked(cancel)
     # save button
     button_2.set_image(g.savebutton)
     button_2.center()
@@ -96,18 +90,36 @@ def draw_settings_screen() -> None:
     button_4.move(x=50)
     button_4.draw()
     button_4.check_if_clicked(g.toggle_music_temp)
+    # TODO: Add resultion setting
+    # TODO: Add fullscreen setting
+    button_5.set_image(g.fullscreenbutton)
+    button_5.center()
+    button_5.move(x=-50, y=60)
+    button_5.draw()
+    button_5.check_if_clicked(g.toggle_fullscreen)
+    # TODO: Add velocity setting
+    # TODO: Add max_fps / gamespeed setting
+    # TODO: Add tilesize (d_size + adj tilesize) setting
+    # TODO: Add input mode? (legacy vs quick)
 
 # settings helper
 def save() -> None:
     g.screen_w = g.screen_w_temp
     g.screen_h = g.screen_h_temp
-    g.fullscren = g.fullscreen_temp
+    g.fullscreen = g.fullscreen_temp
     g.velocity = g.velocity_temp
     g.max_fps = g.max_fps_temp
     g.d_size = g.d_size_temp
     g.d_dist = g.d_dist_temp
     g.sfx = g.sfx_temp
     g.music = g.music_temp
+    g.SCREEN = g.pygame.display.set_mode([g.screen_w, g.screen_h], g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
+    g.reset_menu()
+
+# settings helper
+def cancel() -> None:
+    g.fullscreen_temp = g.fullscreen
+    g.SCREEN = g.pygame.display.set_mode([g.screen_w, g.screen_h], g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
     g.reset_menu()
 
 class Button():
@@ -150,3 +162,4 @@ button_1 = Button()
 button_2 = Button()
 button_3 = Button()
 button_4 = Button()
+button_5 = Button()

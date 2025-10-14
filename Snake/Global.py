@@ -2,8 +2,9 @@ import pygame
 import random
 from enum import Enum
 
-#Settings
-screen_w:int = 720
+# Settings
+# 500x500 min res
+screen_w:int = 1280
 screen_h:int = 720
 fullscreen:bool = False
 velocity:int = 2 #pixels per frame; MAX is tile_size or size + dist
@@ -76,13 +77,14 @@ emptybutton = pygame.transform.scale(get_sprite(buttons, 0, 0, 41, 14), (41 * bu
 menubutton = pygame.transform.scale(get_sprite(buttons, 0, 14, 34, 14), (34 * buttonscale, 14 * buttonscale))
 retrybutton = pygame.transform.scale(get_sprite(buttons, 0, 28, 41, 14), (41 * buttonscale, 14 * buttonscale))
 startbutton = pygame.transform.scale(get_sprite(buttons, 0, 42, 41, 14), (41 * buttonscale, 14 * buttonscale))
-settingsbutton = pygame.transform.scale(get_sprite(buttons, 0, 56, 61, 14), (61 * buttonscale, 14 *buttonscale))
-cancelbutton = pygame.transform.scale(get_sprite(buttons, 0, 70, 48, 14), (48 * buttonscale, 14 *buttonscale))
-savebutton = pygame.transform.scale(get_sprite(buttons, 0, 84, 34, 14), (34 * buttonscale, 14 *buttonscale))
-sfxonbutton = pygame.transform.scale(get_sprite(buttons, 0, 98, 17, 14), (17 * buttonscale, 14 *buttonscale))
-sfxoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 112, 17, 14), (17 * buttonscale, 14 *buttonscale))
-musiconbutton = pygame.transform.scale(get_sprite(buttons, 0, 126, 17, 14), (17 * buttonscale, 14 *buttonscale))
-musicoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 140, 17, 14), (17 * buttonscale, 14 *buttonscale))
+settingsbutton = pygame.transform.scale(get_sprite(buttons, 0, 56, 61, 14), (61 * buttonscale, 14 * buttonscale))
+cancelbutton = pygame.transform.scale(get_sprite(buttons, 0, 70, 48, 14), (48 * buttonscale, 14 * buttonscale))
+savebutton = pygame.transform.scale(get_sprite(buttons, 0, 84, 34, 14), (34 * buttonscale, 14 * buttonscale))
+sfxonbutton = pygame.transform.scale(get_sprite(buttons, 0, 98, 17, 14), (17 * buttonscale, 14 * buttonscale))
+sfxoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 112, 17, 14), (17 * buttonscale, 14 * buttonscale))
+musiconbutton = pygame.transform.scale(get_sprite(buttons, 0, 126, 17, 14), (17 * buttonscale, 14 * buttonscale))
+musicoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 140, 17, 14), (17 * buttonscale, 14 * buttonscale))
+fullscreenbutton = pygame.transform.scale(get_sprite(buttons, 0, 154, 17, 14), (17 * buttonscale, 14 * buttonscale))
 
 bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
 bgtile1 = pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size))
@@ -152,6 +154,12 @@ def toggle_sfx_temp() -> None:
 def toggle_music_temp() -> None:
     global music_temp
     music_temp = not music_temp
+
+def toggle_fullscreen() -> None:
+    global fullscreen_temp
+    global SCREEN
+    fullscreen_temp = not fullscreen_temp
+    SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN, pygame.SCALED) if fullscreen_temp else pygame.display.set_mode([screen_w, screen_h])
 
 # reset functions
 
