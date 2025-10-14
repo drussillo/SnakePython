@@ -4,8 +4,8 @@ from enum import Enum
 
 # Settings
 # 500x500 min res
-screen_w:int = 1280
-screen_h:int = 720
+screen_w:int = 500
+screen_h:int = 500
 fullscreen:bool = False
 velocity:int = 2 #pixels per frame; MAX is tile_size or size + dist
 max_fps:int = 120
@@ -32,13 +32,14 @@ adjust_d_tile_size()
 
 #miscellaneous
 default_font = None
-SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
+REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
+SCREEN = pygame.Surface((screen_w, screen_h))
 clock = pygame.time.Clock()
 
 # temp settings
 screen_w_temp:int
 screen_h_temp:int
-fullscreen_temp:bool
+fullscreen_temp:bool = fullscreen
 velocity_temp:int
 max_fps_temp:int
 d_size_temp:int
@@ -159,7 +160,7 @@ def toggle_fullscreen() -> None:
     global fullscreen_temp
     global SCREEN
     fullscreen_temp = not fullscreen_temp
-    SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN, pygame.SCALED) if fullscreen_temp else pygame.display.set_mode([screen_w, screen_h])
+    REAL_SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN, pygame.SCALED) if fullscreen_temp else pygame.display.set_mode([screen_w, screen_h])
 
 # reset functions
 

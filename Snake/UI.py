@@ -113,13 +113,13 @@ def save() -> None:
     g.d_dist = g.d_dist_temp
     g.sfx = g.sfx_temp
     g.music = g.music_temp
-    g.SCREEN = g.pygame.display.set_mode([g.screen_w, g.screen_h], g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
+    g.REAL_SCREEN = g.pygame.display.set_mode((0, 0), g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
     g.reset_menu()
 
 # settings helper
 def cancel() -> None:
     g.fullscreen_temp = g.fullscreen
-    g.SCREEN = g.pygame.display.set_mode([g.screen_w, g.screen_h], g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
+    g.REAL_SCREEN = g.pygame.display.set_mode((0, 0), g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
     g.reset_menu()
 
 class Button():
@@ -153,6 +153,9 @@ class Button():
     def check_if_clicked(self, function) -> None:
         if g.pygame.mouse.get_pressed(num_buttons=3)[0] and not self.is_down:
             mouse_x, mouse_y = g.pygame.mouse.get_pos()
+            if g.fullscreen or g.fullscreen_temp:
+                mouse_x -= (g.REAL_SCREEN.get_width() - g.screen_w) // 2
+                mouse_y -= (g.REAL_SCREEN.get_height() - g.screen_h) // 2
             if self.x <= mouse_x <= self.x + self.w and self.y <= mouse_y <= self.y + self.h:
                 function()
         self.is_down = g.pygame.mouse.get_pressed(num_buttons=3)[0]
