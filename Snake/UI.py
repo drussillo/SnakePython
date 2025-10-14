@@ -90,13 +90,13 @@ def draw_settings_screen() -> None:
     button_4.move(x=50)
     button_4.draw()
     button_4.check_if_clicked(g.toggle_music_temp)
-    # TODO: Add resultion setting
-    # TODO: Add fullscreen setting
+    # fullscreen button
     button_5.set_image(g.fullscreenbutton)
     button_5.center()
     button_5.move(x=-50, y=60)
     button_5.draw()
     button_5.check_if_clicked(g.toggle_fullscreen)
+    # TODO: Add resultion setting
     # TODO: Add velocity setting
     # TODO: Add max_fps / gamespeed setting
     # TODO: Add tilesize (d_size + adj tilesize) setting

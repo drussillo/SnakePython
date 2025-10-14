@@ -4,8 +4,8 @@ from enum import Enum
 
 # Settings
 # 500x500 min res
-screen_w:int = 500
-screen_h:int = 500
+screen_w:int = 720
+screen_h:int = 720
 fullscreen:bool = False
 velocity:int = 2 #pixels per frame; MAX is tile_size or size + dist
 max_fps:int = 120
