@@ -7,8 +7,8 @@ from enum import Enum
 screen_w:int = 720
 screen_h:int = 720
 fullscreen:bool = False
-velocity:int = 2 #pixels per frame; MAX is tile_size or size + dist
-max_fps:int = 120
+velocity:int = 3 #pixels per frame; MAX is tile_size or size + dist
+max_fps:int = 101
 d_size:int = 60 #default size
 d_dist:int = 5 #default distance
 sfx:bool = True 
@@ -21,10 +21,9 @@ def adjust_d_tile_size() -> None:
     global d_tile_size
     global d_size
     global d_dist
-    d_tile_size = d_size + d_dist
-    if d_tile_size % velocity != 0:
-        adj_size = (d_tile_size % velocity) // 2
-        adj_dist = (d_tile_size % velocity) - adj_size
+    if d_tile_size % (velocity*2) != 0:
+        adj_size = (d_tile_size % (velocity*2)) // 2
+        adj_dist = (d_tile_size % (velocity*2)) - adj_size
         d_size -= adj_size
         d_dist -= adj_dist
         d_tile_size = d_size + d_dist
