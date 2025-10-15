@@ -99,6 +99,8 @@ sfxoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 112, 17, 14), (17 *
 musiconbutton = pygame.transform.scale(get_sprite(buttons, 0, 126, 17, 14), (17 * buttonscale, 14 * buttonscale))
 musicoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 140, 17, 14), (17 * buttonscale, 14 * buttonscale))
 fullscreenbutton = pygame.transform.scale(get_sprite(buttons, 0, 154, 17, 14), (17 * buttonscale, 14 * buttonscale))
+ogonbutton = pygame.transform.scale(get_sprite(buttons, 0, 168, 17, 14), (17 * buttonscale, 14 * buttonscale))
+ogoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 182, 17, 14), (17 * buttonscale, 14 * buttonscale))
 
 bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
 bgtile1 = pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size))
@@ -178,6 +180,10 @@ def toggle_fullscreen() -> None:
     global SCREEN
     fullscreen_temp = not fullscreen_temp
     REAL_SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN, pygame.SCALED) if fullscreen_temp else pygame.display.set_mode([screen_w, screen_h])
+
+def toggle_legacy_mode() -> None:
+    global legacy_mode
+    legacy_mode = not legacy_mode
 
 # reset functions
 

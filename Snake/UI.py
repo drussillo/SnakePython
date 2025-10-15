@@ -96,6 +96,15 @@ def draw_settings_screen() -> None:
     button_5.move(x=-50, y=g.screen_h//10)
     button_5.draw()
     button_5.check_if_clicked(g.toggle_fullscreen)
+    # TODO: Add input mode? (legacy vs quick)
+    if g.legacy_mode:
+        button_6.set_image(g.ogonbutton)
+    else:
+        button_6.set_image(g.ogoffbutton)
+    button_6.center()
+    button_6.move(x=50, y=g.screen_h//10)
+    button_6.draw()
+    button_6.check_if_clicked(g.toggle_legacy_mode)
     # resolution title
     font = g.pygame.font.SysFont(g.default_font, 35)
     resolution_title = font.render('Res:', True, (56, 79, 93))
@@ -125,7 +134,6 @@ def draw_settings_screen() -> None:
     textbox_2.edit()
     g.screen_h_temp = int(textbox_2.default_string)
     # TODO: Add max_fps / gamespeed setting
-    # TODO: Add input mode? (legacy vs quick)
 
 # settings helper
 def save() -> None:
@@ -261,5 +269,6 @@ button_2 = Button()
 button_3 = Button()
 button_4 = Button()
 button_5 = Button()
+button_6 = Button()
 textbox_1 = TextBox()
 textbox_2 = TextBox()
