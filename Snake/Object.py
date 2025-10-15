@@ -1,6 +1,8 @@
 import Global as g
 import random
 
+from typing import Self
+
 class Object:
     def __init__(self, drawable:g.pygame.surface.Surface=g.defapple, width:int=g.d_size, height:int=g.d_size) -> None:
         # set drawable
@@ -69,11 +71,13 @@ class Object:
     def draw(self) -> None:
         g.SCREEN.blit(self.drawable, (self.x_coord, self.y_coord))
         
-    def new_instance(self) -> None:
+    def new_instance(self) -> Self:
         self.__init__()
+        return self
 
-    def add_to_stack(self) -> None:
+    def add_to_stack(self) -> Self:
         g.object_stack.append(self)
+        return self
 
     def remove_from_stack(self) -> None:
         g.object_stack.remove(self)

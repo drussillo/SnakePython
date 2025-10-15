@@ -3,9 +3,9 @@ import Snake
 from Object import Object
 import random
 
-class Boulder(Object):
-    def __init__(self) -> None:
-        super().__init__(g.boulder)
+class StaticObstacle(Object):
+    def __init__(self, drawable:g.pygame.surface.Surface=g.defapple) -> None:
+        super().__init__(drawable)
 
     def valid_pos(self, x:int, y:int) -> bool:
         if (
@@ -27,16 +27,36 @@ class Boulder(Object):
             return super().valid_pos(x, y)
 
     def apply_effect(self) -> None:
-        Snake.die()
+        pass
+        # insert effect in override function
 
     def handle_self(self) -> None:
         self.draw()
         self.check_collision_w_head()
 
+class Boulder(StaticObstacle):
+    def __init__(self) -> None:
+        super().__init__(drawable=g.boulder)
+
+    def apply_effect(self) -> None:
+        Snake.die()
+
+class Bump(StaticObstacle):
+    def __init__(self) -> None:
+        super().__init__(drawable=g.defapple)
+
+    def apply_effect(self) -> None:
+        if len(g.snake_body) > 1:
+            Snake.lose_segment()
+            # TODO: Limit segment loss to 1 per bump hit
+            # TODO: Add bump drawable
+            # TODO: Add bump hit sound
+
 #handle obstacles
 boulder_1 = Boulder()
+bump_1 = Bump()
 
 def init_obstacles_basic() -> None:
-    boulder_1.new_instance()
-    boulder_1.add_to_stack()
+    boulder_1.new_instance().add_to_stack()
+    bump_1.new_instance().add_to_stack()
 
