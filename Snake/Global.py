@@ -58,11 +58,23 @@ class Gamestate(Enum):
 
 current_state: Gamestate = Gamestate.MENU
 
-HUD_w:int = screen_w
-HUD_h:int = screen_h//HUD_divisor
+HUD_w:int = 0
+HUD_h:int = 0
+def set_HUD() -> None:
+    global HUD_w
+    global HUD_h
+    HUD_w = screen_w
+    HUD_h = screen_h // HUD_divisor
+set_HUD()
 velocity_start:int = velocity
-offset_x:int = screen_w % d_tile_size // 2
-offset_y:int = (screen_h - HUD_h) % d_tile_size // 2
+offset_x:int
+offset_y:int
+def set_offsets() -> None:
+    global offset_x
+    global offset_y
+    offset_x = screen_w % d_tile_size // 2
+    offset_y = (screen_h - HUD_h) % d_tile_size // 2
+set_offsets()
 
 def get_sprite(sheet, x, y, width, height):
     # Create a new Surface for the individual sprite
@@ -113,7 +125,11 @@ boulder = pygame.transform.scale(get_sprite(objects, 15, 0, 15, 15), (d_size, d_
 
 
 #randomize background
-background_arr:list[list[type(SCREEN)]] = [[random.choice([bgtile1, bgtile2, bgtile3, bgtile4]) for x in range(screen_w // d_tile_size)] for y in range((screen_h - HUD_h) // d_tile_size)]
+background_arr:list[list[type(SCREEN)]]
+def generate_random_background() -> None:
+    global background_arr
+    background_arr = [[random.choice([bgtile1, bgtile2, bgtile3, bgtile4]) for x in range(screen_w // d_tile_size)] for y in range((screen_h - HUD_h) // d_tile_size)]
+generate_random_background()
 
 def randomize_spawn_pos() -> (int, int):
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
