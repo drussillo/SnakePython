@@ -96,7 +96,7 @@ def draw_settings_screen() -> None:
     button_5.move(x=-50, y=g.screen_h//10)
     button_5.draw()
     button_5.check_if_clicked(g.toggle_fullscreen)
-    # TODO: Add input mode? (legacy vs quick)
+    # legacy mode button
     if g.legacy_mode:
         button_6.set_image(g.ogonbutton)
     else:
@@ -134,6 +134,7 @@ def draw_settings_screen() -> None:
     textbox_2.edit()
     g.screen_h_temp = int(textbox_2.default_string)
     # TODO: Add max_fps / gamespeed setting
+    # TODO: Add d_size and velocity setting for basic mode???
 
 # settings helper
 def save() -> None:
