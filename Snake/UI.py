@@ -124,9 +124,7 @@ def draw_settings_screen() -> None:
     textbox_2.check_if_clicked()
     textbox_2.edit()
     g.screen_h_temp = int(textbox_2.default_string)
-    # TODO: Add velocity setting
     # TODO: Add max_fps / gamespeed setting
-    # TODO: Add tilesize (d_size + adj tilesize) setting
     # TODO: Add input mode? (legacy vs quick)
 
 # settings helper

@@ -7,13 +7,14 @@ from enum import Enum
 screen_w:int = 720
 screen_h:int = 720
 fullscreen:bool = False
-velocity:int = 3 #pixels per frame; MAX is tile_size or size + dist
-max_fps:int = 101
+velocity:int = 2 #pixels per frame; MAX is tile_size or size + dist
+max_fps:int = 120
 d_size:int = 60 #default size
 d_dist:int = 5 #default distance
 sfx:bool = True 
 music:bool = True
-HUD_divisor:int = 10
+legacy_mode:bool = False
+HUD_divisor:int = 10 #screen_w // HUD_divisor
 
 d_tile_size:int = d_size + d_dist
 #adjust tile size according to velocity
@@ -45,6 +46,7 @@ d_size_temp:int
 d_dist_temp:int
 sfx_temp:bool
 music_temp:bool
+legacy_mode_temp:bool
 
 
 # gamestates
