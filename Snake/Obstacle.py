@@ -7,9 +7,6 @@ class Boulder(Object):
     def __init__(self) -> None:
         super().__init__(g.boulder)
 
-    def apply_effect(self) -> None:
-        Snake.die()
-
     def valid_pos(self, x:int, y:int) -> bool:
         if (
             # first, second, second-to-last, and last columns
@@ -29,13 +26,17 @@ class Boulder(Object):
         else:
             return super().valid_pos(x, y)
 
+    def apply_effect(self) -> None:
+        Snake.die()
+
+    def handle_self(self) -> None:
+        self.draw()
+        self.check_collision_w_head()
 
 #handle obstacles
 boulder_1 = Boulder()
 
 def init_obstacles_basic() -> None:
     boulder_1.new_instance()
+    boulder_1.add_to_stack()
 
-def handle_obstacles() -> None:
-    boulder_1.draw()
-    boulder_1.check_collision_w_head()

@@ -4,7 +4,6 @@ import Snake
 import Apple
 import UI
 import States
-import Obstacle
 import Object
 import Sound
 
@@ -43,9 +42,8 @@ while running:
             Snake.draw()
             Snake.movement()
             Snake.check_if_fail()
-            
-            Apple.handle_apples_basic()
-            Obstacle.handle_obstacles()
+
+            Object.handle_objects()
 
         case _:
             print("Unknown or unhandled gamestate")
@@ -54,5 +52,5 @@ while running:
     g.REAL_SCREEN.blit(g.SCREEN, ((g.REAL_SCREEN.get_width() - g.screen_w) // 2, (g.REAL_SCREEN.get_height() - g.screen_h) // 2))
     g.pygame.display.flip()
     g.clock.tick(g.max_fps)
-    
+
 g.pygame.quit()

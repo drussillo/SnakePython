@@ -20,7 +20,6 @@ class Object:
             loop = not self.valid_pos(rnd_x, rnd_y)
         self.x_coord = rnd_x
         self.y_coord = rnd_y
-        self.add_to_stack()
 
     def valid_pos(self, x:int, y:int) -> bool:
         head_x:int = g.snake_body[0][0]
@@ -59,6 +58,10 @@ class Object:
         if collides:
             self.apply_effect()
 
+    def handle_self(self) -> None:
+        pass
+        # insert handling in override function
+
     def apply_effect(self) -> None:
         pass
         # insert effect in override function
@@ -75,5 +78,8 @@ class Object:
     def remove_from_stack(self) -> None:
         g.object_stack.remove(self)
 
+def handle_objects() -> None:
+    for obj in g.object_stack:
+        obj.handle_self()
 
 
