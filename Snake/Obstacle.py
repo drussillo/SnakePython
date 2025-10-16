@@ -30,6 +30,10 @@ class StaticObstacle(Object):
         pass
         # insert effect in override function
 
+    def not_on_head(self) -> None:
+        pass
+        # insert what to do when not on head in override function
+
     def handle_self(self) -> None:
         self.draw()
         self.check_collision_w_head()
@@ -43,13 +47,19 @@ class Boulder(StaticObstacle):
 
 class Cactus(StaticObstacle):
     def __init__(self) -> None:
+        self.active:bool = False
         super().__init__(drawable=g.cactus)
 
     def apply_effect(self) -> None:
-        if len(g.snake_body) > 1:
+        print("on head")
+        if len(g.snake_body) > 1 and not self.active:
+            self.active = True
             Snake.lose_segment()
-            # TODO: Limit segment loss to 1 per cactus hit
             # TODO: Add cactus hit sound
+
+    def not_on_head(self) -> None:
+        self.active = False
+        print("not on head")
 
 #handle obstacles
 boulder_1 = Boulder()

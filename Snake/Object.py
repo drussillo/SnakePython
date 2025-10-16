@@ -59,6 +59,8 @@ class Object:
         collides = object_rect.colliderect(head_rect)
         if collides:
             self.apply_effect()
+        else:
+            self.not_on_head()
 
     def handle_self(self) -> None:
         pass
@@ -67,6 +69,10 @@ class Object:
     def apply_effect(self) -> None:
         pass
         # insert effect in override function
+
+    def not_on_head(self) -> None:
+        pass
+        # insert what to do when not on head in override function
 
     def draw(self) -> None:
         g.SCREEN.blit(self.drawable, (self.x_coord, self.y_coord))
