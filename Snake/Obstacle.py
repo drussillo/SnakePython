@@ -52,10 +52,10 @@ class Cactus(StaticObstacle):
         super().__init__(drawable=g.cactus)
 
     def apply_effect(self) -> None:
-        if len(g.snake_body) > 1 and not self.active:
+        if not self.active:
             self.active = True
             Sound.play(Sound.Type.DAMAGE)
-            Snake.lose_segment(3)
+            Snake.lose_segments(3)
 
     def not_on_head(self) -> None:
         self.active = False
