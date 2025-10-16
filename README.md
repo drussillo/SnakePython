@@ -18,7 +18,6 @@ Modes:
 
 Graphics:  
 - Custom backgrounds for menu, fail, etc.  
-- Custom text  
 - HUD improvement
   
 Obstacles:  

@@ -60,11 +60,15 @@ class Cactus(StaticObstacle):
     def not_on_head(self) -> None:
         self.active = False
 
+# TODO: add class
+# class Scissors(StaticObstacle):
+
 #handle obstacles
 boulder_1 = Boulder()
 cactus_1 = Cactus()
 
 def init_obstacles_basic() -> None:
+    # TODO: Change obstacle amount based on backgroundarr size
     boulder_1.new_instance().add_to_stack()
     cactus_1.new_instance().add_to_stack()
 
