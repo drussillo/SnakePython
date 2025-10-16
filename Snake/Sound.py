@@ -6,6 +6,7 @@ class Type(Enum):
     GROW = 1
     DEATH = 2
     SPAWN = 3
+    DAMAGE = 4
 
 def playBGM() -> None:
     if g.music:
@@ -29,6 +30,8 @@ def play(type:Type) -> None:
                 path = "./audio/death.wav"
             case Type.SPAWN:
                 path = "./audio/spawn.wav"
+            case Type.DAMAGE:
+                path = "./audio/damage.wav"
             case _:
                 path = "./audio/error.wav"
 

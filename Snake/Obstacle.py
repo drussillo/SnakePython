@@ -2,6 +2,7 @@ import Global as g
 import Snake
 from Object import Object
 import random
+import Sound
 
 class StaticObstacle(Object):
     def __init__(self, drawable:g.pygame.surface.Surface=g.defapple) -> None:
@@ -54,8 +55,8 @@ class Cactus(StaticObstacle):
         print("on head")
         if len(g.snake_body) > 1 and not self.active:
             self.active = True
+            Sound.play(Sound.Type.DAMAGE)
             Snake.lose_segment()
-            # TODO: Add cactus hit sound
 
     def not_on_head(self) -> None:
         self.active = False
