@@ -41,22 +41,21 @@ class Boulder(StaticObstacle):
     def apply_effect(self) -> None:
         Snake.die()
 
-class Bump(StaticObstacle):
+class Cactus(StaticObstacle):
     def __init__(self) -> None:
-        super().__init__(drawable=g.defapple)
+        super().__init__(drawable=g.cactus)
 
     def apply_effect(self) -> None:
         if len(g.snake_body) > 1:
             Snake.lose_segment()
-            # TODO: Limit segment loss to 1 per bump hit
-            # TODO: Add bump drawable
-            # TODO: Add bump hit sound
+            # TODO: Limit segment loss to 1 per cactus hit
+            # TODO: Add cactus hit sound
 
 #handle obstacles
 boulder_1 = Boulder()
-bump_1 = Bump()
+cactus_1 = Cactus()
 
 def init_obstacles_basic() -> None:
     boulder_1.new_instance().add_to_stack()
-    bump_1.new_instance().add_to_stack()
+    cactus_1.new_instance().add_to_stack()
 

@@ -125,6 +125,7 @@ snakelast_w = pygame.transform.rotate(snakelast_s, -90)
 objects = pygame.image.load("drawables/objects.png").convert_alpha()
 defapple = pygame.transform.scale(get_sprite(objects, 0, 0, 15, 15), (d_size, d_size))
 boulder = pygame.transform.scale(get_sprite(objects, 15, 0, 15, 15), (d_size, d_size))
+cactus = pygame.transform.scale(get_sprite(objects, 30, 0, 15, 15), (d_size, d_size))
 
 
 #randomize background
