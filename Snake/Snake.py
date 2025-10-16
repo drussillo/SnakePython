@@ -119,9 +119,9 @@ def add_segment() -> None:
     offset_x, offset_y = offset_dict[last_direction]
     g.snake_body.append((last_x + offset_x, last_y + offset_y, last_direction))
 
-def lose_segment() -> None:
+def lose_segment(amount:int=1) -> None:
     # remove tail
-    g.snake_body = g.snake_body[:-1]
+    g.snake_body = g.snake_body[:-amount]
 
 def check_if_coll_itself() -> bool:
     head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], g.d_size, g.d_size)
