@@ -31,9 +31,8 @@ def adjust_d_tile_size() -> None:
 adjust_d_tile_size()
 
 #miscellaneous
-# TODO: Add a font
-# TODO: Load font only once in global
-default_font = None
+# TODO: CREDIT: Comicoro font by jeti
+default_font:str = "./fonts/mainfont.ttf"
 REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 SCREEN = pygame.Surface((screen_w, screen_h))
 clock = pygame.time.Clock()
