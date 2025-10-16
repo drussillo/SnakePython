@@ -31,6 +31,8 @@ def adjust_d_tile_size() -> None:
 adjust_d_tile_size()
 
 #miscellaneous
+# TODO: Add a font
+# TODO: Load font only once in global
 default_font = None
 REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 SCREEN = pygame.Surface((screen_w, screen_h))
@@ -109,10 +111,13 @@ bgtileset_grass:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 30, 0, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 45, 0, 15, 15), (d_tile_size, d_tile_size))
 )
+# TODO: add more bgtilesets for different modes
 
 bgtilesmenuscale:int = 6
 bgtilesmenu = pygame.image.load("drawables/bgtilesmenu.png").convert_alpha()
 bgtilemenu1 = pygame.transform.scale(get_sprite(bgtilesmenu, 0, 0, 14, 14), (14 * bgtilesmenuscale, 14 * bgtilesmenuscale))
+# TODO: improve current menu bgtile
+# TODO: add more bg tiles for menu
 
 snakesegments = pygame.image.load("drawables/segments.png").convert_alpha()
 snakesegment_vert = pygame.transform.scale(get_sprite(snakesegments, 0, 0, 15, 15), (d_size, d_size))
