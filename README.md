@@ -22,7 +22,6 @@ Graphics:
 - HUD improvement
   
 Obstacles:  
-- Cacti: get shorter  
 - Scissors: snake cuts in half
 
 ### Ideas for future features (in priority order):   
