@@ -2,13 +2,11 @@ import Global as g
 import Snake
 from Object import Object
 import random
+import Sound
 
-class Boulder(Object):
-    def __init__(self) -> None:
-        super().__init__(g.boulder)
-
-    def apply_effect(self) -> None:
-        Snake.die()
+class StaticObstacle(Object):
+    def __init__(self, drawable:g.pygame.surface.Surface=g.defapple) -> None:
+        super().__init__(drawable)
 
     def valid_pos(self, x:int, y:int) -> bool:
         if (
@@ -29,13 +27,44 @@ class Boulder(Object):
         else:
             return super().valid_pos(x, y)
 
+    def apply_effect(self) -> None:
+        pass
+        # insert effect in override function
+
+    def not_on_head(self) -> None:
+        pass
+        # insert what to do when not on head in override function
+
+    def handle_self(self) -> None:
+        self.draw()
+        self.check_collision_w_head()
+
+class Boulder(StaticObstacle):
+    def __init__(self) -> None:
+        super().__init__(drawable=g.boulder)
+
+    def apply_effect(self) -> None:
+        Snake.die()
+
+class Cactus(StaticObstacle):
+    def __init__(self) -> None:
+        self.active:bool = False
+        super().__init__(drawable=g.cactus)
+
+    def apply_effect(self) -> None:
+        if len(g.snake_body) > 1 and not self.active:
+            self.active = True
+            Sound.play(Sound.Type.DAMAGE)
+            Snake.lose_segment(3)
+
+    def not_on_head(self) -> None:
+        self.active = False
 
 #handle obstacles
 boulder_1 = Boulder()
+cactus_1 = Cactus()
 
 def init_obstacles_basic() -> None:
-    boulder_1.new_instance()
+    boulder_1.new_instance().add_to_stack()
+    cactus_1.new_instance().add_to_stack()
 
-def handle_obstacles() -> None:
-    boulder_1.draw()
-    boulder_1.check_collision_w_head()

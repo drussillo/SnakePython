@@ -28,13 +28,13 @@ def draw_fail_state_screen() -> None: #without buttons
     button_1.set_image(g.retrybutton)
     button_1.center()
     button_1.move(y=200, x=150)
-    button_1.draw(g.SCREEN)
+    button_1.draw()
     button_1.check_if_clicked(g.reset_mode_basic)
     # menu button
     button_2.set_image(g.menubutton)
     button_2.center()
     button_2.move(y=200, x=-150)
-    button_2.draw(g.SCREEN)
+    button_2.draw()
     button_2.check_if_clicked(g.reset_menu)
 
 def draw_main_menu_screen() -> None:
@@ -46,20 +46,14 @@ def draw_main_menu_screen() -> None:
     button_1.set_image(g.startbutton)
     button_1.center()
     button_1.move(y=g.screen_h//5)
-    button_1.draw(g.SCREEN)
+    button_1.draw()
     button_1.check_if_clicked(g.reset_mode_basic)
     # settings button
     button_2.set_image(g.settingsbutton)
     button_2.center()
     button_2.move(y=button_1.y-button_2.y+75)
-    button_2.draw(g.SCREEN)
+    button_2.draw()
     button_2.check_if_clicked(g.reset_settings)
-    # TODO: Add resultion setting
-    # TODO: Add fullscreen setting
-    # TODO: Add velocity setting
-    # TODO: Add max_fps / gamespeed setting
-    # TODO: Add tilesize (d_size + adj tilesize) setting
-    # TODO: Add input mode? (legacy vs quick)
 
 def draw_settings_screen() -> None:
     g.SCREEN.fill((110, 135, 97))
@@ -71,7 +65,7 @@ def draw_settings_screen() -> None:
     button_1.center()
     button_1.move(x=-150, y=g.screen_h//2.5)
     button_1.draw()
-    button_1.check_if_clicked(g.reset_menu)
+    button_1.check_if_clicked(cancel)
     # save button
     button_2.set_image(g.savebutton)
     button_2.center()
@@ -96,18 +90,74 @@ def draw_settings_screen() -> None:
     button_4.move(x=50)
     button_4.draw()
     button_4.check_if_clicked(g.toggle_music_temp)
+    # fullscreen button
+    button_5.set_image(g.fullscreenbutton)
+    button_5.center()
+    button_5.move(x=-50, y=g.screen_h//10)
+    button_5.draw()
+    button_5.check_if_clicked(g.toggle_fullscreen)
+    # legacy mode button
+    if g.legacy_mode:
+        button_6.set_image(g.ogonbutton)
+    else:
+        button_6.set_image(g.ogoffbutton)
+    button_6.center()
+    button_6.move(x=50, y=g.screen_h//10)
+    button_6.draw()
+    button_6.check_if_clicked(g.toggle_legacy_mode)
+    # resolution title
+    font = g.pygame.font.SysFont(g.default_font, 35)
+    resolution_title = font.render('Res:', True, (56, 79, 93))
+    resolution_title_centered:(int, int) = ((g.screen_w - resolution_title.get_width()) // 2, (g.screen_h - resolution_title.get_height()) // 2 )
+    g.SCREEN.blit(resolution_title, (resolution_title_centered[0] - 140, resolution_title_centered[1] + g.screen_h // 5))
+    # resolution text boxes
+    if not textbox_1.default_string:
+        textbox_1.set_default_string(f"{g.screen_w}")
+    textbox_1.set_fontsize(35)
+    textbox_1.set_fontcolor((56, 79, 93))
+    textbox_1.set_w(100)
+    textbox_1.center()
+    textbox_1.move(x=-50, y=g.screen_h//5)
+    textbox_1.draw()
+    textbox_1.check_if_clicked()
+    textbox_1.edit()
+    g.screen_w_temp = int(textbox_1.default_string)
+    if not textbox_2.default_string:
+        textbox_2.set_default_string(f"{g.screen_h}")
+    textbox_2.set_fontsize(35)
+    textbox_2.set_fontcolor((56, 79, 93))
+    textbox_2.set_w(100)
+    textbox_2.center()
+    textbox_2.move(x=50,y=g.screen_h//5)
+    textbox_2.draw()
+    textbox_2.check_if_clicked()
+    textbox_2.edit()
+    g.screen_h_temp = int(textbox_2.default_string)
+    # TODO: Add max_fps / gamespeed setting
+    # TODO: Add d_size and velocity setting for basic mode???
 
 # settings helper
 def save() -> None:
     g.screen_w = g.screen_w_temp
     g.screen_h = g.screen_h_temp
-    g.fullscren = g.fullscreen_temp
+    g.fullscreen = g.fullscreen_temp
     g.velocity = g.velocity_temp
     g.max_fps = g.max_fps_temp
     g.d_size = g.d_size_temp
     g.d_dist = g.d_dist_temp
     g.sfx = g.sfx_temp
     g.music = g.music_temp
+    g.REAL_SCREEN = g.pygame.display.set_mode((0, 0), g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
+    g.SCREEN = g.pygame.Surface((g.screen_w, g.screen_h))
+    g.set_HUD()
+    g.set_offsets()
+    g.generate_random_background()
+    g.reset_menu()
+
+# settings helper
+def cancel() -> None:
+    g.fullscreen_temp = g.fullscreen
+    g.REAL_SCREEN = g.pygame.display.set_mode((0, 0), g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
     g.reset_menu()
 
 class Button():
@@ -119,6 +169,12 @@ class Button():
         self.image = drawable
         self.rect = g.pygame.Rect(x, y, self.w, self.h)
         self.is_down = False
+
+    def set_w(self, w:int) -> None:
+        self.w = w
+
+    def set_h(self, h:int) -> None:
+        self.h = h
 
     def set_image(self, drawable:g.pygame.surface.Surface=g.defapple) -> None:
         self.w = drawable.get_width()
@@ -135,18 +191,85 @@ class Button():
     def resize(self, w=30, h=30) -> None:
         self.image = g.pygame.transform.scale(self.image, (w, h))
 
-    def draw(self, surface=g.SCREEN) -> None:
-        surface.blit(self.image, (self.x, self.y))
+    def draw(self) -> None:
+        g.SCREEN.blit(g.pygame.transform.scale(self.image, (self.w, self.h)), (self.x, self.y))
 
-    def check_if_clicked(self, function) -> None:
+    def check_if_clicked(self, function=None) -> None:
         if g.pygame.mouse.get_pressed(num_buttons=3)[0] and not self.is_down:
             mouse_x, mouse_y = g.pygame.mouse.get_pos()
-            if self.x <= mouse_x <= self.x + self.w and self.y <= mouse_y <= self.y + self.h:
+            if g.fullscreen or g.fullscreen_temp:
+                mouse_x -= (g.REAL_SCREEN.get_width() - g.screen_w) // 2
+                mouse_y -= (g.REAL_SCREEN.get_height() - g.screen_h) // 2
+            was_clicked = self.x <= mouse_x <= self.x + self.w and self.y <= mouse_y <= self.y + self.h
+            if was_clicked and function:
                 function()
         self.is_down = g.pygame.mouse.get_pressed(num_buttons=3)[0]
+    
+class TextBox(Button):
+    def __init__(self, x=0, y=0, w=0, h=0, drawable:g.pygame.surface.Surface=g.emptybutton, fontsize=12, fontcolor=(0, 0, 0)) -> None:
+        self.string = ""
+        self.default_string = ""
+        self.fontsize = fontsize
+        self.fontcolor = fontcolor
+        self.active:bool = False
+        super().__init__(x, y, w, h, drawable)
+
+    def set_default_string(self, string:str) -> None:
+        self.default_string = string
+
+    def clear_string(self) -> None:
+        self.string = ""
+
+    def set_fontsize(self, size:int) -> None:
+        self.fontsize = size
+
+    def set_fontcolor(self, color:(int, int, int)) -> None:
+        self.fontcolor = color
+
+    def draw(self) -> None:
+        super().draw()
+        font = g.pygame.font.SysFont(g.default_font, self.fontsize)
+        if self.active:
+            title = font.render(self.string, True, (self.fontcolor[0]+15, self.fontcolor[1]+15, self.fontcolor[2]+15))
+        else:
+            title = font.render(self.string, True, self.fontcolor)
+        g.SCREEN.blit(title, (self.x + (self.w - title.get_width()) // 2, self.y + (self.h - title.get_height()) // 2))
+
+    def check_if_clicked(self) -> None:
+        if g.pygame.mouse.get_pressed(num_buttons=3)[0] and not self.is_down:
+            mouse_x, mouse_y = g.pygame.mouse.get_pos()
+            if g.fullscreen or g.fullscreen_temp:
+                mouse_x -= (g.REAL_SCREEN.get_width() - g.screen_w) // 2
+                mouse_y -= (g.REAL_SCREEN.get_height() - g.screen_h) // 2
+            self.active = self.x <= mouse_x <= self.x + self.w and self.y <= mouse_y <= self.y + self.h
+            if self.active:
+                self.string = ""
+            else:
+                self.string = self.default_string
+        self.is_down = g.pygame.mouse.get_pressed(num_buttons=3)[0]
+
+    def edit(self) -> None:
+        if self.active:
+            for event in g.pygame.event.get():
+                if event.type == g.pygame.KEYDOWN:
+                    if event.key == g.pygame.K_RETURN:
+                        if self.string.isdigit() and int(self.string) >= 500 and len(self.string) <= 6:
+                            self.default_string = self.string
+                        else:
+                            self.string = self.default_string
+                        self.active = False
+                    elif event.key == g.pygame.K_BACKSPACE:
+                        self.string = self.string[:-1]
+                    else:
+                        self.string += event.unicode
+
 
 #declare multiuse button objects
 button_1 = Button()
 button_2 = Button()
 button_3 = Button()
 button_4 = Button()
+button_5 = Button()
+button_6 = Button()
+textbox_1 = TextBox()
+textbox_2 = TextBox()

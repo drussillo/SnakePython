@@ -9,20 +9,22 @@ class Apple(Object):
 
     def apply_effect(self) -> None:
         if not self.eaten:
-            self.remove_from_stack()
             Snake.add_segment()
-            self.eaten = True
             print(f" apples: { len(g.snake_body) - 1 }") #debug
+            self.new_instance()
+
+    def handle_self(self) -> None:
+        if self.eaten:
+            self.remove_from_stack()
+            self.new_instance()
+        else:
+            self.draw()
+            self.check_collision_w_head()
 
 #handle apples
 apple_1 = Apple()
 
 def init_apples_basic() -> None:
     apple_1.new_instance()
+    apple_1.add_to_stack()
 
-def handle_apples_basic() -> None:
-    if apple_1.eaten:
-        apple_1.new_instance()
-    else:
-        apple_1.draw()
-        apple_1.check_collision_w_head()

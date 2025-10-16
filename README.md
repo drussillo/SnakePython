@@ -6,19 +6,14 @@ This is my attempt at making snake with python!
 # Notes:
 
 ### TODO:
-Bugfixes:  
-- Speed boost breaks with different tile sizes
-
 Settings  
-- Add resultion setting
-- Add fullscreen setting
-- Add velocity setting
+- Add velocity setting ?
+- Add tilesize (d_size + adj tilesize) setting ?
 - Add max_fps / gamespeed setting
-- Add tilesize (d_size + adj tilesize) setting
-- Add input mode? (legacy vs quick)
 
 Modes:  
 - Add basic mode selection from menu 
+- Add winstate / score system for basic mode
 - Add level mode
 
 Graphics:  
@@ -27,7 +22,7 @@ Graphics:
 - HUD improvement
   
 Obstacles:  
-- Bumps: get shorter  
+- Scissors: snake cuts in half
 
 ### Ideas for future features (in priority order):   
 Different apples  

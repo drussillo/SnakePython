@@ -72,7 +72,7 @@ def head_align_if_turn() -> None:
                 new_x, new_y = align_with_tile(current_x, current_y, current_direction, next_direction)
                 g.snake_body[i] = (new_x, new_y, current_direction)
 
-def follow_up() -> None:
+def follow_up_quick() -> None:
     head_aligned:bool = (
             (g.snake_body[0][0] - g.offset_x) % g.d_tile_size == 0 and 
             (g.snake_body[0][1] - g.offset_y - g.HUD_h) % g.d_tile_size == 0
@@ -83,10 +83,22 @@ def follow_up() -> None:
         # update head direction
         set_segment_dir(0, g.direction)
 
+def follow_up_legacy() -> None:
+    if (g.snake_body[0][0] - g.offset_x) % g.d_tile_size == 0 and (g.snake_body[0][1] - g.offset_y - g.HUD_h) % g.d_tile_size == 0:
+        for current_index in range(len(g.snake_body)-1, 0, -1): #from tail to head, excluding the head
+            next_segment_direction = g.snake_body[current_index-1][2]
+            set_segment_dir(current_index, next_segment_direction)
+        #set head to global direction
+        set_segment_dir(0, g.direction)
+
 def movement() -> None:
-    head_align_if_turn()
-    follow_up()
-    advance()
+    if g.legacy_mode:
+        follow_up_legacy()
+        advance()
+    else:
+        head_align_if_turn()
+        follow_up_quick()
+        advance()
 
 def check_if_fail() -> None:
     if check_if_coll_itself() or out_of_bounds():
@@ -106,6 +118,10 @@ def add_segment() -> None:
         }
     offset_x, offset_y = offset_dict[last_direction]
     g.snake_body.append((last_x + offset_x, last_y + offset_y, last_direction))
+
+def lose_segment(amount:int=1) -> None:
+    # remove tail
+    g.snake_body = g.snake_body[:-amount]
 
 def check_if_coll_itself() -> bool:
     head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], g.d_size, g.d_size)
