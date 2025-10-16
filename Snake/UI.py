@@ -1,6 +1,5 @@
 import Global as g
 
-
 def draw_HUD() -> None:
     HUD_field = g.pygame.Rect(0, 0, g.HUD_w, g.HUD_h) 
     g.pygame.draw.rect(g.SCREEN, (222,222,23), HUD_field)
@@ -13,14 +12,19 @@ def draw_HUD() -> None:
     apple_counter_pos_x, apple_counter_pos_y = apple_icon_pos_x + apple_icon_w, apple_icon_pos_y + apple_icon_w//4
     g.SCREEN.blit(apple_counter, (apple_counter_pos_x, apple_counter_pos_y))
 
-def draw_background() -> None:
+def draw_background(bgtilemenu:g.pygame.surface.Surface=None) -> None:
     g.SCREEN.fill((110, 135, 97))
-    for y, row in enumerate(g.background_arr):
-        for x, bgimg in enumerate(row):
-            g.SCREEN.blit(bgimg, (x * g.d_tile_size + g.offset_x, y * g.d_tile_size + g.HUD_h + g.offset_y))
+    if bgtilemenu:
+        pass
+    else:
+        for y, row in enumerate(g.background_arr):
+            for x, bgimg in enumerate(row):
+                g.SCREEN.blit(bgimg, (x * g.d_tile_size + g.offset_x, y * g.d_tile_size + g.HUD_h + g.offset_y))
 
 def draw_fail_state_screen() -> None: #without buttons
+    # TODO: replace with dynamic background tiling
     g.SCREEN.fill((110, 135, 97))
+
     font = g.pygame.font.SysFont(g.default_font, 100)
     fail_title = font.render('You Failed!', True, (56, 79, 93))
     g.SCREEN.blit(fail_title, (g.screen_w // 2 - fail_title.get_width() // 2, g.screen_h // 5))
@@ -38,7 +42,9 @@ def draw_fail_state_screen() -> None: #without buttons
     button_2.check_if_clicked(g.reset_menu)
 
 def draw_main_menu_screen() -> None:
+    # TODO: replace with dynamic background tiling
     g.SCREEN.fill((110, 135, 97))
+
     font = g.pygame.font.SysFont(g.default_font, 100)
     main_title = font.render('Snake Python', True, (56, 79, 93))
     g.SCREEN.blit(main_title, (g.screen_w // 2 - main_title.get_width() // 2, g.screen_h // 5))
@@ -56,7 +62,9 @@ def draw_main_menu_screen() -> None:
     button_2.check_if_clicked(g.reset_settings)
 
 def draw_settings_screen() -> None:
+    # TODO: replace with dynamic background tiling
     g.SCREEN.fill((110, 135, 97))
+
     font = g.pygame.font.SysFont(g.default_font, 100)
     settings_title = font.render('Settings', True, (56, 79, 93))
     g.SCREEN.blit(settings_title, (g.screen_w // 2 - settings_title.get_width() // 2, g.screen_h // 5))
@@ -151,7 +159,7 @@ def save() -> None:
     g.SCREEN = g.pygame.Surface((g.screen_w, g.screen_h))
     g.set_HUD()
     g.set_offsets()
-    g.generate_random_background()
+    g.background_arr = g.generate_random_background()
     g.reset_menu()
 
 # settings helper
