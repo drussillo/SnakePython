@@ -22,7 +22,8 @@ Graphics:
 - HUD improvement
   
 Obstacles:  
-- Bumps: get shorter  
+- Cacti: get shorter  
+- Scissors: snake cuts in half
 
 ### Ideas for future features (in priority order):   
 Different apples  
