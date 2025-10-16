@@ -22,6 +22,7 @@ Graphics:
 - HUD improvement
   
 Obstacles:  
+- Obstacle amount changes based on background array size
 - Scissors: snake cuts in half
 
 ### Ideas for future features (in priority order):   
