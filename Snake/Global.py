@@ -31,7 +31,8 @@ def adjust_d_tile_size() -> None:
 adjust_d_tile_size()
 
 #miscellaneous
-default_font = None
+# TODO: CREDIT: Comicoro font by jeti
+default_font:str = "./fonts/mainfont.ttf"
 REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 SCREEN = pygame.Surface((screen_w, screen_h))
 clock = pygame.time.Clock()
@@ -103,10 +104,19 @@ ogonbutton = pygame.transform.scale(get_sprite(buttons, 0, 168, 17, 14), (17 * b
 ogoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 182, 17, 14), (17 * buttonscale, 14 * buttonscale))
 
 bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
-bgtile1 = pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size))
-bgtile2 = pygame.transform.scale(get_sprite(bgtiles, 15, 0, 15, 15), (d_tile_size, d_tile_size))
-bgtile3 = pygame.transform.scale(get_sprite(bgtiles, 30, 0, 15, 15), (d_tile_size, d_tile_size))
-bgtile4 = pygame.transform.scale(get_sprite(bgtiles, 45, 0, 15, 15), (d_tile_size, d_tile_size))
+bgtileset_grass:tuple[pygame.surface.Surface, ...] = (
+    pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 15, 0, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 30, 0, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 45, 0, 15, 15), (d_tile_size, d_tile_size))
+)
+# TODO: add more bgtilesets for different modes
+
+bgtilesmenuscale:int = 6
+bgtilesmenu = pygame.image.load("drawables/bgtilesmenu.png").convert_alpha()
+bgtilemenu1 = pygame.transform.scale(get_sprite(bgtilesmenu, 0, 0, 14, 14), (14 * bgtilesmenuscale, 14 * bgtilesmenuscale))
+# TODO: improve current menu bgtile
+# TODO: add more bg tiles for menu
 
 snakesegments = pygame.image.load("drawables/segments.png").convert_alpha()
 snakesegment_vert = pygame.transform.scale(get_sprite(snakesegments, 0, 0, 15, 15), (d_size, d_size))
@@ -127,13 +137,17 @@ defapple = pygame.transform.scale(get_sprite(objects, 0, 0, 15, 15), (d_size, d_
 boulder = pygame.transform.scale(get_sprite(objects, 15, 0, 15, 15), (d_size, d_size))
 cactus = pygame.transform.scale(get_sprite(objects, 30, 0, 15, 15), (d_size, d_size))
 
-
-#randomize background
-background_arr:list[list[type(SCREEN)]]
-def generate_random_background() -> None:
-    global background_arr
-    background_arr = [[random.choice([bgtile1, bgtile2, bgtile3, bgtile4]) for x in range(screen_w // d_tile_size)] for y in range((screen_h - HUD_h) // d_tile_size)]
-generate_random_background()
+# random tile background array
+current_bgtileset:tuple[pygame.surface.Surface, ...] = bgtileset_grass  # default to grass
+def generate_random_background(bgtileset:tuple[pygame.surface.Surface, ...]=current_bgtileset) -> list[list[pygame.surface.Surface]]:
+    return [
+        [
+            random.choice(bgtileset)
+            for x in range(screen_w // d_tile_size)
+        ]
+        for y in range((screen_h - HUD_h) // d_tile_size)
+    ]
+background_arr:list[list[pygame.surface.Surface]] = generate_random_background(bgtileset_grass)
 
 def randomize_spawn_pos() -> (int, int):
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
