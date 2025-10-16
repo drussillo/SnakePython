@@ -110,8 +110,9 @@ bgtileset_grass:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 45, 0, 15, 15), (d_tile_size, d_tile_size))
 )
 
+bgtilesmenuscale:int = 6
 bgtilesmenu = pygame.image.load("drawables/bgtilesmenu.png").convert_alpha()
-bgtilemenu1 = pygame.transform.scale(get_sprite(bgtilesmenu, 0, 0, 14, 14), (14, 14))
+bgtilemenu1 = pygame.transform.scale(get_sprite(bgtilesmenu, 0, 0, 14, 14), (14 * bgtilesmenuscale, 14 * bgtilesmenuscale))
 
 snakesegments = pygame.image.load("drawables/segments.png").convert_alpha()
 snakesegment_vert = pygame.transform.scale(get_sprite(snakesegments, 0, 0, 15, 15), (d_size, d_size))

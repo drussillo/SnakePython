@@ -15,8 +15,10 @@ def draw_HUD() -> None:
 def draw_background(bgtilemenu:g.pygame.surface.Surface=None) -> None:
     g.SCREEN.fill((110, 135, 97))
     if bgtilemenu:
-        # TODO: Add tiling using bgtilemenu logic
-        pass
+        # TODO: use tiling
+        for row in range(g.screen_w // 14 * g.bgtilesmenuscale):
+            for col in range(g.screen_h // 14 * g.bgtilesmenuscale):
+                g.SCREEN.blit(bgtilemenu, (row * 14 * g.bgtilesmenuscale, col * 14 * g.bgtilesmenuscale))
     else:
         for y, row in enumerate(g.background_arr):
             for x, bgimg in enumerate(row):
