@@ -221,6 +221,7 @@ class TextBox(Button):
         self.fontsize = fontsize
         self.fontcolor = fontcolor
         self.active:bool = False
+        self.validityf = lambda: True
         super().__init__(x, y, w, h, drawable)
 
     def set_input_validity_function(self, f) -> None:
