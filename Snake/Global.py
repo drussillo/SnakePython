@@ -140,7 +140,6 @@ bgtileset_cherryblossom:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 30, 75, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 45, 75, 15, 15), (d_tile_size, d_tile_size))
 )
-# TODO: add more bgtilesets for different modes
 
 bgtilesmenuscale:int = 6
 bgtilesmenu = pygame.image.load("drawables/bgtilesmenu.png").convert_alpha()
