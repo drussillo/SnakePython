@@ -6,7 +6,10 @@ This is my attempt at making snake with python!
 # Notes:
 
 ### TODO:
+- Fix: add font loading in Global
+
 Settings  
+- Fix low framerate
 - Add velocity setting ?
 - Add tilesize (d_size + adj tilesize) setting ?
 - Add max_fps / gamespeed setting
