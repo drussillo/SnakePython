@@ -121,6 +121,7 @@ def draw_settings_screen() -> None:
     # resolution text boxes
     if not textbox_1.default_string:
         textbox_1.set_default_string(f"{g.screen_w}")
+    textbox_1.set_input_validity_function(textbox_validity_check)
     textbox_1.set_fontsize(35)
     textbox_1.set_fontcolor((56, 79, 93))
     textbox_1.set_w(100)
@@ -132,6 +133,7 @@ def draw_settings_screen() -> None:
     g.screen_w_temp = int(textbox_1.default_string)
     if not textbox_2.default_string:
         textbox_2.set_default_string(f"{g.screen_h}")
+    textbox_2.set_input_validity_function(textbox_validity_check)
     textbox_2.set_fontsize(35)
     textbox_2.set_fontcolor((56, 79, 93))
     textbox_2.set_w(100)
@@ -221,6 +223,9 @@ class TextBox(Button):
         self.active:bool = False
         super().__init__(x, y, w, h, drawable)
 
+    def set_input_validity_function(self, f) -> None:
+        self.validityf = f
+
     def set_default_string(self, string:str) -> None:
         self.default_string = string
 
@@ -252,7 +257,10 @@ class TextBox(Button):
             if self.active:
                 self.string = ""
             else:
-                self.string = self.default_string
+                if self.validityf(self):
+                    self.default_string = self.string
+                else:
+                    self.string = self.default_string
         self.is_down = g.pygame.mouse.get_pressed(num_buttons=3)[0]
 
     def edit(self) -> None:
@@ -260,7 +268,7 @@ class TextBox(Button):
             for event in g.pygame.event.get():
                 if event.type == g.pygame.KEYDOWN:
                     if event.key == g.pygame.K_RETURN:
-                        if self.string.isdigit() and int(self.string) >= 500 and len(self.string) <= 6:
+                        if self.validityf(self):
                             self.default_string = self.string
                         else:
                             self.string = self.default_string
@@ -270,6 +278,9 @@ class TextBox(Button):
                     else:
                         self.string += event.unicode
 
+# settings helper
+def textbox_validity_check(textbox:TextBox) -> bool:
+    return textbox.string.isdigit() and int(textbox.string) >= 500 and len(textbox.string) <= 6
 
 #declare multiuse button objects
 button_1 = Button()
