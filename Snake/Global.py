@@ -105,12 +105,42 @@ ogoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 182, 17, 14), (17 * 
 
 bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
 bgtileset_grass:tuple[pygame.surface.Surface, ...] = (
-    pygame.transform.scale(get_sprite(bgtiles, 0, 0, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 00, 0, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 15, 0, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 30, 0, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 45, 0, 15, 15), (d_tile_size, d_tile_size))
 )
-# TODO: add more bgtilesets for different modes
+bgtileset_desert:tuple[pygame.surface.Surface, ...] = (
+    pygame.transform.scale(get_sprite(bgtiles, 00, 15, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 15, 15, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 30, 15, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 45, 15, 15, 15), (d_tile_size, d_tile_size))
+)
+bgtileset_jungle:tuple[pygame.surface.Surface, ...] = (
+    pygame.transform.scale(get_sprite(bgtiles, 00, 30, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 15, 30, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 30, 30, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 45, 30, 15, 15), (d_tile_size, d_tile_size))
+)
+bgtileset_city:tuple[pygame.surface.Surface, ...] = (
+    pygame.transform.scale(get_sprite(bgtiles, 00, 45, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 15, 45, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 30, 45, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 45, 45, 15, 15), (d_tile_size, d_tile_size))
+)
+bgtileset_snow:tuple[pygame.surface.Surface, ...] = (
+    pygame.transform.scale(get_sprite(bgtiles, 00, 60, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 15, 60, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 30, 60, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 45, 60, 15, 15), (d_tile_size, d_tile_size))
+)
+# TODO: snow / frozen background + more backgrounds?
+bgtileset_cherryblossom:tuple[pygame.surface.Surface, ...] = (
+    pygame.transform.scale(get_sprite(bgtiles, 00, 75, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 15, 75, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 30, 75, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 45, 75, 15, 15), (d_tile_size, d_tile_size))
+)
 
 bgtilesmenuscale:int = 6
 bgtilesmenu = pygame.image.load("drawables/bgtilesmenu.png").convert_alpha()
@@ -139,15 +169,16 @@ cactus = pygame.transform.scale(get_sprite(objects, 30, 0, 15, 15), (d_size, d_s
 
 # random tile background array
 current_bgtileset:tuple[pygame.surface.Surface, ...] = bgtileset_grass  # default to grass
-def generate_random_background(bgtileset:tuple[pygame.surface.Surface, ...]=current_bgtileset) -> list[list[pygame.surface.Surface]]:
-    return [
+background_arr:list[list[pygame.surface.Surface]]
+def generate_random_background():
+    global background_arr
+    background_arr = [
         [
-            random.choice(bgtileset)
+            random.choice(current_bgtileset)
             for x in range(screen_w // d_tile_size)
         ]
         for y in range((screen_h - HUD_h) // d_tile_size)
     ]
-background_arr:list[list[pygame.surface.Surface]] = generate_random_background(bgtileset_grass)
 
 def randomize_spawn_pos() -> (int, int):
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size

@@ -159,7 +159,6 @@ def save() -> None:
     g.SCREEN = g.pygame.Surface((g.screen_w, g.screen_h))
     g.set_HUD()
     g.set_offsets()
-    g.background_arr = g.generate_random_background()
     g.reset_menu()
 
 # settings helper
