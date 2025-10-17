@@ -38,7 +38,7 @@ def init_settings() -> None:
 def init_mode_basic() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.MODE_BASIC:
-        g.current_bgtileset = g.bgtileset_cherryblossom
+        g.current_bgtileset = g.bgtileset_grass
         g.generate_random_background()
         g.clear_object_stack()
         new_head_x, new_head_y = g.randomize_spawn_pos()
