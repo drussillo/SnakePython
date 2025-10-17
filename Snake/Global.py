@@ -128,18 +128,24 @@ bgtileset_city:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 30, 45, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 45, 45, 15, 15), (d_tile_size, d_tile_size))
 )
-bgtileset_snow:tuple[pygame.surface.Surface, ...] = (
+bgtileset_frozen:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 00, 60, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 15, 60, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 30, 60, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 45, 60, 15, 15), (d_tile_size, d_tile_size))
 )
-# TODO: snow / frozen background + more backgrounds?
-bgtileset_cherryblossom:tuple[pygame.surface.Surface, ...] = (
+bgtileset_snow:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 00, 75, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 15, 75, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 30, 75, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 45, 75, 15, 15), (d_tile_size, d_tile_size))
+)
+# TODO: snow / frozen background + more backgrounds?
+bgtileset_cherryblossom:tuple[pygame.surface.Surface, ...] = (
+    pygame.transform.scale(get_sprite(bgtiles, 00, 90, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 15, 90, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 30, 90, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 45, 90, 15, 15), (d_tile_size, d_tile_size))
 )
 
 bgtilesmenuscale:int = 6
