@@ -2,6 +2,8 @@ import pygame
 import random
 from enum import Enum
 
+pygame.init()
+
 # Settings
 # 500x500 min res
 screen_w:int = 720
@@ -30,9 +32,15 @@ def adjust_d_tile_size() -> None:
         d_tile_size = d_size + d_dist
 adjust_d_tile_size()
 
+# fonts
+# CREDIT: Comicoro font by jeti
+default_font_path:str = "./fonts/mainfont.ttf"
+font_tile_size = pygame.font.Font(default_font_path, d_tile_size)
+font_100 = pygame.font.Font(default_font_path, 100)
+font_35 = pygame.font.Font(default_font_path, 35)
+
+
 #miscellaneous
-# TODO: CREDIT: Comicoro font by jeti
-default_font:str = "./fonts/mainfont.ttf"
 REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 SCREEN = pygame.Surface((screen_w, screen_h))
 clock = pygame.time.Clock()
