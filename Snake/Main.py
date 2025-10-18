@@ -7,7 +7,6 @@ import States
 import Object
 import Sound
 
-g.pygame.init()
 g.pygame.display.set_caption("Snake")
 g.pygame.mixer.init()
 
