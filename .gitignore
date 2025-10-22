@@ -365,3 +365,4 @@ FodyWeavers.xsd
 **/dist/*
 **/build/*
 **/__pycache__/*
+*.spec
