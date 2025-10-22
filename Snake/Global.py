@@ -34,7 +34,7 @@ adjust_d_tile_size()
 
 # fonts
 # CREDIT: Comicoro font by jeti
-default_font_path:str = "./fonts/mainfont.ttf"
+default_font_path:str = "fonts/mainfont.ttf"
 font_tile_size = pygame.font.Font(default_font_path, d_tile_size)
 font_100 = pygame.font.Font(default_font_path, 100)
 font_35 = pygame.font.Font(default_font_path, 35)

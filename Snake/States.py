@@ -8,7 +8,7 @@ initalized_state = g.Gamestate.VOID
 def init_menu() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.MENU:
-        Sound.setBGM("./audio/MainSoundtrack1-trianglewave.wav")
+        Sound.setBGM("audio/MainSoundtrack1-trianglewave.wav")
         Sound.playBGM()
         initalized_state = g.Gamestate.MENU
 
@@ -45,7 +45,7 @@ def init_mode_basic() -> None:
         g.direction = g.randomize_direction()
         g.snake_body = [(new_head_x, new_head_y, g.direction)]
         g.velocity = g.velocity_start
-        Sound.setBGM("./audio/MainSoundtrack1.wav")
+        Sound.setBGM("audio/MainSoundtrack1.wav")
         Sound.playBGM()
         Apple.init_apples_basic()
         Obstacle.init_obstacles_basic()
