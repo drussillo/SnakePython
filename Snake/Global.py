@@ -1,6 +1,18 @@
+import sys
+import os
 import pygame
 import random
 from enum import Enum
+
+# path helper to build executables
+def resource_path(relative_path):
+    # Get absolute path to resource, works for PyInstaller onefile.
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
 
 pygame.init()
 
@@ -34,7 +46,7 @@ adjust_d_tile_size()
 
 # fonts
 # CREDIT: Comicoro font by jeti
-default_font_path:str = "fonts/mainfont.ttf"
+default_font_path:str = resource_path("fonts/mainfont.ttf")
 font_tile_size = pygame.font.Font(default_font_path, d_tile_size)
 font_100 = pygame.font.Font(default_font_path, 100)
 font_35 = pygame.font.Font(default_font_path, 35)
@@ -95,7 +107,7 @@ def get_sprite(sheet, x, y, width, height):
 
 #start drawables
 buttonscale:int = 4  # each row is 14px
-buttons = pygame.image.load("drawables/buttons.png").convert_alpha()
+buttons = pygame.image.load(resource_path("drawables/buttons.png")).convert_alpha()
 emptybutton = pygame.transform.scale(get_sprite(buttons, 0, 0, 41, 14), (41 * buttonscale, 14 * buttonscale))
 menubutton = pygame.transform.scale(get_sprite(buttons, 0, 14, 34, 14), (34 * buttonscale, 14 * buttonscale))
 retrybutton = pygame.transform.scale(get_sprite(buttons, 0, 28, 41, 14), (41 * buttonscale, 14 * buttonscale))
@@ -111,7 +123,7 @@ fullscreenbutton = pygame.transform.scale(get_sprite(buttons, 0, 154, 17, 14), (
 ogonbutton = pygame.transform.scale(get_sprite(buttons, 0, 168, 17, 14), (17 * buttonscale, 14 * buttonscale))
 ogoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 182, 17, 14), (17 * buttonscale, 14 * buttonscale))
 
-bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
+bgtiles = pygame.image.load(resource_path("drawables/bgtiles.png")).convert_alpha()
 bgtileset_grass:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 00, 0, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 15, 0, 15, 15), (d_tile_size, d_tile_size)),
@@ -157,12 +169,12 @@ bgtileset_cherryblossom:tuple[pygame.surface.Surface, ...] = (
 )
 
 bgtilesmenuscale:int = 6
-bgtilesmenu = pygame.image.load("drawables/bgtilesmenu.png").convert_alpha()
+bgtilesmenu = pygame.image.load(resource_path("drawables/bgtilesmenu.png")).convert_alpha()
 bgtilemenu1 = pygame.transform.scale(get_sprite(bgtilesmenu, 0, 0, 14, 14), (14 * bgtilesmenuscale, 14 * bgtilesmenuscale))
 # TODO: improve current menu bgtile
 # TODO: add more bg tiles for menu
 
-snakesegments = pygame.image.load("drawables/segments.png").convert_alpha()
+snakesegments = pygame.image.load(resource_path("drawables/segments.png")).convert_alpha()
 snakesegment_vert = pygame.transform.scale(get_sprite(snakesegments, 0, 0, 15, 15), (d_size, d_size))
 snakesegment_hor = pygame.transform.rotate(snakesegment_vert, 90)
 
@@ -176,7 +188,7 @@ snakelast_e = pygame.transform.rotate(snakelast_n, -90)
 snakelast_s = pygame.transform.rotate(snakelast_e, -90)
 snakelast_w = pygame.transform.rotate(snakelast_s, -90)
 
-objects = pygame.image.load("drawables/objects.png").convert_alpha()
+objects = pygame.image.load(resource_path("drawables/objects.png")).convert_alpha()
 defapple = pygame.transform.scale(get_sprite(objects, 0, 0, 15, 15), (d_size, d_size))
 boulder = pygame.transform.scale(get_sprite(objects, 15, 0, 15, 15), (d_size, d_size))
 cactus = pygame.transform.scale(get_sprite(objects, 30, 0, 15, 15), (d_size, d_size))
