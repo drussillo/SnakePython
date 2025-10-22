@@ -1,9 +1,19 @@
 # Snake
 
-This is my attempt at making snake with python!
+This is my attempt at making snake with python!  
 
+## Installation:  
 
-# Notes:
+### Executable  
+- If the executable for your specific system is available under the latest release, download and run it.  
+
+### Run from source
+- Install python  
+- Run pip install pygame on the terminal to install pygame  
+- Download as zip and extract or clone into repository
+- Go into Snake/ directory and run Main.py
+
+## Notes:
 
 ### TODO:
 Settings  
