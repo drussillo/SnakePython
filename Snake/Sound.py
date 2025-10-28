@@ -15,6 +15,14 @@ def playBGM() -> None:
 def setBGM(path:str) -> None:
     g.pygame.mixer.music.load(path)
 
+def setCurrentBGM() -> None:
+    match g.current_bgtileset:
+        case g.bgtileset_jungle:
+            setBGM("audio/MainSoundtrack1-jungle.wav")
+        #TODO: Add more soundtracks
+        case _:
+            setBGM("audio/MainSoundtrack1.wav")
+
 def stop() -> None:
     g.pygame.mixer.music.stop()
 
