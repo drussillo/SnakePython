@@ -194,8 +194,10 @@ cactus = pygame.transform.scale(get_sprite(objects, 30, 0, 15, 15), (d_size, d_s
 # random tile background array
 current_bgtileset:tuple[pygame.surface.Surface, ...] = bgtileset_grass  # default to grass
 background_arr:list[list[pygame.surface.Surface]]
+background_size:int
 def generate_random_background():
     global background_arr
+    global background_size
     background_arr = [
         [
             random.choice(current_bgtileset)
@@ -203,6 +205,7 @@ def generate_random_background():
         ]
         for y in range((screen_h - HUD_h) // d_tile_size)
     ]
+    background_size = len(background_arr) * len(background_arr[0])
 
 def randomize_spawn_pos() -> (int, int):
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
