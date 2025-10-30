@@ -129,7 +129,7 @@ def draw_settings_screen() -> None:
     # resolution text boxes
     if not textbox_1.default_string:
         textbox_1.set_default_string(f"{g.screen_w}")
-    textbox_1.set_input_validity_function(textbox_validity_check)
+    textbox_1.set_input_validity_function(resolution_validity_check)
     textbox_1.set_font(g.font_35)
     textbox_1.set_fontcolor((56, 79, 93))
     textbox_1.set_w(100)
@@ -141,7 +141,7 @@ def draw_settings_screen() -> None:
     g.screen_w_temp = int(textbox_1.default_string)
     if not textbox_2.default_string:
         textbox_2.set_default_string(f"{g.screen_h}")
-    textbox_2.set_input_validity_function(textbox_validity_check)
+    textbox_2.set_input_validity_function(resolution_validity_check)
     textbox_2.set_font(g.font_35)
     textbox_2.set_fontcolor((56, 79, 93))
     textbox_2.set_w(100)
@@ -157,7 +157,7 @@ def draw_settings_screen() -> None:
     if not textbox_3.default_string:
         textbox_3.set_default_string(f"{g.d_size}")
     textbox_3.set_image(g.emptybutton_small)
-    textbox_3.set_input_validity_function(textbox_validity_check) # TODO
+    textbox_3.set_input_validity_function(size_validity_check)
     textbox_3.set_font(g.font_35)
     textbox_3.set_fontcolor((56, 79, 93))
     textbox_3.center()
@@ -165,20 +165,20 @@ def draw_settings_screen() -> None:
     textbox_3.draw()
     textbox_3.check_if_clicked()
     textbox_3.edit()
-    g.screen_h_temp = int(textbox_3.default_string)
+    g.d_size_temp = int(textbox_3.default_string)
     # velocity textbox (basic mode)
-    if not textbox_4.default_string:
-        textbox_4.set_default_string(f"{g.screen_h}")
-    textbox_4.set_input_validity_function(textbox_validity_check)
-    textbox_4.set_font(g.font_35)
-    textbox_4.set_fontcolor((56, 79, 93))
-    textbox_4.set_w(100)
-    textbox_4.center()
-    textbox_4.move(x=50,y=g.screen_h//5)
-    textbox_4.draw()
-    textbox_4.check_if_clicked()
-    textbox_4.edit()
-    g.screen_h_temp = int(textbox_4.default_string)
+    # if not textbox_4.default_string:
+    #     textbox_4.set_default_string(f"{g.screen_h}")
+    # textbox_4.set_input_validity_function(textbox_validity_check)
+    # textbox_4.set_font(g.font_35)
+    # textbox_4.set_fontcolor((56, 79, 93))
+    # textbox_4.set_w(100)
+    # textbox_4.center()
+    # textbox_4.move(x=50,y=g.screen_h//5)
+    # textbox_4.draw()
+    # textbox_4.check_if_clicked()
+    # textbox_4.edit()
+    # g.screen_h_temp = int(textbox_4.default_string)
 
 # settings helper
 def save() -> None:
@@ -191,15 +191,15 @@ def save() -> None:
     g.d_dist = g.d_dist_temp
     g.sfx = g.sfx_temp
     g.music = g.music_temp
-    g.REAL_SCREEN = g.pygame.display.set_mode((0, 0), g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
-    g.SCREEN = g.pygame.Surface((g.screen_w, g.screen_h))
+    g.adjust_d_tile_size()
     g.set_HUD()
     g.set_offsets()
     g.reset_menu()
+    g.REAL_SCREEN = g.pygame.display.set_mode((0, 0), g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
+    g.SCREEN = g.pygame.Surface((g.screen_w, g.screen_h))
 
 # settings helper
 def cancel() -> None:
-    g.fullscreen_temp = g.fullscreen
     g.REAL_SCREEN = g.pygame.display.set_mode((0, 0), g.pygame.FULLSCREEN) if g.fullscreen else g.pygame.display.set_mode([g.screen_w, g.screen_h])
     g.reset_menu()
 
@@ -313,11 +313,21 @@ class TextBox(Button):
                         self.string += event.unicode
 
 # settings helper
-def textbox_validity_check(textbox:TextBox) -> bool:
+def resolution_validity_check(textbox:TextBox) -> bool:
     return textbox.string.isdigit() and int(textbox.string) >= 500 and len(textbox.string) <= 6
 
-def size_validity_chack(size:int) -> bool:
-    return size
+def size_validity_check(textbox:TextBox) -> bool:
+    # 15 - (screen_w + screen_h) * 0.04
+    return textbox.string.isdigit() and int(textbox.string) >= 15 and int(textbox.string) <= (g.screen_w + g.screen_h) // 14.4
+
+def dist_validity_check(textbox:TextBox) -> bool:
+    # 1 - 20
+    return textbox.string.isdigit() and int(textbox.string) >= 1 and int(textbox.string) <= 20
+
+def velocity_validity_check(textbox:TextBox) -> bool:
+    # 1 - d_tile_size (or d_size + d_dist)
+    return textbox.string.isdigit() and int(textbox.string) >= 1 and int(textbox.string) <= g.d_size + g.d_dist
+
 
 #declare multiuse button objects
 button_1 = Button()

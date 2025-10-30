@@ -4,6 +4,7 @@ import Global as g
 import Sound
 import Apple
 import Obstacle
+import UI
 
 initalized_state = g.Gamestate.VOID
 
@@ -46,6 +47,7 @@ def init_settings() -> None:
         g.d_dist_temp = g.d_dist
         g.sfx_temp = g.sfx
         g.music_temp = g.music
+        # print(UI.screen_w_temp) TODO
         initalized_state = g.Gamestate.SETTINGS
 
 
