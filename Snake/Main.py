@@ -39,16 +39,17 @@ while running:
         case g.Gamestate.MODE_BASIC:
             States.init_mode_basic()
             UI.draw_background()
-            UI.draw_HUD()
-            running = Input.handle_input_main()
 
-            #draw and move the snake
             Snake.draw()
             Snake.movement()
+            Object.handle_objects()
+
+            UI.draw_HUD()
+
             Snake.check_if_fail()
             Snake.check_if_win()
 
-            Object.handle_objects()
+            running = Input.handle_input_main()
 
         case _:
             print("Unknown or unhandled gamestate")

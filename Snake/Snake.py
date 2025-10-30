@@ -161,6 +161,8 @@ def die() -> None:
 
 def win() -> None:
     advance()
+    g.REAL_SCREEN.blit(g.SCREEN, ((g.REAL_SCREEN.get_width() - g.screen_w) // 2, (g.REAL_SCREEN.get_height() - g.screen_h) // 2))
+    g.pygame.display.flip()
     Sound.stop()
     Sound.play(Sound.Type.SPAWN)
     while Sound.is_playing():
