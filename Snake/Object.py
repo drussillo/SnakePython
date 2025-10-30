@@ -15,10 +15,10 @@ class Object:
         while loop:
             rnd_x = random.randint(0, g.screen_w - 2 * g.offset_x - 1)
             rnd_x -= rnd_x % g.d_tile_size
-            rnd_x += g.offset_x
+            rnd_x += g.offset_x + g.d_dist // 2
             rnd_y = random.randint(0, g.screen_h - 2 * g.offset_y - g.HUD_h - 1)
             rnd_y -= rnd_y % g.d_tile_size
-            rnd_y += g.offset_y + g.HUD_h
+            rnd_y += g.offset_y + g.HUD_h + g.d_dist // 2
             loop = not self.valid_pos(rnd_x, rnd_y)
         self.x_coord = rnd_x
         self.y_coord = rnd_y
