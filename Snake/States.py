@@ -28,7 +28,7 @@ def init_win() -> None:
     if initalized_state != g.Gamestate.WIN:
         g.generate_menu_background(g.bgtilemenu1)
         g.clear_object_stack()
-        Sound.setBGM('audio/WinSoundtrack.wav')
+        Sound.setBGM(g.resource_path('audio/WinSoundtrack.wav'))
         Sound.playBGM()
         initalized_state = g.Gamestate.WIN
 
