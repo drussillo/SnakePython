@@ -53,6 +53,7 @@ font_35 = pygame.font.Font(default_font_path, 35)
 
 #miscellaneous
 score:int
+objective:int
 REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 SCREEN = pygame.Surface((screen_w, screen_h))
 clock = pygame.time.Clock()

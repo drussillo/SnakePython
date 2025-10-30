@@ -7,9 +7,11 @@ def draw_HUD() -> None:
     apple_icon = g.pygame.transform.scale(g.defapple, (apple_icon_w, apple_icon_h))
     apple_icon_pos_x, apple_icon_pos_y = g.HUD_w//g.HUD_divisor, g.HUD_h // 2 - apple_icon.get_height()//2
     g.SCREEN.blit(apple_icon, (apple_icon_pos_x, apple_icon_pos_y))
-    apple_counter = g.font_tile_size.render(f" x {len(g.snake_body) - 1}", True, (0,0,0))
+    apple_counter = g.font_tile_size.render(f" x {len(g.snake_body) - 1}", True, (0, 0, 0))
     apple_counter_pos_x, apple_counter_pos_y = apple_icon_pos_x + apple_icon_w, apple_icon_pos_y + (apple_icon_h - g.font_tile_size.get_height()) // 2
     g.SCREEN.blit(apple_counter, (apple_counter_pos_x, apple_counter_pos_y))
+    objective_title = g.font_tile_size.render(f"Objective: {g.objective}", True, (0, 0, 0))
+    g.SCREEN.blit(objective_title, (g.screen_w - objective_title.get_width() - g.d_tile_size, apple_counter_pos_y))
 
 def draw_background(bgtilemenu:g.pygame.surface.Surface=None) -> None:
     g.SCREEN.fill((110, 135, 97))

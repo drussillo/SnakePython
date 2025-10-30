@@ -63,6 +63,7 @@ def init_mode_basic() -> None:
         g.direction = g.randomize_direction()
         g.snake_body = [(new_head_x, new_head_y, g.direction)]
         g.velocity = g.velocity_start
+        g.objective = 5 # temporary value
         Sound.setCurrentBGM()
         Sound.playBGM()
         Apple.init_apples_basic()
