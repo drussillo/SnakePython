@@ -21,6 +21,14 @@ def init_fail() -> None:
         Sound.stop()
         initalized_state = g.Gamestate.FAIL
 
+def init_win() -> None:
+    global initalized_state
+    if initalized_state != g.Gamestate.WIN:
+        g.clear_object_stack()
+        Sound.setBGM('audio/WinSoundtrack.wav')
+        Sound.playBGM()
+        initalized_state = g.Gamestate.WIN
+
 def init_settings() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.SETTINGS:

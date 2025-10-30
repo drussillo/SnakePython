@@ -43,6 +43,24 @@ def draw_fail_state_screen() -> None: #without buttons
     button_2.draw()
     button_2.check_if_clicked(g.reset_menu)
 
+def draw_win_state_screen() -> None:
+    draw_background(g.bgtilemenu1)
+    win_title = g.font_100.render('You Won!', True, (56, 79, 93))
+    g.SCREEN.blit(win_title, (g.screen_w // 2 - win_title.get_width() // 2, g.screen_h // 5))
+    # TODO: add high score
+    # reset button
+    button_1.set_image(g.retrybutton)
+    button_1.center()
+    button_1.move(y=200, x=150)
+    button_1.draw()
+    button_1.check_if_clicked(g.reset_mode_basic)
+    # menu button
+    button_2.set_image(g.menubutton)
+    button_2.center()
+    button_2.move(y=200, x=-150)
+    button_2.draw()
+    button_2.check_if_clicked(g.reset_menu)
+
 def draw_main_menu_screen() -> None:
     draw_background(g.bgtilemenu1)
     main_title = g.font_100.render('Snake Python', True, (56, 79, 93))

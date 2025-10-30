@@ -26,6 +26,11 @@ while running:
             States.init_fail()
             running = Input.handle_input_fail()
 
+        case g.Gamestate.WIN:
+            UI.draw_win_state_screen()
+            States.init_win()
+            running = Input.handle_input_fail()
+
         case g.Gamestate.SETTINGS:
             States.init_settings()
             UI.draw_settings_screen()
@@ -41,6 +46,7 @@ while running:
             Snake.draw()
             Snake.movement()
             Snake.check_if_fail()
+            Snake.check_if_win()
 
             Object.handle_objects()
 

@@ -73,8 +73,9 @@ class Gamestate(Enum):
     VOID = 0
     MENU = 1
     FAIL = 2
-    SETTINGS = 3
-    MODE_BASIC = 4
+    WIN = 3
+    SETTINGS = 4
+    MODE_BASIC = 5
 
 current_state: Gamestate = Gamestate.MENU
 
@@ -267,6 +268,10 @@ def reset_menu() -> None:
 def reset_fail() -> None:
     global current_state
     current_state = Gamestate.FAIL
+
+def reset_win() -> None:
+    global current_state
+    current_state = Gamestate.WIN
 
 def reset_settings() -> None:
     global current_state
