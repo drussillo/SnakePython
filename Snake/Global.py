@@ -47,10 +47,13 @@ adjust_d_tile_size()
 default_font_path:str = resource_path("fonts/mainfont.ttf")
 font_tile_size = pygame.font.Font(default_font_path, d_tile_size)
 font_100 = pygame.font.Font(default_font_path, 100)
+font_60 = pygame.font.Font(default_font_path, 60)
 font_35 = pygame.font.Font(default_font_path, 35)
 
 
 #miscellaneous
+score:int
+objective:int
 REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 SCREEN = pygame.Surface((screen_w, screen_h))
 clock = pygame.time.Clock()
@@ -73,8 +76,9 @@ class Gamestate(Enum):
     VOID = 0
     MENU = 1
     FAIL = 2
-    SETTINGS = 3
-    MODE_BASIC = 4
+    WIN = 3
+    SETTINGS = 4
+    MODE_BASIC = 5
 
 current_state: Gamestate = Gamestate.MENU
 
@@ -194,8 +198,10 @@ cactus = pygame.transform.scale(get_sprite(objects, 30, 0, 15, 15), (d_size, d_s
 # random tile background array
 current_bgtileset:tuple[pygame.surface.Surface, ...] = bgtileset_grass  # default to grass
 background_arr:list[list[pygame.surface.Surface]]
+background_size:int
 def generate_random_background():
     global background_arr
+    global background_size
     background_arr = [
         [
             random.choice(current_bgtileset)
@@ -203,6 +209,7 @@ def generate_random_background():
         ]
         for y in range((screen_h - HUD_h) // d_tile_size)
     ]
+    background_size = len(background_arr) * len(background_arr[0])
 
 def randomize_spawn_pos() -> (int, int):
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
@@ -264,6 +271,10 @@ def reset_menu() -> None:
 def reset_fail() -> None:
     global current_state
     current_state = Gamestate.FAIL
+
+def reset_win() -> None:
+    global current_state
+    current_state = Gamestate.WIN
 
 def reset_settings() -> None:
     global current_state

@@ -21,6 +21,14 @@ def init_fail() -> None:
         Sound.stop()
         initalized_state = g.Gamestate.FAIL
 
+def init_win() -> None:
+    global initalized_state
+    if initalized_state != g.Gamestate.WIN:
+        g.clear_object_stack()
+        Sound.setBGM('audio/WinSoundtrack.wav')
+        Sound.playBGM()
+        initalized_state = g.Gamestate.WIN
+
 def init_settings() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.SETTINGS:
@@ -55,6 +63,7 @@ def init_mode_basic() -> None:
         g.direction = g.randomize_direction()
         g.snake_body = [(new_head_x, new_head_y, g.direction)]
         g.velocity = g.velocity_start
+        g.objective = g.background_size // 3 # temporary value
         Sound.setCurrentBGM()
         Sound.playBGM()
         Apple.init_apples_basic()

@@ -7,9 +7,11 @@ def draw_HUD() -> None:
     apple_icon = g.pygame.transform.scale(g.defapple, (apple_icon_w, apple_icon_h))
     apple_icon_pos_x, apple_icon_pos_y = g.HUD_w//g.HUD_divisor, g.HUD_h // 2 - apple_icon.get_height()//2
     g.SCREEN.blit(apple_icon, (apple_icon_pos_x, apple_icon_pos_y))
-    apple_counter = g.font_tile_size.render(f" x {len(g.snake_body) - 1}", True, (0,0,0))
+    apple_counter = g.font_tile_size.render(f" x {len(g.snake_body) - 1}", True, (0, 0, 0))
     apple_counter_pos_x, apple_counter_pos_y = apple_icon_pos_x + apple_icon_w, apple_icon_pos_y + (apple_icon_h - g.font_tile_size.get_height()) // 2
     g.SCREEN.blit(apple_counter, (apple_counter_pos_x, apple_counter_pos_y))
+    objective_title = g.font_tile_size.render(f"Objective: {g.objective}", True, (0, 0, 0))
+    g.SCREEN.blit(objective_title, (g.screen_w - objective_title.get_width() - g.d_tile_size, apple_counter_pos_y))
 
 def draw_background(bgtilemenu:g.pygame.surface.Surface=None) -> None:
     g.SCREEN.fill((110, 135, 97))
@@ -30,6 +32,26 @@ def draw_fail_state_screen() -> None: #without buttons
     draw_background(g.bgtilemenu1)
     fail_title = g.font_100.render('You Failed!', True, (56, 79, 93))
     g.SCREEN.blit(fail_title, (g.screen_w // 2 - fail_title.get_width() // 2, g.screen_h // 5))
+    # reset button
+    button_1.set_image(g.retrybutton)
+    button_1.center()
+    button_1.move(y=200, x=150)
+    button_1.draw()
+    button_1.check_if_clicked(g.reset_mode_basic)
+    # menu button
+    button_2.set_image(g.menubutton)
+    button_2.center()
+    button_2.move(y=200, x=-150)
+    button_2.draw()
+    button_2.check_if_clicked(g.reset_menu)
+
+def draw_win_state_screen() -> None:
+    draw_background(g.bgtilemenu1)
+    win_title = g.font_100.render('You Won!', True, (56, 79, 93))
+    g.SCREEN.blit(win_title, (g.screen_w // 2 - win_title.get_width() // 2, g.screen_h // 5))
+    # TODO: add high score
+    score = g.font_60.render(f'Score: {g.score}', True, (56, 79, 93))
+    g.SCREEN.blit(score, (g.screen_w // 2 - score.get_width() // 2, g.screen_h // 3))
     # reset button
     button_1.set_image(g.retrybutton)
     button_1.center()
