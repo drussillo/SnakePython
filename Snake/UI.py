@@ -7,30 +7,21 @@ def draw_HUD() -> None:
     apple_icon = g.pygame.transform.scale(g.defapple, (apple_icon_w, apple_icon_h))
     apple_icon_pos_x, apple_icon_pos_y = g.HUD_w//g.HUD_divisor, g.HUD_h // 2 - apple_icon.get_height()//2
     g.SCREEN.blit(apple_icon, (apple_icon_pos_x, apple_icon_pos_y))
-    font = g.pygame.font.Font(g.default_font, apple_icon.get_width())
-    apple_counter = font.render(f" x {len(g.snake_body) - 1}", True, (0,0,0))
-    apple_counter_pos_x, apple_counter_pos_y = apple_icon_pos_x + apple_icon_w, apple_icon_pos_y + apple_icon_w//4
+    apple_counter = g.font_tile_size.render(f" x {len(g.snake_body) - 1}", True, (0, 0, 0))
+    apple_counter_pos_x, apple_counter_pos_y = apple_icon_pos_x + apple_icon_w, apple_icon_pos_y + (apple_icon_h - g.font_tile_size.get_height()) // 2
     g.SCREEN.blit(apple_counter, (apple_counter_pos_x, apple_counter_pos_y))
+    objective_title = g.font_tile_size.render(f"Objective: {g.objective}", True, (0, 0, 0))
+    g.SCREEN.blit(objective_title, (g.screen_w - objective_title.get_width() - g.d_tile_size, apple_counter_pos_y))
 
-def draw_background(bgtilemenu:g.pygame.surface.Surface=None) -> None:
-    g.SCREEN.fill((110, 135, 97))
-    if bgtilemenu:
-        tile_size = 14 * g.bgtilesmenuscale
-        for row in range(g.screen_w // 14 * g.bgtilesmenuscale):
-            for col in range(g.screen_h // 14 * g.bgtilesmenuscale):
-                if col % 2 == 1:
-                    g.SCREEN.blit(bgtilemenu, (col * tile_size, row * tile_size - tile_size // 2))
-                else:
-                    g.SCREEN.blit(bgtilemenu, (col * tile_size, row * tile_size))
-    else:
-        for y, row in enumerate(g.background_arr):
-            for x, bgimg in enumerate(row):
-                g.SCREEN.blit(bgimg, (x * g.d_tile_size + g.offset_x, y * g.d_tile_size + g.HUD_h + g.offset_y))
+def draw_game_background() -> None:
+    g.SCREEN.blit(g.game_background, (0, 0))
+
+def draw_menu_background() -> None:
+    g.SCREEN.blit(g.menu_background, (0, 0))
 
 def draw_fail_state_screen() -> None: #without buttons
-    draw_background(g.bgtilemenu1)
-    font = g.pygame.font.Font(g.default_font, 100)
-    fail_title = font.render('You Failed!', True, (56, 79, 93))
+    draw_menu_background()
+    fail_title = g.font_100.render('You Failed!', True, (56, 79, 93))
     g.SCREEN.blit(fail_title, (g.screen_w // 2 - fail_title.get_width() // 2, g.screen_h // 5))
     # reset button
     button_1.set_image(g.retrybutton)
@@ -45,10 +36,29 @@ def draw_fail_state_screen() -> None: #without buttons
     button_2.draw()
     button_2.check_if_clicked(g.reset_menu)
 
+def draw_win_state_screen() -> None:
+    draw_menu_background()
+    win_title = g.font_100.render('You Won!', True, (56, 79, 93))
+    g.SCREEN.blit(win_title, (g.screen_w // 2 - win_title.get_width() // 2, g.screen_h // 5))
+    # TODO: add high score
+    score = g.font_60.render(f'Score: {g.score}', True, (56, 79, 93))
+    g.SCREEN.blit(score, (g.screen_w // 2 - score.get_width() // 2, g.screen_h // 3))
+    # reset button
+    button_1.set_image(g.retrybutton)
+    button_1.center()
+    button_1.move(y=200, x=150)
+    button_1.draw()
+    button_1.check_if_clicked(g.reset_mode_basic)
+    # menu button
+    button_2.set_image(g.menubutton)
+    button_2.center()
+    button_2.move(y=200, x=-150)
+    button_2.draw()
+    button_2.check_if_clicked(g.reset_menu)
+
 def draw_main_menu_screen() -> None:
-    draw_background(g.bgtilemenu1)
-    font = g.pygame.font.Font(g.default_font, 100)
-    main_title = font.render('Snake Python', True, (56, 79, 93))
+    draw_menu_background()
+    main_title = g.font_100.render('Snake Python', True, (56, 79, 93))
     g.SCREEN.blit(main_title, (g.screen_w // 2 - main_title.get_width() // 2, g.screen_h // 5))
     # start button
     button_1.set_image(g.startbutton)
@@ -64,9 +74,8 @@ def draw_main_menu_screen() -> None:
     button_2.check_if_clicked(g.reset_settings)
 
 def draw_settings_screen() -> None:
-    draw_background(g.bgtilemenu1)
-    font = g.pygame.font.Font(g.default_font, 100)
-    settings_title = font.render('Settings', True, (56, 79, 93))
+    draw_menu_background()
+    settings_title = g.font_100.render('Settings', True, (56, 79, 93))
     g.SCREEN.blit(settings_title, (g.screen_w // 2 - settings_title.get_width() // 2, g.screen_h // 5))
     # cancel button
     button_1.set_image(g.cancelbutton)
@@ -114,15 +123,14 @@ def draw_settings_screen() -> None:
     button_6.draw()
     button_6.check_if_clicked(g.toggle_legacy_mode)
     # resolution title
-    font = g.pygame.font.Font(g.default_font, 35)
-    resolution_title = font.render('Res:', True, (56, 79, 93))
+    resolution_title = g.font_35.render('Res:', True, (56, 79, 93))
     resolution_title_centered:(int, int) = ((g.screen_w - resolution_title.get_width()) // 2, (g.screen_h - resolution_title.get_height()) // 2 )
     g.SCREEN.blit(resolution_title, (resolution_title_centered[0] - 140, resolution_title_centered[1] + g.screen_h // 5))
     # resolution text boxes
     if not textbox_1.default_string:
         textbox_1.set_default_string(f"{g.screen_w}")
     textbox_1.set_input_validity_function(textbox_validity_check)
-    textbox_1.set_fontsize(35)
+    textbox_1.set_font(g.font_35)
     textbox_1.set_fontcolor((56, 79, 93))
     textbox_1.set_w(100)
     textbox_1.center()
@@ -134,7 +142,7 @@ def draw_settings_screen() -> None:
     if not textbox_2.default_string:
         textbox_2.set_default_string(f"{g.screen_h}")
     textbox_2.set_input_validity_function(textbox_validity_check)
-    textbox_2.set_fontsize(35)
+    textbox_2.set_font(g.font_35)
     textbox_2.set_fontcolor((56, 79, 93))
     textbox_2.set_w(100)
     textbox_2.center()
@@ -215,10 +223,10 @@ class Button():
         self.is_down = g.pygame.mouse.get_pressed(num_buttons=3)[0]
     
 class TextBox(Button):
-    def __init__(self, x=0, y=0, w=0, h=0, drawable:g.pygame.surface.Surface=g.emptybutton, fontsize=12, fontcolor=(0, 0, 0)) -> None:
+    def __init__(self, x=0, y=0, w=0, h=0, drawable:g.pygame.surface.Surface=g.emptybutton, font=g.font_35, fontcolor=(0, 0, 0)) -> None:
         self.string = ""
         self.default_string = ""
-        self.fontsize = fontsize
+        self.font = font
         self.fontcolor = fontcolor
         self.active:bool = False
         self.validityf = lambda: True
@@ -233,19 +241,18 @@ class TextBox(Button):
     def clear_string(self) -> None:
         self.string = ""
 
-    def set_fontsize(self, size:int) -> None:
-        self.fontsize = size
+    def set_font(self, font) -> None:
+        self.font = font
 
     def set_fontcolor(self, color:(int, int, int)) -> None:
         self.fontcolor = color
 
     def draw(self) -> None:
         super().draw()
-        font = g.pygame.font.Font(g.default_font, self.fontsize)
         if self.active:
-            title = font.render(self.string, True, (self.fontcolor[0]+15, self.fontcolor[1]+15, self.fontcolor[2]+15))
+            title = self.font.render(self.string, True, (self.fontcolor[0]+15, self.fontcolor[1]+15, self.fontcolor[2]+15))
         else:
-            title = font.render(self.string, True, self.fontcolor)
+            title = self.font.render(self.string, True, self.fontcolor)
         g.SCREEN.blit(title, (self.x + (self.w - title.get_width()) // 2, self.y + (self.h - title.get_height()) // 2))
 
     def check_if_clicked(self) -> None:

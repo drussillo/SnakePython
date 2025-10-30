@@ -7,7 +7,6 @@ import States
 import Object
 import Sound
 
-g.pygame.init()
 g.pygame.display.set_caption("Snake")
 g.pygame.mixer.init()
 
@@ -27,6 +26,11 @@ while running:
             States.init_fail()
             running = Input.handle_input_fail()
 
+        case g.Gamestate.WIN:
+            UI.draw_win_state_screen()
+            States.init_win()
+            running = Input.handle_input_fail()
+
         case g.Gamestate.SETTINGS:
             States.init_settings()
             UI.draw_settings_screen()
@@ -34,16 +38,18 @@ while running:
 
         case g.Gamestate.MODE_BASIC:
             States.init_mode_basic()
-            UI.draw_background()
-            UI.draw_HUD()
-            running = Input.handle_input_main()
+            UI.draw_game_background()
 
-            #draw and move the snake
             Snake.draw()
             Snake.movement()
-            Snake.check_if_fail()
-
             Object.handle_objects()
+
+            UI.draw_HUD()
+
+            Snake.check_if_fail()
+            Snake.check_if_win()
+
+            running = Input.handle_input_main()
 
         case _:
             print("Unknown or unhandled gamestate")

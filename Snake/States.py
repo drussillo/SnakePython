@@ -1,3 +1,5 @@
+import random
+
 import Global as g
 import Sound
 import Apple
@@ -8,20 +10,32 @@ initalized_state = g.Gamestate.VOID
 def init_menu() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.MENU:
-        Sound.setBGM("./audio/MainSoundtrack1-trianglewave.wav")
+        g.generate_menu_background(g.bgtilemenu1)
+        Sound.setBGM(g.resource_path("audio/MainSoundtrack1-trianglewave.wav"))
         Sound.playBGM()
         initalized_state = g.Gamestate.MENU
 
 def init_fail() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.FAIL:
+        g.generate_menu_background(g.bgtilemenu1)
         g.clear_object_stack()
         Sound.stop()
         initalized_state = g.Gamestate.FAIL
 
+def init_win() -> None:
+    global initalized_state
+    if initalized_state != g.Gamestate.WIN:
+        g.generate_menu_background(g.bgtilemenu1)
+        g.clear_object_stack()
+        Sound.setBGM(g.resource_path('audio/WinSoundtrack.wav'))
+        Sound.playBGM()
+        initalized_state = g.Gamestate.WIN
+
 def init_settings() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.SETTINGS:
+        g.generate_menu_background(g.bgtilemenu1)
         # reset temp settings
         g.screen_w_temp = g.screen_w
         g.screen_h_temp = g.screen_h
@@ -38,14 +52,24 @@ def init_settings() -> None:
 def init_mode_basic() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.MODE_BASIC:
-        g.current_bgtileset = g.bgtileset_grass
-        g.generate_random_background()
+        g.current_bgtileset = random.choices((
+            g.bgtileset_grass,
+            g.bgtileset_jungle,
+            g.bgtileset_desert,
+            g.bgtileset_city,
+            g.bgtileset_frozen,
+            g.bgtileset_snow,
+            g.bgtileset_cherryblossom
+        ), weights=(4, 3, 3, 2, 2, 2, 1))[0]
+        g.generate_random_background_array()
+        g.generate_game_background()
         g.clear_object_stack()
         new_head_x, new_head_y = g.randomize_spawn_pos()
         g.direction = g.randomize_direction()
         g.snake_body = [(new_head_x, new_head_y, g.direction)]
         g.velocity = g.velocity_start
-        Sound.setBGM("./audio/MainSoundtrack1.wav")
+        g.objective = g.background_size // 3 # temporary value
+        Sound.setCurrentBGM()
         Sound.playBGM()
         Apple.init_apples_basic()
         Obstacle.init_obstacles_basic()

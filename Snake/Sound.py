@@ -15,6 +15,14 @@ def playBGM() -> None:
 def setBGM(path:str) -> None:
     g.pygame.mixer.music.load(path)
 
+def setCurrentBGM() -> None:
+    match g.current_bgtileset:
+        case g.bgtileset_jungle:
+            setBGM(g.resource_path("audio/MainSoundtrack1-jungle.wav"))
+        #TODO: Add more soundtracks
+        case _:
+            setBGM(g.resource_path("audio/MainSoundtrack1.wav"))
+
 def stop() -> None:
     g.pygame.mixer.music.stop()
 
@@ -25,15 +33,15 @@ def play(type:Type) -> None:
     if g.sfx:
         match type:
             case Type.GROW:
-                path = "./audio/grow.wav"
+                path = g.resource_path("audio/grow.wav")
             case Type.DEATH:
-                path = "./audio/death.wav"
+                path = g.resource_path("audio/death.wav")
             case Type.SPAWN:
-                path = "./audio/spawn.wav"
+                path = g.resource_path("audio/spawn.wav")
             case Type.DAMAGE:
-                path = "./audio/damage.wav"
+                path = g.resource_path("audio/damage.wav")
             case _:
-                path = "./audio/error.wav"
+                path = g.resource_path("audio/error.wav")
 
         sound = g.pygame.mixer.Sound(path)
         sound.set_volume(0.2)

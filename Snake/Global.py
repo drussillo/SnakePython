@@ -1,6 +1,18 @@
+import sys
+import os
 import pygame
 import random
 from enum import Enum
+
+# path helper to build executables
+def resource_path(relative_path) -> str:
+    # Get absolute path to resource, works for PyInstaller onefile.
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+pygame.init()
 
 # Settings
 # 500x500 min res
@@ -30,9 +42,18 @@ def adjust_d_tile_size() -> None:
         d_tile_size = d_size + d_dist
 adjust_d_tile_size()
 
+# fonts
+# CREDIT: Comicoro font by jeti
+default_font_path:str = resource_path("fonts/mainfont.ttf")
+font_tile_size = pygame.font.Font(default_font_path, d_tile_size)
+font_100 = pygame.font.Font(default_font_path, 100)
+font_60 = pygame.font.Font(default_font_path, 60)
+font_35 = pygame.font.Font(default_font_path, 35)
+
+
 #miscellaneous
-# TODO: CREDIT: Comicoro font by jeti
-default_font:str = "./fonts/mainfont.ttf"
+score:int
+objective:int
 REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 SCREEN = pygame.Surface((screen_w, screen_h))
 clock = pygame.time.Clock()
@@ -55,8 +76,9 @@ class Gamestate(Enum):
     VOID = 0
     MENU = 1
     FAIL = 2
-    SETTINGS = 3
-    MODE_BASIC = 4
+    WIN = 3
+    SETTINGS = 4
+    MODE_BASIC = 5
 
 current_state: Gamestate = Gamestate.MENU
 
@@ -87,7 +109,7 @@ def get_sprite(sheet, x, y, width, height):
 
 #start drawables
 buttonscale:int = 4  # each row is 14px
-buttons = pygame.image.load("drawables/buttons.png").convert_alpha()
+buttons = pygame.image.load(resource_path("drawables/buttons.png")).convert_alpha()
 emptybutton = pygame.transform.scale(get_sprite(buttons, 0, 0, 41, 14), (41 * buttonscale, 14 * buttonscale))
 menubutton = pygame.transform.scale(get_sprite(buttons, 0, 14, 34, 14), (34 * buttonscale, 14 * buttonscale))
 retrybutton = pygame.transform.scale(get_sprite(buttons, 0, 28, 41, 14), (41 * buttonscale, 14 * buttonscale))
@@ -103,7 +125,7 @@ fullscreenbutton = pygame.transform.scale(get_sprite(buttons, 0, 154, 17, 14), (
 ogonbutton = pygame.transform.scale(get_sprite(buttons, 0, 168, 17, 14), (17 * buttonscale, 14 * buttonscale))
 ogoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 182, 17, 14), (17 * buttonscale, 14 * buttonscale))
 
-bgtiles = pygame.image.load("drawables/bgtiles.png").convert_alpha()
+bgtiles = pygame.image.load(resource_path("drawables/bgtiles.png")).convert_alpha()
 bgtileset_grass:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 00, 0, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 15, 0, 15, 15), (d_tile_size, d_tile_size)),
@@ -128,27 +150,33 @@ bgtileset_city:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 30, 45, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 45, 45, 15, 15), (d_tile_size, d_tile_size))
 )
-bgtileset_snow:tuple[pygame.surface.Surface, ...] = (
+bgtileset_frozen:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 00, 60, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 15, 60, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 30, 60, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 45, 60, 15, 15), (d_tile_size, d_tile_size))
 )
-# TODO: snow / frozen background + more backgrounds?
-bgtileset_cherryblossom:tuple[pygame.surface.Surface, ...] = (
+bgtileset_snow:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 00, 75, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 15, 75, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 30, 75, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 45, 75, 15, 15), (d_tile_size, d_tile_size))
 )
+# TODO: snow / frozen background + more backgrounds?
+bgtileset_cherryblossom:tuple[pygame.surface.Surface, ...] = (
+    pygame.transform.scale(get_sprite(bgtiles, 00, 90, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 15, 90, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 30, 90, 15, 15), (d_tile_size, d_tile_size)),
+    pygame.transform.scale(get_sprite(bgtiles, 45, 90, 15, 15), (d_tile_size, d_tile_size))
+)
 
 bgtilesmenuscale:int = 6
-bgtilesmenu = pygame.image.load("drawables/bgtilesmenu.png").convert_alpha()
+bgtilesmenu = pygame.image.load(resource_path("drawables/bgtilesmenu.png")).convert_alpha()
 bgtilemenu1 = pygame.transform.scale(get_sprite(bgtilesmenu, 0, 0, 14, 14), (14 * bgtilesmenuscale, 14 * bgtilesmenuscale))
 # TODO: improve current menu bgtile
 # TODO: add more bg tiles for menu
 
-snakesegments = pygame.image.load("drawables/segments.png").convert_alpha()
+snakesegments = pygame.image.load(resource_path("drawables/segments.png")).convert_alpha()
 snakesegment_vert = pygame.transform.scale(get_sprite(snakesegments, 0, 0, 15, 15), (d_size, d_size))
 snakesegment_hor = pygame.transform.rotate(snakesegment_vert, 90)
 
@@ -162,16 +190,19 @@ snakelast_e = pygame.transform.rotate(snakelast_n, -90)
 snakelast_s = pygame.transform.rotate(snakelast_e, -90)
 snakelast_w = pygame.transform.rotate(snakelast_s, -90)
 
-objects = pygame.image.load("drawables/objects.png").convert_alpha()
+objects = pygame.image.load(resource_path("drawables/objects.png")).convert_alpha()
 defapple = pygame.transform.scale(get_sprite(objects, 0, 0, 15, 15), (d_size, d_size))
 boulder = pygame.transform.scale(get_sprite(objects, 15, 0, 15, 15), (d_size, d_size))
 cactus = pygame.transform.scale(get_sprite(objects, 30, 0, 15, 15), (d_size, d_size))
 
-# random tile background array
-current_bgtileset:tuple[pygame.surface.Surface, ...] = bgtileset_grass  # default to grass
-background_arr:list[list[pygame.surface.Surface]]
-def generate_random_background():
+
+# random background tiles
+current_bgtileset:tuple[pygame.Surface, ...] = bgtileset_grass  # default to grass
+background_arr:list[list[pygame.Surface]]
+background_size:int
+def generate_random_background_array():
     global background_arr
+    global background_size
     background_arr = [
         [
             random.choice(current_bgtileset)
@@ -179,6 +210,39 @@ def generate_random_background():
         ]
         for y in range((screen_h - HUD_h) // d_tile_size)
     ]
+    background_size = len(background_arr) * len(background_arr[0])
+
+# backgrounds
+game_background:pygame.Surface
+menu_background:pygame.Surface
+
+def generate_game_background() -> None:
+    global d_tile_size
+    global offset_x
+    global offset_y
+    global HUD_h
+    global game_background
+    game_background = pygame.Surface((screen_w, screen_h))
+    game_background.fill((110, 135, 97))
+    global background_arr
+    for y, row in enumerate(background_arr):
+        for x, bgimg in enumerate(row):
+            game_background.blit(bgimg, (x * d_tile_size + offset_x, y * d_tile_size + HUD_h + offset_y))
+
+def generate_menu_background(bgtilemenu:pygame.Surface) -> None:
+    global screen_w
+    global screen_h
+    global menu_background
+    menu_background = pygame.Surface((screen_w, screen_h))
+    global bgtilesmenuscale
+    tile_size = 14 * bgtilesmenuscale
+    for row in range(screen_w // 14 * bgtilesmenuscale):
+        for col in range(screen_h // 14 * bgtilesmenuscale):
+            if col % 2 == 1:
+                menu_background.blit(bgtilemenu, (col * tile_size, row * tile_size - tile_size // 2))
+            else:
+                menu_background.blit(bgtilemenu, (col * tile_size, row * tile_size))
+
 
 def randomize_spawn_pos() -> (int, int):
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
@@ -240,6 +304,10 @@ def reset_menu() -> None:
 def reset_fail() -> None:
     global current_state
     current_state = Gamestate.FAIL
+
+def reset_win() -> None:
+    global current_state
+    current_state = Gamestate.WIN
 
 def reset_settings() -> None:
     global current_state

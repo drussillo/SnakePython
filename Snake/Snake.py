@@ -104,6 +104,11 @@ def check_if_fail() -> None:
     if check_if_coll_itself() or out_of_bounds():
         die()
 
+def check_if_win() -> None:
+    g.score = len(g.snake_body) - 1
+    if g.score >= g.objective:
+        win()
+
 def set_segment_dir(index:int, direction:str) -> None:
     g.snake_body[index] = (g.snake_body[index][0], g.snake_body[index][1], direction)
 
@@ -154,4 +159,13 @@ def die() -> None:
         continue
     g.reset_fail()
 
+def win() -> None:
+    advance()
+    g.REAL_SCREEN.blit(g.SCREEN, ((g.REAL_SCREEN.get_width() - g.screen_w) // 2, (g.REAL_SCREEN.get_height() - g.screen_h) // 2))
+    g.pygame.display.flip()
+    Sound.stop()
+    Sound.play(Sound.Type.SPAWN)
+    while Sound.is_playing():
+        continue
+    g.reset_win()
 
