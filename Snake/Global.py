@@ -47,10 +47,12 @@ adjust_d_tile_size()
 default_font_path:str = resource_path("fonts/mainfont.ttf")
 font_tile_size = pygame.font.Font(default_font_path, d_tile_size)
 font_100 = pygame.font.Font(default_font_path, 100)
+font_60 = pygame.font.Font(default_font_path, 60)
 font_35 = pygame.font.Font(default_font_path, 35)
 
 
 #miscellaneous
+score:int
 REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 SCREEN = pygame.Surface((screen_w, screen_h))
 clock = pygame.time.Clock()

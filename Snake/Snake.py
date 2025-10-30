@@ -105,8 +105,8 @@ def check_if_fail() -> None:
         die()
 
 def check_if_win() -> None:
-    # if len(g.snake_body) == g.background_size:
-    if len(g.snake_body) == 5:
+    g.score = g.snake_body
+    if g.score == g.background_size - len(g.object_stack) - g.background_size // 2:
         win()
 
 def set_segment_dir(index:int, direction:str) -> None:

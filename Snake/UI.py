@@ -48,6 +48,8 @@ def draw_win_state_screen() -> None:
     win_title = g.font_100.render('You Won!', True, (56, 79, 93))
     g.SCREEN.blit(win_title, (g.screen_w // 2 - win_title.get_width() // 2, g.screen_h // 5))
     # TODO: add high score
+    score = g.font_60.render(f'Score: {g.score}', True, (56, 79, 93))
+    g.SCREEN.blit(score, (g.screen_w // 2 - score.get_width() // 2, g.screen_h // 3))
     # reset button
     button_1.set_image(g.retrybutton)
     button_1.center()
