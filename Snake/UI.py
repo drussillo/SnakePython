@@ -153,6 +153,32 @@ def draw_settings_screen() -> None:
     g.screen_h_temp = int(textbox_2.default_string)
     # TODO: Add max_fps / gamespeed setting
     # TODO: Add d_size and velocity setting for basic mode???
+    # tile size textbox (basic mode)
+    if not textbox_3.default_string:
+        textbox_3.set_default_string(f"{g.d_size}")
+    textbox_3.set_image(g.emptybutton_small)
+    textbox_3.set_input_validity_function(textbox_validity_check) # TODO
+    textbox_3.set_font(g.font_35)
+    textbox_3.set_fontcolor((56, 79, 93))
+    textbox_3.center()
+    textbox_3.move(x=50,y=g.screen_h//3)
+    textbox_3.draw()
+    textbox_3.check_if_clicked()
+    textbox_3.edit()
+    g.screen_h_temp = int(textbox_3.default_string)
+    # velocity textbox (basic mode)
+    if not textbox_4.default_string:
+        textbox_4.set_default_string(f"{g.screen_h}")
+    textbox_4.set_input_validity_function(textbox_validity_check)
+    textbox_4.set_font(g.font_35)
+    textbox_4.set_fontcolor((56, 79, 93))
+    textbox_4.set_w(100)
+    textbox_4.center()
+    textbox_4.move(x=50,y=g.screen_h//5)
+    textbox_4.draw()
+    textbox_4.check_if_clicked()
+    textbox_4.edit()
+    g.screen_h_temp = int(textbox_4.default_string)
 
 # settings helper
 def save() -> None:
@@ -193,7 +219,7 @@ class Button():
     def set_h(self, h:int) -> None:
         self.h = h
 
-    def set_image(self, drawable:g.pygame.surface.Surface=g.defapple) -> None:
+    def set_image(self, drawable:g.pygame.Surface=g.defapple) -> None:
         self.w = drawable.get_width()
         self.h = drawable.get_height()
         self.image = drawable
@@ -290,6 +316,9 @@ class TextBox(Button):
 def textbox_validity_check(textbox:TextBox) -> bool:
     return textbox.string.isdigit() and int(textbox.string) >= 500 and len(textbox.string) <= 6
 
+def size_validity_chack(size:int) -> bool:
+    return size
+
 #declare multiuse button objects
 button_1 = Button()
 button_2 = Button()
@@ -299,3 +328,5 @@ button_5 = Button()
 button_6 = Button()
 textbox_1 = TextBox()
 textbox_2 = TextBox()
+textbox_3 = TextBox()
+textbox_4 = TextBox()
