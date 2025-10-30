@@ -23,13 +23,15 @@ Settings
 
 Modes:  
 - Add basic mode selection from menu 
-- Add winstate / score system for basic mode
 - Add level mode
 
 Graphics:  
 - Custom backgrounds for menu, fail, etc.  
 - Custom text  
 - HUD improvement
+
+Audio:  
+- Add different soundtracks depending on the current background  
   
 Obstacles:  
 - Obstacle amount changes based on background array size
