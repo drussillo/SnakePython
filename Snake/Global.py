@@ -5,7 +5,7 @@ import random
 from enum import Enum
 
 # path helper to build executables
-def resource_path(relative_path):
+def resource_path(relative_path) -> str:
     # Get absolute path to resource, works for PyInstaller onefile.
     try:
         base_path = sys._MEIPASS
