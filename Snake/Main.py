@@ -38,7 +38,7 @@ while running:
 
         case g.Gamestate.MODE_BASIC:
             States.init_mode_basic()
-            UI.draw_background()
+            UI.draw_game_background()
 
             Snake.draw()
             Snake.movement()
