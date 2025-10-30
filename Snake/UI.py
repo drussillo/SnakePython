@@ -13,23 +13,14 @@ def draw_HUD() -> None:
     objective_title = g.font_tile_size.render(f"Objective: {g.objective}", True, (0, 0, 0))
     g.SCREEN.blit(objective_title, (g.screen_w - objective_title.get_width() - g.d_tile_size, apple_counter_pos_y))
 
-def draw_background(bgtilemenu:g.pygame.surface.Surface=None) -> None:
-    g.SCREEN.fill((110, 135, 97))
-    if bgtilemenu:
-        tile_size = 14 * g.bgtilesmenuscale
-        for row in range(g.screen_w // 14 * g.bgtilesmenuscale):
-            for col in range(g.screen_h // 14 * g.bgtilesmenuscale):
-                if col % 2 == 1:
-                    g.SCREEN.blit(bgtilemenu, (col * tile_size, row * tile_size - tile_size // 2))
-                else:
-                    g.SCREEN.blit(bgtilemenu, (col * tile_size, row * tile_size))
-    else:
-        for y, row in enumerate(g.background_arr):
-            for x, bgimg in enumerate(row):
-                g.SCREEN.blit(bgimg, (x * g.d_tile_size + g.offset_x, y * g.d_tile_size + g.HUD_h + g.offset_y))
+def draw_game_background() -> None:
+    g.SCREEN.blit(g.game_background, (0, 0))
+
+def draw_menu_background() -> None:
+    g.SCREEN.blit(g.menu_background, (0, 0))
 
 def draw_fail_state_screen() -> None: #without buttons
-    draw_background(g.bgtilemenu1)
+    draw_menu_background()
     fail_title = g.font_100.render('You Failed!', True, (56, 79, 93))
     g.SCREEN.blit(fail_title, (g.screen_w // 2 - fail_title.get_width() // 2, g.screen_h // 5))
     # reset button
@@ -46,7 +37,7 @@ def draw_fail_state_screen() -> None: #without buttons
     button_2.check_if_clicked(g.reset_menu)
 
 def draw_win_state_screen() -> None:
-    draw_background(g.bgtilemenu1)
+    draw_menu_background()
     win_title = g.font_100.render('You Won!', True, (56, 79, 93))
     g.SCREEN.blit(win_title, (g.screen_w // 2 - win_title.get_width() // 2, g.screen_h // 5))
     # TODO: add high score
@@ -66,7 +57,7 @@ def draw_win_state_screen() -> None:
     button_2.check_if_clicked(g.reset_menu)
 
 def draw_main_menu_screen() -> None:
-    draw_background(g.bgtilemenu1)
+    draw_menu_background()
     main_title = g.font_100.render('Snake Python', True, (56, 79, 93))
     g.SCREEN.blit(main_title, (g.screen_w // 2 - main_title.get_width() // 2, g.screen_h // 5))
     # start button
@@ -83,7 +74,7 @@ def draw_main_menu_screen() -> None:
     button_2.check_if_clicked(g.reset_settings)
 
 def draw_settings_screen() -> None:
-    draw_background(g.bgtilemenu1)
+    draw_menu_background()
     settings_title = g.font_100.render('Settings', True, (56, 79, 93))
     g.SCREEN.blit(settings_title, (g.screen_w // 2 - settings_title.get_width() // 2, g.screen_h // 5))
     # cancel button

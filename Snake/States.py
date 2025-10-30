@@ -10,6 +10,7 @@ initalized_state = g.Gamestate.VOID
 def init_menu() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.MENU:
+        g.generate_menu_background(g.bgtilemenu1)
         Sound.setBGM(g.resource_path("audio/MainSoundtrack1-trianglewave.wav"))
         Sound.playBGM()
         initalized_state = g.Gamestate.MENU
@@ -17,6 +18,7 @@ def init_menu() -> None:
 def init_fail() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.FAIL:
+        g.generate_menu_background(g.bgtilemenu1)
         g.clear_object_stack()
         Sound.stop()
         initalized_state = g.Gamestate.FAIL
@@ -24,6 +26,7 @@ def init_fail() -> None:
 def init_win() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.WIN:
+        g.generate_menu_background(g.bgtilemenu1)
         g.clear_object_stack()
         Sound.setBGM('audio/WinSoundtrack.wav')
         Sound.playBGM()
@@ -32,6 +35,7 @@ def init_win() -> None:
 def init_settings() -> None:
     global initalized_state
     if initalized_state != g.Gamestate.SETTINGS:
+        g.generate_menu_background(g.bgtilemenu1)
         # reset temp settings
         g.screen_w_temp = g.screen_w
         g.screen_h_temp = g.screen_h
@@ -57,7 +61,8 @@ def init_mode_basic() -> None:
             g.bgtileset_snow,
             g.bgtileset_cherryblossom
         ), weights=(4, 3, 3, 2, 2, 2, 1))[0]
-        g.generate_random_background()
+        g.generate_random_background_array()
+        g.generate_game_background()
         g.clear_object_stack()
         new_head_x, new_head_y = g.randomize_spawn_pos()
         g.direction = g.randomize_direction()

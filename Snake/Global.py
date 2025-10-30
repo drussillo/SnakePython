@@ -195,11 +195,12 @@ defapple = pygame.transform.scale(get_sprite(objects, 0, 0, 15, 15), (d_size, d_
 boulder = pygame.transform.scale(get_sprite(objects, 15, 0, 15, 15), (d_size, d_size))
 cactus = pygame.transform.scale(get_sprite(objects, 30, 0, 15, 15), (d_size, d_size))
 
-# random tile background array
-current_bgtileset:tuple[pygame.surface.Surface, ...] = bgtileset_grass  # default to grass
-background_arr:list[list[pygame.surface.Surface]]
+
+# random background tiles
+current_bgtileset:tuple[pygame.Surface, ...] = bgtileset_grass  # default to grass
+background_arr:list[list[pygame.Surface]]
 background_size:int
-def generate_random_background():
+def generate_random_background_array():
     global background_arr
     global background_size
     background_arr = [
@@ -210,6 +211,38 @@ def generate_random_background():
         for y in range((screen_h - HUD_h) // d_tile_size)
     ]
     background_size = len(background_arr) * len(background_arr[0])
+
+# backgrounds
+game_background:pygame.Surface
+menu_background:pygame.Surface
+
+def generate_game_background() -> None:
+    global d_tile_size
+    global offset_x
+    global offset_y
+    global HUD_h
+    global game_background
+    game_background = pygame.Surface((screen_w, screen_h))
+    game_background.fill((110, 135, 97))
+    global background_arr
+    for y, row in enumerate(background_arr):
+        for x, bgimg in enumerate(row):
+            game_background.blit(bgimg, (x * d_tile_size + offset_x, y * d_tile_size + HUD_h + offset_y))
+
+def generate_menu_background(bgtilemenu:pygame.Surface) -> None:
+    global screen_w
+    global screen_h
+    global menu_background
+    menu_background = pygame.Surface((screen_w, screen_h))
+    global bgtilesmenuscale
+    tile_size = 14 * bgtilesmenuscale
+    for row in range(screen_w // 14 * bgtilesmenuscale):
+        for col in range(screen_h // 14 * bgtilesmenuscale):
+            if col % 2 == 1:
+                menu_background.blit(bgtilemenu, (col * tile_size, row * tile_size - tile_size // 2))
+            else:
+                menu_background.blit(bgtilemenu, (col * tile_size, row * tile_size))
+
 
 def randomize_spawn_pos() -> (int, int):
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
