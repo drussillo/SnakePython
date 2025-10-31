@@ -17,8 +17,12 @@ def setBGM(path:str) -> None:
 
 def setCurrentBGM() -> None:
     match g.current_bgtileset:
+        case g.bgtileset_desert:
+            setBGM(g.resource_path("audio/MainSoundtrack1-desert.wav"))
         case g.bgtileset_jungle:
             setBGM(g.resource_path("audio/MainSoundtrack1-jungle.wav"))
+        case g.bgtileset_city:
+            setBGM(g.resource_path("audio/MainSoundtrack1-city.wav"))
         #TODO: Add more soundtracks
         case _:
             setBGM(g.resource_path("audio/MainSoundtrack1.wav"))
