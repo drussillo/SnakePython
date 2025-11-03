@@ -192,6 +192,8 @@ def save() -> None:
     g.sfx = g.sfx_temp
     g.music = g.music_temp
     g.adjust_d_tile_size()
+    g.generate_random_background_array()
+    g.generate_game_background()
     g.set_HUD()
     g.set_offsets()
     g.reset_menu()
@@ -204,14 +206,14 @@ def cancel() -> None:
     g.reset_menu()
 
 class Button():
-    def __init__(self, x=0, y=0, w=0, h=0, drawable:g.pygame.surface.Surface=g.emptybutton) -> None:
-        self.x = x
-        self.y = y
-        self.w = w if w > 0 else drawable.get_width()
-        self.h = h if h > 0 else drawable.get_height()
-        self.image = drawable
-        self.rect = g.pygame.Rect(x, y, self.w, self.h)
-        self.is_down = False
+    def __init__(self, x:int=0, y:int=0, w:int=0, h:int=0, drawable:g.pygame.Surface=g.emptybutton) -> None:
+        self.x:int = x
+        self.y:int = y
+        self.w:int = w if w > 0 else drawable.get_width()
+        self.h:int = h if h > 0 else drawable.get_height()
+        self.image:g.pygame.Surface = drawable
+        self.rect:g.pygame.Surface = g.pygame.Rect(x, y, self.w, self.h)
+        self.is_down:bool = False
 
     def set_w(self, w:int) -> None:
         self.w = w
@@ -318,7 +320,7 @@ def resolution_validity_check(textbox:TextBox) -> bool:
 
 def size_validity_check(textbox:TextBox) -> bool:
     # 15 - (screen_w + screen_h) * 0.04
-    return textbox.string.isdigit() and int(textbox.string) >= 15 and int(textbox.string) <= (g.screen_w + g.screen_h) // 14.4
+    return textbox.string.isdigit() and int(textbox.string) >= 15 and int(textbox.string) <= (g.screen_w + g.screen_h) // 14.4 + 1
 
 def dist_validity_check(textbox:TextBox) -> bool:
     # 1 - 20

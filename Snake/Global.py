@@ -5,7 +5,7 @@ import random
 from enum import Enum
 
 # path helper to build executables
-def resource_path(relative_path) -> str:
+def resource_path(relative_path:str) -> str:
     # Get absolute path to resource, works for PyInstaller onefile.
     try:
         base_path = sys._MEIPASS
@@ -21,19 +21,20 @@ screen_h:int = 720
 fullscreen:bool = False
 velocity:int = 2 #pixels per frame; 1 - d_tile_size
 max_fps:int = 120
-d_size:int = 60 #default size 15 - (screen_w + screen_h) // 14.4
+d_size:int = 60 #default size 15 - (screen_w + screen_h) // 14.4 + 1
 d_dist:int = 5 #default distance 1 - 20
 sfx:bool = True 
 music:bool = True
 legacy_mode:bool = False
 HUD_divisor:int = 10 #screen_w // HUD_divisor
 
-d_tile_size:int = d_size + d_dist
+d_tile_size:int = 0
 #adjust tile size according to velocity
 def adjust_d_tile_size() -> None:
     global d_tile_size
     global d_size
     global d_dist
+    d_tile_size = d_size + d_dist
     if d_tile_size % (velocity*2) != 0:
         adj_size = (d_tile_size % (velocity*2)) // 2
         adj_dist = (d_tile_size % (velocity*2)) - adj_size
@@ -100,11 +101,11 @@ def set_offsets() -> None:
     offset_y = (screen_h - HUD_h) % d_tile_size // 2
 set_offsets()
 
-def get_sprite(sheet, x, y, width, height):
+def get_sprite(sheet:pygame.Surface, x:int, y:int, width:int, height:int) -> pygame.Surface:
     # Create a new Surface for the individual sprite
     sprite_image = pygame.Surface((width, height), pygame.SRCALPHA)
     # Blit the desired portion of the sprite sheet onto the new Surface
-    sprite_image.blit(sheet, (0, 0), (x, y, width, height))
+    _ = sprite_image.blit(sheet, (0, 0), (x, y, width, height))
     return sprite_image
 
 #start drawables
@@ -127,6 +128,9 @@ ogonbutton = pygame.transform.scale(get_sprite(buttons, 0, 168, 17, 14), (17 * b
 ogoffbutton = pygame.transform.scale(get_sprite(buttons, 0, 182, 17, 14), (17 * buttonscale, 14 * buttonscale))
 
 bgtiles = pygame.image.load(resource_path("drawables/bgtiles.png")).convert_alpha()
+# bgtileset_grass:tuple[pygame.surface.Surface, ...]
+# TODO: function to assign d_tile_size
+
 bgtileset_grass:tuple[pygame.surface.Surface, ...] = (
     pygame.transform.scale(get_sprite(bgtiles, 00, 0, 15, 15), (d_tile_size, d_tile_size)),
     pygame.transform.scale(get_sprite(bgtiles, 15, 0, 15, 15), (d_tile_size, d_tile_size)),
@@ -202,14 +206,19 @@ current_bgtileset:tuple[pygame.Surface, ...] = bgtileset_grass  # default to gra
 background_arr:list[list[pygame.Surface]]
 background_size:int
 def generate_random_background_array():
+    global current_bgtileset
+    global screen_w
+    global screen_h
+    global d_tile_size
+    global HUD_h
     global background_arr
     global background_size
     background_arr = [
         [
             random.choice(current_bgtileset)
-            for x in range(screen_w // d_tile_size)
+            for _ in range(screen_w // d_tile_size)
         ]
-        for y in range((screen_h - HUD_h) // d_tile_size)
+        for _ in range((screen_h - HUD_h) // d_tile_size)
     ]
     background_size = len(background_arr) * len(background_arr[0])
 
@@ -218,17 +227,20 @@ game_background:pygame.Surface
 menu_background:pygame.Surface
 
 def generate_game_background() -> None:
-    global d_tile_size
+    global screen_w
+    global screen_h
     global offset_x
     global offset_y
     global HUD_h
+    global d_tile_size
+    global background_arr
     global game_background
     game_background = pygame.Surface((screen_w, screen_h))
-    game_background.fill((110, 135, 97))
+    _ = game_background.fill((110, 135, 97))
     global background_arr
     for y, row in enumerate(background_arr):
         for x, bgimg in enumerate(row):
-            game_background.blit(bgimg, (x * d_tile_size + offset_x, y * d_tile_size + HUD_h + offset_y))
+            _ = game_background.blit(bgimg, (x * d_tile_size + offset_x, y * d_tile_size + HUD_h + offset_y))
 
 def generate_menu_background(bgtilemenu:pygame.Surface) -> None:
     global screen_w
@@ -240,12 +252,12 @@ def generate_menu_background(bgtilemenu:pygame.Surface) -> None:
     for row in range(screen_w // 14 * bgtilesmenuscale):
         for col in range(screen_h // 14 * bgtilesmenuscale):
             if col % 2 == 1:
-                menu_background.blit(bgtilemenu, (col * tile_size, row * tile_size - tile_size // 2))
+                _ = menu_background.blit(bgtilemenu, (col * tile_size, row * tile_size - tile_size // 2))
             else:
-                menu_background.blit(bgtilemenu, (col * tile_size, row * tile_size))
+                _ = menu_background.blit(bgtilemenu, (col * tile_size, row * tile_size))
 
 
-def randomize_spawn_pos() -> (int, int):
+def randomize_spawn_pos() -> tuple[int, int]:
     min_x = d_size * 5 * velocity if d_size * 5 * velocity < screen_w // 2 - d_size else screen_w // 2 - d_size
     max_x = screen_w - d_size * 5 * velocity if screen_w - d_size * 5 * velocity > screen_w // 2 + d_size else screen_w // 2 + d_size
     min_y = HUD_h + d_size * 5 * velocity if HUD_h + d_size * 5 * velocity < screen_h // 2 - d_size else screen_h // 2 - d_size
@@ -265,7 +277,7 @@ def randomize_direction() -> str:
 # initial snake body
 head_x, head_y = randomize_spawn_pos()
 direction = randomize_direction()
-snake_body:list[(int, int, str)] = [(head_x, head_y, direction)]
+snake_body:list[tuple[int, int, str]] = [(head_x, head_y, direction)]
 
 # objects
 object_stack = []
@@ -275,7 +287,7 @@ def clear_object_stack() -> None:
     object_stack = []
 
 #Help functions
-def get_middle_pos(w=0, h=0) -> (int, int):
+def get_middle_pos(w:int=0, h:int=0) -> tuple[int, int]:
     return (screen_w // 2 - w // 2, screen_h // 2 - h // 2)
 
 def toggle_sfx_temp() -> None:
