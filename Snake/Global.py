@@ -1,6 +1,7 @@
 import sys
 import os
 import pygame
+__all__ = ["pygame"]
 import random
 from enum import Enum
 
