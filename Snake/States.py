@@ -63,8 +63,9 @@ def init_mode_basic() -> None:
             g.bgtileset_snow,
             g.bgtileset_cherryblossom
         ), weights=(4, 3, 3, 2, 2, 2, 1))[0]
+        g.scale_sprites()
         g.generate_random_background_array()
-        g.generate_game_background()
+        g.generate_scaled_game_background()
         g.clear_object_stack()
         new_head_x, new_head_y = g.randomize_spawn_pos()
         g.direction = g.randomize_direction()

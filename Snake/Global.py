@@ -131,49 +131,48 @@ bgtiles = pygame.image.load(resource_path("drawables/bgtiles.png")).convert_alph
 # bgtileset_grass:tuple[pygame.surface.Surface, ...]
 # TODO: function to assign d_tile_size
 
-bgtileset_grass:tuple[pygame.surface.Surface, ...] = (
-    pygame.transform.scale(get_sprite(bgtiles, 00, 0, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 15, 0, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 30, 0, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 45, 0, 15, 15), (d_tile_size, d_tile_size))
-)
-bgtileset_desert:tuple[pygame.surface.Surface, ...] = (
-    pygame.transform.scale(get_sprite(bgtiles, 00, 15, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 15, 15, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 30, 15, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 45, 15, 15, 15), (d_tile_size, d_tile_size))
-)
-bgtileset_jungle:tuple[pygame.surface.Surface, ...] = (
-    pygame.transform.scale(get_sprite(bgtiles, 00, 30, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 15, 30, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 30, 30, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 45, 30, 15, 15), (d_tile_size, d_tile_size))
-)
-bgtileset_city:tuple[pygame.surface.Surface, ...] = (
-    pygame.transform.scale(get_sprite(bgtiles, 00, 45, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 15, 45, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 30, 45, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 45, 45, 15, 15), (d_tile_size, d_tile_size))
-)
-bgtileset_frozen:tuple[pygame.surface.Surface, ...] = (
-    pygame.transform.scale(get_sprite(bgtiles, 00, 60, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 15, 60, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 30, 60, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 45, 60, 15, 15), (d_tile_size, d_tile_size))
-)
-bgtileset_snow:tuple[pygame.surface.Surface, ...] = (
-    pygame.transform.scale(get_sprite(bgtiles, 00, 75, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 15, 75, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 30, 75, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 45, 75, 15, 15), (d_tile_size, d_tile_size))
-)
-# TODO: snow / frozen background + more backgrounds?
-bgtileset_cherryblossom:tuple[pygame.surface.Surface, ...] = (
-    pygame.transform.scale(get_sprite(bgtiles, 00, 90, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 15, 90, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 30, 90, 15, 15), (d_tile_size, d_tile_size)),
-    pygame.transform.scale(get_sprite(bgtiles, 45, 90, 15, 15), (d_tile_size, d_tile_size))
-)
+bgtileset_grass:tuple[pygame.Surface, ...] = (
+    get_sprite(bgtiles, 00, 0, 15, 15),
+    get_sprite(bgtiles, 15, 0, 15, 15),
+    get_sprite(bgtiles, 30, 0, 15, 15),
+    get_sprite(bgtiles, 45, 0, 15, 15))
+
+bgtileset_desert:tuple[pygame.Surface, ...] = (
+    get_sprite(bgtiles, 00, 15, 15, 15),
+    get_sprite(bgtiles, 15, 15, 15, 15),
+    get_sprite(bgtiles, 30, 15, 15, 15),
+    get_sprite(bgtiles, 45, 15, 15, 15))
+
+bgtileset_jungle:tuple[pygame.Surface, ...] = (
+    get_sprite(bgtiles, 00, 30, 15, 15),
+    get_sprite(bgtiles, 15, 30, 15, 15),
+    get_sprite(bgtiles, 30, 30, 15, 15),
+    get_sprite(bgtiles, 45, 30, 15, 15))
+
+bgtileset_city:tuple[pygame.Surface, ...] = (
+    get_sprite(bgtiles, 00, 45, 15, 15),
+    get_sprite(bgtiles, 15, 45, 15, 15),
+    get_sprite(bgtiles, 30, 45, 15, 15),
+    get_sprite(bgtiles, 45, 45, 15, 15))
+
+bgtileset_frozen:tuple[pygame.Surface, ...] = (
+    get_sprite(bgtiles, 00, 60, 15, 15),
+    get_sprite(bgtiles, 15, 60, 15, 15),
+    get_sprite(bgtiles, 30, 60, 15, 15),
+    get_sprite(bgtiles, 45, 60, 15, 15))
+
+bgtileset_snow:tuple[pygame.Surface, ...] = (
+    get_sprite(bgtiles, 00, 75, 15, 15),
+    get_sprite(bgtiles, 15, 75, 15, 15),
+    get_sprite(bgtiles, 30, 75, 15, 15),
+    get_sprite(bgtiles, 45, 75, 15, 15))
+
+bgtileset_cherryblossom:tuple[pygame.Surface, ...] = (
+    get_sprite(bgtiles, 00, 90, 15, 15),
+    get_sprite(bgtiles, 15, 90, 15, 15),
+    get_sprite(bgtiles, 30, 90, 15, 15),
+    get_sprite(bgtiles, 45, 90, 15, 15))
+
 
 bgtilesmenuscale:int = 6
 bgtilesmenu = pygame.image.load(resource_path("drawables/bgtilesmenu.png")).convert_alpha()
@@ -182,23 +181,53 @@ bgtilemenu1 = pygame.transform.scale(get_sprite(bgtilesmenu, 0, 0, 14, 14), (14 
 # TODO: add more bg tiles for menu
 
 snakesegments = pygame.image.load(resource_path("drawables/segments.png")).convert_alpha()
-snakesegment_vert = pygame.transform.scale(get_sprite(snakesegments, 0, 0, 15, 15), (d_size, d_size))
+snakesegment_vert = get_sprite(snakesegments, 0, 0, 15, 15)
 snakesegment_hor = pygame.transform.rotate(snakesegment_vert, 90)
 
-snakehead_n = pygame.transform.scale(get_sprite(snakesegments, 30, 0, 15, 15), (d_size, d_size))
+snakehead_n = get_sprite(snakesegments, 30, 0, 15, 15)
 snakehead_e = pygame.transform.rotate(snakehead_n, -90)
 snakehead_s = pygame.transform.rotate(snakehead_e, -90)
 snakehead_w = pygame.transform.rotate(snakehead_s, -90)
 
-snakelast_n = pygame.transform.scale(get_sprite(snakesegments, 15, 0, 15, 15), (d_size, d_size))
+snakelast_n = get_sprite(snakesegments, 15, 0, 15, 15)
 snakelast_e = pygame.transform.rotate(snakelast_n, -90)
 snakelast_s = pygame.transform.rotate(snakelast_e, -90)
 snakelast_w = pygame.transform.rotate(snakelast_s, -90)
 
 objects = pygame.image.load(resource_path("drawables/objects.png")).convert_alpha()
-defapple = pygame.transform.scale(get_sprite(objects, 0, 0, 15, 15), (d_size, d_size))
-boulder = pygame.transform.scale(get_sprite(objects, 15, 0, 15, 15), (d_size, d_size))
-cactus = pygame.transform.scale(get_sprite(objects, 30, 0, 15, 15), (d_size, d_size))
+defapple = get_sprite(objects, 0, 0, 15, 15)
+boulder = get_sprite(objects, 15, 0, 15, 15)
+cactus = get_sprite(objects, 30, 0, 15, 15)
+
+def scale_sprites() -> None:
+    global snakesegment_vert
+    global snakesegment_hor
+    global snakehead_n
+    global snakehead_e
+    global snakehead_s
+    global snakehead_w
+    global snakelast_n
+    global snakelast_e
+    global snakelast_s
+    global snakelast_w
+    global defapple
+    global boulder
+    global cactus
+    snakesegment_vert = pygame.transform.scale(snakesegment_vert, (d_size, d_size))
+    snakesegment_hor = pygame.transform.scale(snakesegment_hor, (d_size, d_size))
+    snakehead_n = pygame.transform.scale(snakehead_n, (d_size, d_size))
+    snakehead_e = pygame.transform.scale(snakehead_e, (d_size, d_size))
+    snakehead_s = pygame.transform.scale(snakehead_s, (d_size, d_size))
+    snakehead_w = pygame.transform.scale(snakehead_w, (d_size, d_size))
+    snakelast_n = pygame.transform.scale(snakelast_n, (d_size, d_size))
+    snakelast_e = pygame.transform.scale(snakelast_e, (d_size, d_size))
+    snakelast_s = pygame.transform.scale(snakelast_s, (d_size, d_size))
+    snakelast_w = pygame.transform.scale(snakelast_w, (d_size, d_size))
+    defapple = pygame.transform.scale(defapple, (d_size, d_size))
+    boulder = pygame.transform.scale(boulder, (d_size, d_size))
+    cactus = pygame.transform.scale(cactus, (d_size, d_size))
+
+
 
 
 # random background tiles
@@ -206,11 +235,6 @@ current_bgtileset:tuple[pygame.Surface, ...] = bgtileset_grass  # default to gra
 background_arr:list[list[pygame.Surface]]
 background_size:int
 def generate_random_background_array():
-    global current_bgtileset
-    global screen_w
-    global screen_h
-    global d_tile_size
-    global HUD_h
     global background_arr
     global background_size
     background_arr = [
@@ -226,28 +250,19 @@ def generate_random_background_array():
 game_background:pygame.Surface
 menu_background:pygame.Surface
 
-def generate_game_background() -> None:
-    global screen_w
-    global screen_h
-    global offset_x
-    global offset_y
-    global HUD_h
-    global d_tile_size
-    global background_arr
+def generate_scaled_game_background() -> None:
     global game_background
     game_background = pygame.Surface((screen_w, screen_h))
     _ = game_background.fill((110, 135, 97))
-    global background_arr
     for y, row in enumerate(background_arr):
         for x, bgimg in enumerate(row):
-            _ = game_background.blit(bgimg, (x * d_tile_size + offset_x, y * d_tile_size + HUD_h + offset_y))
+            _ = game_background.blit(
+                pygame.transform.scale(bgimg, (d_tile_size, d_tile_size)), 
+                (x * d_tile_size + offset_x, y * d_tile_size + HUD_h + offset_y))
 
 def generate_menu_background(bgtilemenu:pygame.Surface) -> None:
-    global screen_w
-    global screen_h
     global menu_background
     menu_background = pygame.Surface((screen_w, screen_h))
-    global bgtilesmenuscale
     tile_size = 14 * bgtilesmenuscale
     for row in range(screen_w // 14 * bgtilesmenuscale):
         for col in range(screen_h // 14 * bgtilesmenuscale):
@@ -300,7 +315,6 @@ def toggle_music_temp() -> None:
 
 def toggle_fullscreen() -> None:
     global fullscreen_temp
-    global SCREEN
     fullscreen_temp = not fullscreen_temp
     REAL_SCREEN = pygame.display.set_mode([screen_w, screen_h], pygame.FULLSCREEN, pygame.SCALED) if fullscreen_temp else pygame.display.set_mode([screen_w, screen_h])
 
