@@ -192,8 +192,6 @@ def save() -> None:
     g.sfx = g.sfx_temp
     g.music = g.music_temp
     g.adjust_d_tile_size()
-    g.generate_random_background_array()
-    g.generate_game_background()
     g.set_HUD()
     g.set_offsets()
     g.reset_menu()
