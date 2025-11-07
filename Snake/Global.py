@@ -20,8 +20,8 @@ pygame.init()
 screen_w:int = 720
 screen_h:int = 720
 fullscreen:bool = False
-velocity:int = 2 #pixels per frame; 1 - 6
-max_fps:int = 15
+velocity:int = 2 #pixels per frame; 1 - 8
+max_fps:int = 120
 d_size:int = 61 #default size 15 - (screen_w + screen_h) // 14.4 + 1
 d_dist:int = 5 #default distance 1 - 20
 sfx:bool = True 
