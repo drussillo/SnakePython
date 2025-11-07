@@ -4,6 +4,7 @@ import Global as g
 import Sound
 import Apple
 import Obstacle
+import UI
 
 initalized_state = g.Gamestate.VOID
 
@@ -46,6 +47,7 @@ def init_settings() -> None:
         g.d_dist_temp = g.d_dist
         g.sfx_temp = g.sfx
         g.music_temp = g.music
+        # print(UI.screen_w_temp) TODO
         initalized_state = g.Gamestate.SETTINGS
 
 
@@ -61,13 +63,14 @@ def init_mode_basic() -> None:
             g.bgtileset_snow,
             g.bgtileset_cherryblossom
         ), weights=(4, 3, 3, 2, 2, 2, 1))[0]
+        g.scale_sprites()
         g.generate_random_background_array()
-        g.generate_game_background()
+        g.generate_scaled_game_background()
         g.clear_object_stack()
         new_head_x, new_head_y = g.randomize_spawn_pos()
         g.direction = g.randomize_direction()
         g.snake_body = [(new_head_x, new_head_y, g.direction)]
-        g.velocity = g.velocity_start
+        # g.velocity = g.velocity_start
         g.objective = g.background_size // 3 # temporary value
         Sound.setCurrentBGM()
         Sound.playBGM()

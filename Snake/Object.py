@@ -15,10 +15,10 @@ class Object:
         while loop:
             rnd_x = random.randint(0, g.screen_w - 2 * g.offset_x - 1)
             rnd_x -= rnd_x % g.d_tile_size
-            rnd_x += g.offset_x
+            rnd_x += g.offset_x + g.d_dist // 2
             rnd_y = random.randint(0, g.screen_h - 2 * g.offset_y - g.HUD_h - 1)
             rnd_y -= rnd_y % g.d_tile_size
-            rnd_y += g.offset_y + g.HUD_h
+            rnd_y += g.offset_y + g.HUD_h + g.d_dist // 2
             loop = not self.valid_pos(rnd_x, rnd_y)
         self.x_coord = rnd_x
         self.y_coord = rnd_y
@@ -54,9 +54,17 @@ class Object:
         return valid
 
     def check_collision_w_head(self) -> None:
+        # TODO: refactor to fix broken collision on different tilesizes / velocities
         object_rect = g.pygame.Rect(self.x_coord, self.y_coord, g.d_size, g.d_size)
         head_rect = g.pygame.Rect(g.snake_body[0][0], g.snake_body[0][1], g.d_size, g.d_size)
         collides = object_rect.colliderect(head_rect)
+        # head_x, head_y, _ = g.snake_body[0]
+        # head_x, head_y = (head_x - g.offset_x, head_y - g.HUD_h - g.offset_y)
+        # x_coord, y_coord = (self.x_coord - g.offset_x, self.y_coord - g.HUD_h - g.offset_y)
+        # offset_x, offset_y = (x_coord % g.d_tile_size, y_coord % g.d_tile_size)
+        # collides:bool = ((head_x >= self.x_coord - offset_x and head_x <= self.x_coord - offset_x + g.d_tile_size) and 
+        #                  (head_y >= self.y_coord - offset_y and head_y <= self.y_coord - offset_y + g.d_tile_size))
+        # print(head_x, head_y, self.x_coord - offset_x, self.y_coord - offset_y)
         if collides:
             self.apply_effect()
         else:
