@@ -70,7 +70,7 @@ def init_mode_basic() -> None:
         new_head_x, new_head_y = g.randomize_spawn_pos()
         g.direction = g.randomize_direction()
         g.snake_body = [(new_head_x, new_head_y, g.direction)]
-        g.velocity = g.velocity_start
+        # g.velocity = g.velocity_start
         g.objective = g.background_size // 3 # temporary value
         Sound.setCurrentBGM()
         Sound.playBGM()
