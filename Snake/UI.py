@@ -78,7 +78,7 @@ def draw_main_menu_screen() -> None:
 def draw_settings_screen() -> None:
     draw_menu_background()
     settings_title = g.font_100.render('Settings', True, (56, 79, 93))
-    _ = g.SCREEN.blit(settings_title, ((g.screen_w - settings_title.get_width()) // 2, g.screen_h // 5))
+    _ = g.SCREEN.blit(settings_title, ((g.screen_w - settings_title.get_width()) // 2, g.screen_h // 10))
     # cancel button
     button_1.set_image(g.cancelbutton)
     button_1.center()
@@ -92,6 +92,10 @@ def draw_settings_screen() -> None:
     button_2.draw()
     button_2.check_if_clicked(save)
 
+    ### GENERAL SETTINGS ###
+    # General settings title
+    general_title = g.font_60.render('General', True, (56, 79, 93))
+    _ = g.SCREEN.blit(general_title, ((g.screen_w - general_title.get_width()) // 2, g.screen_h // 4))
     # sfx button
     if g.sfx_temp:
         button_3.set_image(g.sfxonbutton)
@@ -157,10 +161,14 @@ def draw_settings_screen() -> None:
     g.screen_h_temp = int(textbox_2.default_string)
     # TODO: Add max_fps / gamespeed setting
 
+    ### BASIC MODE ###
+    # basic mode titile
+    basic_mode_title = g.font_60.render('Basic Mode', True, (56, 79, 93))
+    _ = g.SCREEN.blit(basic_mode_title, ((g.screen_w - basic_mode_title.get_width()) // 2, g.screen_h // 1.75))
     # tile size title
     tile_size_title = g.font_35.render(f'Tilesize (15 - {int((g.screen_w + g.screen_h) // 14.4 + 1)}):', True, (56, 79, 93))
     tile_size_title_centered_coords:tuple[int, int] = ((g.screen_w - tile_size_title.get_width()) // 2, (g.screen_h - tile_size_title.get_height()) // 2)
-    _ = g.SCREEN.blit(tile_size_title, (tile_size_title_centered_coords[0] - 200, tile_size_title_centered_coords[1] + g.screen_h // 10))
+    _ = g.SCREEN.blit(tile_size_title, (tile_size_title_centered_coords[0] - 200, tile_size_title_centered_coords[1] + g.screen_h // 5))
     # tile size textbox (basic mode)
     if not textbox_3.default_string:
         textbox_3.set_default_string(f"{g.d_size}")
@@ -169,7 +177,7 @@ def draw_settings_screen() -> None:
     textbox_3.set_font(g.font_35)
     textbox_3.set_fontcolor((56, 79, 93))
     textbox_3.center()
-    textbox_3.move(x=-50,y=g.screen_h//10)
+    textbox_3.move(x=-50,y=g.screen_h//5)
     textbox_3.draw()
     textbox_3.check_if_clicked()
     textbox_3.edit()
