@@ -177,29 +177,28 @@ def draw_settings_screen() -> None:
     textbox_3.set_font(g.font_35)
     textbox_3.set_fontcolor((56, 79, 93))
     textbox_3.center()
-    textbox_3.move(x=-50,y=g.screen_h//5)
+    textbox_3.move(x=-60,y=g.screen_h//5)
     textbox_3.draw()
     textbox_3.check_if_clicked()
     textbox_3.edit()
     g.d_size_temp = int(textbox_3.default_string)
-    # TODO
     # velocity title
-    # velocity_title = g.font_35.render(f'Tilesize (15 - {int((g.screen_w + g.screen_h) // 14.4 + 1)}):', True, (56, 79, 93))
-    # tile_size_title_centered_coords:tuple[int, int] = ((g.screen_w - tile_size_title.get_width()) // 2, (g.screen_h - tile_size_title.get_height()) // 2)
-    # _ = g.SCREEN.blit(tile_size_title, (tile_size_title_centered_coords[0] - 200, tile_size_title_centered_coords[1] + g.screen_h // 10))
+    velocity_title = g.font_35.render(f'Velocity (1 - 8):', True, (56, 79, 93))
+    velocity_title_centered_coords:tuple[int, int] = ((g.screen_w - velocity_title.get_width()) // 2, (g.screen_h - velocity_title.get_height()) // 2)
+    _ = g.SCREEN.blit(velocity_title, (velocity_title_centered_coords[0] + 100, velocity_title_centered_coords[1] + g.screen_h // 5))
     # velocity textbox (basic mode)
-    # if not textbox_4.default_string:
-    #     textbox_4.set_default_string(f"{g.screen_h}")
-    # textbox_4.set_input_validity_function(textbox_validity_check)
-    # textbox_4.set_font(g.font_35)
-    # textbox_4.set_fontcolor((56, 79, 93))
-    # textbox_4.set_w(100)
-    # textbox_4.center()
-    # textbox_4.move(x=50,y=g.screen_h//5)
-    # textbox_4.draw()
-    # textbox_4.check_if_clicked()
-    # textbox_4.edit()
-    # g.screen_h_temp = int(textbox_4.default_string)
+    if not textbox_4.default_string:
+        textbox_4.set_default_string(f"{g.velocity}")
+    textbox_4.set_image(g.emptybutton_small)
+    textbox_4.set_input_validity_function(velocity_validity_check)
+    textbox_4.set_font(g.font_35)
+    textbox_4.set_fontcolor((56, 79, 93))
+    textbox_4.center()
+    textbox_4.move(x=230,y=g.screen_h//5)
+    textbox_4.draw()
+    textbox_4.check_if_clicked()
+    textbox_4.edit()
+    g.velocity_temp = int(textbox_4.default_string)
 
 # settings helper
 def save() -> None:
@@ -207,6 +206,7 @@ def save() -> None:
     g.screen_h = g.screen_h_temp
     g.fullscreen = g.fullscreen_temp
     g.velocity = g.velocity_temp
+    g.velocity_start = g.velocity_temp
     g.max_fps = g.max_fps_temp
     g.d_size = g.d_size_temp
     g.d_dist = g.d_dist_temp
@@ -351,8 +351,8 @@ def dist_validity_check(textbox:TextBox) -> bool:
     return textbox.string.isdigit() and int(textbox.string) >= 1 and int(textbox.string) <= 20
 
 def velocity_validity_check(textbox:TextBox) -> bool:
-    # 1 - d_tile_size (or d_size + d_dist)
-    return textbox.string.isdigit() and int(textbox.string) >= 1 and int(textbox.string) <= g.d_size + g.d_dist
+    # 1 - 8
+    return textbox.string.isdigit() and int(textbox.string) >= 1 and int(textbox.string) <= 8
 
 
 #declare multiuse button objects
