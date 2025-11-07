@@ -78,7 +78,7 @@ def draw_main_menu_screen() -> None:
 def draw_settings_screen() -> None:
     draw_menu_background()
     settings_title = g.font_100.render('Settings', True, (56, 79, 93))
-    _ = g.SCREEN.blit(settings_title, (g.screen_w // 2 - settings_title.get_width() // 2, g.screen_h // 5))
+    _ = g.SCREEN.blit(settings_title, ((g.screen_w - settings_title.get_width()) // 2, g.screen_h // 5))
     # cancel button
     button_1.set_image(g.cancelbutton)
     button_1.center()
@@ -91,13 +91,14 @@ def draw_settings_screen() -> None:
     button_2.move(x=150, y=int(g.screen_h//2.5))
     button_2.draw()
     button_2.check_if_clicked(save)
+
     # sfx button
     if g.sfx_temp:
         button_3.set_image(g.sfxonbutton)
     else:
         button_3.set_image(g.sfxoffbutton)
     button_3.center()
-    button_3.move(x=-50)
+    button_3.move(x=-50, y=-g.screen_h//10)
     button_3.draw()
     button_3.check_if_clicked(g.toggle_sfx_temp)
     # music button
@@ -106,13 +107,13 @@ def draw_settings_screen() -> None:
     else:
         button_4.set_image(g.musicoffbutton)
     button_4.center()
-    button_4.move(x=50)
+    button_4.move(x=-150, y=-g.screen_h//10)
     button_4.draw()
     button_4.check_if_clicked(g.toggle_music_temp)
     # fullscreen button
     button_5.set_image(g.fullscreenbutton)
     button_5.center()
-    button_5.move(x=-50, y=g.screen_h//10)
+    button_5.move(x=50, y=-g.screen_h//10)
     button_5.draw()
     button_5.check_if_clicked(g.toggle_fullscreen)
     # legacy mode button
@@ -121,13 +122,14 @@ def draw_settings_screen() -> None:
     else:
         button_6.set_image(g.ogoffbutton)
     button_6.center()
-    button_6.move(x=50, y=g.screen_h//10)
+    button_6.move(x=150, y=-g.screen_h//10)
     button_6.draw()
     button_6.check_if_clicked(g.toggle_legacy_mode)
+
     # resolution title
     resolution_title = g.font_35.render('Res:', True, (56, 79, 93))
-    resolution_title_centered:tuple[int, int] = ((g.screen_w - resolution_title.get_width()) // 2, (g.screen_h - resolution_title.get_height()) // 2 )
-    _ = g.SCREEN.blit(resolution_title, (resolution_title_centered[0] - 140, resolution_title_centered[1] + g.screen_h // 5))
+    resolution_title_centered_coords:tuple[int, int] = ((g.screen_w - resolution_title.get_width()) // 2, (g.screen_h - resolution_title.get_height()) // 2)
+    _ = g.SCREEN.blit(resolution_title, (resolution_title_centered_coords[0] - 230, resolution_title_centered_coords[1]))
     # resolution text boxes
     if not textbox_1.default_string:
         textbox_1.set_default_string(f"{g.screen_w}")
@@ -136,7 +138,7 @@ def draw_settings_screen() -> None:
     textbox_1.set_fontcolor((56, 79, 93))
     textbox_1.set_w(100)
     textbox_1.center()
-    textbox_1.move(x=-50, y=g.screen_h//5)
+    textbox_1.move(x=-150)
     textbox_1.draw()
     textbox_1.check_if_clicked()
     textbox_1.edit()
@@ -148,13 +150,17 @@ def draw_settings_screen() -> None:
     textbox_2.set_fontcolor((56, 79, 93))
     textbox_2.set_w(100)
     textbox_2.center()
-    textbox_2.move(x=50,y=g.screen_h//5)
+    textbox_2.move(x=-50)
     textbox_2.draw()
     textbox_2.check_if_clicked()
     textbox_2.edit()
     g.screen_h_temp = int(textbox_2.default_string)
     # TODO: Add max_fps / gamespeed setting
-    # TODO: Add d_size and velocity setting for basic mode???
+
+    # tile size title
+    tile_size_title = g.font_35.render(f'Tilesize (15 - {int((g.screen_w + g.screen_h) // 14.4 + 1)}):', True, (56, 79, 93))
+    tile_size_title_centered_coords:tuple[int, int] = ((g.screen_w - tile_size_title.get_width()) // 2, (g.screen_h - tile_size_title.get_height()) // 2)
+    _ = g.SCREEN.blit(tile_size_title, (tile_size_title_centered_coords[0] - 200, tile_size_title_centered_coords[1] + g.screen_h // 10))
     # tile size textbox (basic mode)
     if not textbox_3.default_string:
         textbox_3.set_default_string(f"{g.d_size}")
@@ -163,11 +169,16 @@ def draw_settings_screen() -> None:
     textbox_3.set_font(g.font_35)
     textbox_3.set_fontcolor((56, 79, 93))
     textbox_3.center()
-    textbox_3.move(x=50,y=g.screen_h//3)
+    textbox_3.move(x=-50,y=g.screen_h//10)
     textbox_3.draw()
     textbox_3.check_if_clicked()
     textbox_3.edit()
     g.d_size_temp = int(textbox_3.default_string)
+    # TODO
+    # velocity title
+    # velocity_title = g.font_35.render(f'Tilesize (15 - {int((g.screen_w + g.screen_h) // 14.4 + 1)}):', True, (56, 79, 93))
+    # tile_size_title_centered_coords:tuple[int, int] = ((g.screen_w - tile_size_title.get_width()) // 2, (g.screen_h - tile_size_title.get_height()) // 2)
+    # _ = g.SCREEN.blit(tile_size_title, (tile_size_title_centered_coords[0] - 200, tile_size_title_centered_coords[1] + g.screen_h // 10))
     # velocity textbox (basic mode)
     # if not textbox_4.default_string:
     #     textbox_4.set_default_string(f"{g.screen_h}")
