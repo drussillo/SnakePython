@@ -53,6 +53,7 @@ font_35 = pygame.font.Font(default_font_path, 35)
 
 #miscellaneous
 score:int
+current_level:int = 0
 objective:int
 REAL_SCREEN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) if fullscreen else pygame.display.set_mode([screen_w, screen_h])
 SCREEN = pygame.Surface((screen_w, screen_h))
@@ -79,6 +80,7 @@ class Gamestate(Enum):
     WIN = 3
     SETTINGS = 4
     MODE_BASIC = 5
+    MODE_LEVELS = 6
 
 current_state: Gamestate = Gamestate.MENU
 
@@ -316,4 +318,9 @@ def reset_settings() -> None:
 def reset_mode_basic() -> None:
     global current_state
     current_state = Gamestate.MODE_BASIC
+
+def reset_mode_levels() -> None:
+    global current_state
+    current_state = Gamestate.MODE_LEVELS
+
 

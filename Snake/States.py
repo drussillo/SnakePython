@@ -5,36 +5,36 @@ import Sound
 import Apple
 import Obstacle
 
-initalized_state = g.Gamestate.VOID
+initialized_state = g.Gamestate.VOID
 
 def init_menu() -> None:
-    global initalized_state
-    if initalized_state != g.Gamestate.MENU:
+    global initialized_state
+    if initialized_state != g.Gamestate.MENU:
         g.generate_menu_background(g.bgtilemenu1)
         Sound.setBGM(g.resource_path("audio/MainSoundtrack1-trianglewave.wav"))
         Sound.playBGM()
-        initalized_state = g.Gamestate.MENU
+        initialized_state = g.Gamestate.MENU
 
 def init_fail() -> None:
-    global initalized_state
-    if initalized_state != g.Gamestate.FAIL:
+    global initialized_state
+    if initialized_state != g.Gamestate.FAIL:
         g.generate_menu_background(g.bgtilemenu1)
         g.clear_object_stack()
         Sound.stop()
-        initalized_state = g.Gamestate.FAIL
+        initialized_state = g.Gamestate.FAIL
 
 def init_win() -> None:
-    global initalized_state
-    if initalized_state != g.Gamestate.WIN:
+    global initialized_state
+    if initialized_state != g.Gamestate.WIN:
         g.generate_menu_background(g.bgtilemenu1)
         g.clear_object_stack()
         Sound.setBGM(g.resource_path('audio/WinSoundtrack.wav'))
         Sound.playBGM()
-        initalized_state = g.Gamestate.WIN
+        initialized_state = g.Gamestate.WIN
 
 def init_settings() -> None:
-    global initalized_state
-    if initalized_state != g.Gamestate.SETTINGS:
+    global initialized_state
+    if initialized_state != g.Gamestate.SETTINGS:
         g.generate_menu_background(g.bgtilemenu1)
         # reset temp settings
         g.screen_w_temp = g.screen_w
@@ -46,12 +46,12 @@ def init_settings() -> None:
         g.d_dist_temp = g.d_dist
         g.sfx_temp = g.sfx
         g.music_temp = g.music
-        initalized_state = g.Gamestate.SETTINGS
+        initialized_state = g.Gamestate.SETTINGS
 
 
 def init_mode_basic() -> None:
-    global initalized_state
-    if initalized_state != g.Gamestate.MODE_BASIC:
+    global initialized_state
+    if initialized_state != g.Gamestate.MODE_BASIC:
         g.current_bgtileset = random.choices((
             g.bgtileset_grass,
             g.bgtileset_jungle,
@@ -73,5 +73,39 @@ def init_mode_basic() -> None:
         Sound.playBGM()
         Apple.init_apples_basic()
         Obstacle.init_obstacles_basic()
-        initalized_state = g.Gamestate.MODE_BASIC
+        initialized_state = g.Gamestate.MODE_BASIC
+
+def init_mode_levels() -> None:
+    global initialized_state
+    if initialized_state != g.Gamestate.MODE_LEVELS:
+        g.current_bgtileset = random.choices((
+            g.bgtileset_grass,
+            g.bgtileset_jungle,
+            g.bgtileset_desert,
+            g.bgtileset_city,
+            g.bgtileset_frozen,
+            g.bgtileset_snow,
+            g.bgtileset_cherryblossom
+        ), weights=(4, 3, 3, 2, 2, 2, 1))[0]
+        g.generate_random_background_array()
+        g.generate_game_background()
+        g.clear_object_stack()
+        new_head_x, new_head_y = g.randomize_spawn_pos()
+        g.direction = g.randomize_direction()
+        g.snake_body = [(new_head_x, new_head_y, g.direction)]
+        if g.current_level == 0:
+            # TODO: init level 1
+            g.current_level = 1
+        """ THIS SECTION SHOULD BE LEVEL-DEPENDENT
+        g.velocity = g.velocity_start
+        g.objective = g.background_size // 3 # temporary value
+        Sound.setCurrentBGM()
+        Sound.playBGM()
+        Apple.init_apples_basic()
+        Obstacle.init_obstacles_basic()
+        """ # TODO: add mode levels init
+        initialized_state = g.Gamestate.MODE_LEVELS
+
+
+
 
